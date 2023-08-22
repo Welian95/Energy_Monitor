@@ -1,8 +1,8 @@
-# Energy Monitoring System
+# Energy Monitor
 
 ## Overview
 
-The Energy Monitoring System is a comprehensive software solution for analyzing and visualizing energy flows and data. Developed in Python using Streamlit, it allows users to select different system modules, map data, and perform energy analyses.
+The Energy Monitor is a comprehensive software solution for analyzing and visualizing energy flows and data. Developed in Python using Streamlit, it allows users to select different system modules, map data, and perform energy analyses.
 
 ## Structure
 
