@@ -37,9 +37,7 @@ The project is in an advanced stage of development with a clear structure and de
 
 1. **Download the Repository**: Clone or download the repository to your local machine.
 2. **Install Required Modules**: Navigate to the project folder and install all the modules from the `requirements.txt` file by running:
-   \`\`\`
-   pip install -r requirements.txt
-   \`\`\`
+   `pip install -r requirements.txt`
 3. **Configure the API**: Adapt the API to your datasets (CSV or Database), or use the "example" folder provided in the repository.
 4. **Start the Application**: Simply run the `Main.py` script to start the application.
 
