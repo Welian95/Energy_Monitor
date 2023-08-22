@@ -1,0 +1,1 @@
+{"data_mapping": {"Heat_pump": {"Compressor_Power_[kW]": "wp_strombezug", "Heating_Capacity_[W]": "waermeabgabe_wp", "Power_grid_purchase_[W]": "netzbezug"}, "Photovoltaik": {"P_yield_[W]": "pv_ertrag", "Battery_charge_[Wh]": "elektrospeicher"}}, "system_modules": ["Heat_pump", "Photovoltaik"]}
