@@ -124,6 +124,7 @@ def display_data_mapping(column_names, active_system_modules, saved_data_mapping
                 default_value = 0
                 default_unit = 0
 
+            
             selected_column = col1.selectbox(f"Select input data from source for {data_name}:", column_list, index=default_value, key=counter, help="The data series required for the selected plant component are to be entered here. The dropdown selection lists all data series from the interface to the database. " )
             counter += 1
 

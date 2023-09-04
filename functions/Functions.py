@@ -59,7 +59,7 @@ def load_data_by_mapping (data_mapping,data):
 
     return mapped_data
 
-def load_data_for_module(data_mapping, module_names, filename, freq_input = None ):
+def load_data_for_module(data_mapping, module_names, filename, freq_input=None, start_time=None, end_time=None):
     """
     Load data for specified modules from the API and interpolate missing values.
 
@@ -67,7 +67,7 @@ def load_data_for_module(data_mapping, module_names, filename, freq_input = None
         data_mapping: The data mapping dictionary.
         module_names: List of module names for which data should be loaded.
         filename: The filename or path to the file to read from the API.
-        freq: Desired frequency for data (default is '1T' for 1 minute).
+        freq_input: Desired frequency for data (default is '1T' for 1 minute).
 
     Returns:
         A dictionary with the same structure as data_mapping, but with actual data 
@@ -78,18 +78,18 @@ def load_data_for_module(data_mapping, module_names, filename, freq_input = None
         if module in module_names:
             loaded_data[module] = {}
             for data_name, column_name in data.items():
-                raw_data_from_api = Data_API.read_data_from_api(filename, [column_name])
-                
+                raw_data_from_api = Data_API.read_data_from_csv_with_time_range(filename, [column_name], start_time, end_time,)
 
-                if freq_input != None:
-                    freq = freq_input 
-                
-                elif pd.infer_freq(raw_data_from_api.index) != None:
-                    freq = pd.infer_freq(raw_data_from_api.index)
-
+                if freq_input is not None:
+                    freq = freq_input
                 else:
-                    freq = "1T"
-                    st.warning("No freq given and no freq in data: freq is set to 1 Minute")
+                    try:
+                        freq = pd.infer_freq(raw_data_from_api.index)
+                        if freq is None:
+                            raise ValueError
+                    except ValueError:
+                        freq = "1T"
+                        st.warning("The time series data contains fewer than 3 timestamps, so the frequency of the data cannot be determined. Defaulting to 1 minute. Please make sure you have at least 3 records with timestamps in your dataset.")
 
                 interpolated_data = Imputation.interpolate_impute(raw_data_from_api, freq=freq)
 

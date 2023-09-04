@@ -33,13 +33,13 @@ def get_required_data():
 
     return required_data
 
-def load_module_data(data_mapping, module_names, filename, freq): 
+def load_module_data(data_mapping, module_names, filename, freq, start_time=None, end_time=None,): 
     '''
     This function is only to set the freq vor each module individualy 
     '''
 
 
-    loaded_data = Functions.load_data_for_module(data_mapping, module_names, filename, freq)
+    loaded_data = Functions.load_data_for_module(data_mapping, module_names, filename, freq, start_time, end_time,)
 
     return loaded_data
 

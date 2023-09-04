@@ -27,9 +27,10 @@ def extract_unit(column_name):
 
 
 
-def create_figure(selected_data, start_date, end_date ):
+def create_figure(selected_data, start_date, end_date):
     """
     Creates a list of combined plotly figures based on the selected data.
+    
     Args:
         selected_data: A dictionary containing the selected data.
         start_date: A string or datetime object indicating the start date.
@@ -40,7 +41,6 @@ def create_figure(selected_data, start_date, end_date ):
     """
     figures = []
     fig = make_subplots(specs=[[{"secondary_y": True}]])
-    
     unit_list = []
     
     for module, data in selected_data.items():
@@ -53,7 +53,7 @@ def create_figure(selected_data, start_date, end_date ):
             
             # If we've added 2 units to the current figure, add it to the list and start a new one
             if len(unit_list) > 2:
-                figures.append(fig)
+                figures.append((fig, unit_list[:]))
                 fig = make_subplots(specs=[[{"secondary_y": True}]])
                 unit_list = [unit]
             
@@ -72,13 +72,12 @@ def create_figure(selected_data, start_date, end_date ):
                 'Value: %{y} [' + unit + ']<br>',
                 hoverlabel=dict(namelength=-1)
             ), secondary_y=secondary_y)
-
     
     # If there's a figure with less than 2 units, add it to the list
     if len(fig.data) > 0:
-        figures.append(fig)
+        figures.append((fig, unit_list[:]))
 
-    for fig in figures:
+    for fig, unit_list in figures:
         fig.update_layout(
             showlegend=True,
             legend=dict(
@@ -93,13 +92,10 @@ def create_figure(selected_data, start_date, end_date ):
         if len(unit_list) > 1:
             fig.update_yaxes(title_text=f"[{unit_list[1]}]", secondary_y=True)
 
-
         # Update the x-axis range
         fig.update_xaxes(range=[start_date, end_date], autorange=False)
 
-    return figures
-
-
+    return [fig for fig, _ in figures]
 
 
 #Functions to get the range of time in given data
@@ -184,6 +180,57 @@ def date_range_selector(start_date: dt.date, end_date: dt.date):
     
     return selected_start_date, selected_end_date
 
+def process_selected_data(data_mapping, filename, start_time, end_time):
+    """
+    Process selected data based on user input from the Streamlit sidebar.
+    
+    Parameters:
+    - data_mapping (dict): A mapping of module names to data names and column names.
+    - filename (str): The name of the file to load data from.
+    - start_time (datetime): The start time for data filtering.
+    - end_time (datetime): The end time for data filtering.
+    
+    Returns:
+    - selected_data (dict): A dictionary containing the selected data.
+    """
+    
+    # Initialize a counter to change the checkbox-key in every iteration
+    counter = 0
+    
+    # Initialize an empty dictionary to store selected data
+    selected_data = {}
+    
+    # Iterate through each module and its corresponding data
+    for module_name, module_data in data_mapping.items():
+        selected_data[module_name] = {}
+        expander = st.sidebar.expander(f"Analyse Data for {module_name}")
+        counter += 1
+        
+        for data_name, column_name in module_data.items():
+            key = f"{module_name}_{data_name}_{counter}"
+            selected = expander.checkbox(data_name, value=False, key=key)
+            counter += 1
+            
+            if selected:
+                # Dynamically import the module
+                module = importlib.import_module(f'pages.modules.{module_name}_module')
+                
+                # Load the data from the API
+                with st.expander(f"Change time frequency of {data_name}"):
+                    freq = st.number_input("Input a frequency in Minutes:", value=0, help="If value is 0 the original frequency of the data is used", key=counter)
+                    
+                    if freq <= 0:
+                        freq = None
+                    else:
+                        freq = f'{freq}T'
+                
+                loaded_data = module.load_module_data(data_mapping, [module_name], filename, freq, start_time, end_time)
+                
+                # Store the loaded data in the selected_data dictionary
+                selected_data[module_name][data_name] = loaded_data[module_name][data_name]
+    
+    
+    return selected_data
 
 
 def main():
@@ -199,54 +246,44 @@ def main():
 
     data_mapping = st.session_state.data_mapping
 
-    # Create a Counter to change the checkbox-key in every iteration
-    counter = 0
+    
+    
+    current_year = st.number_input("Year:", value=2022,step=1)
+    #Hier Könnte als default Value das Aktuelle Jahr oder direkt die gesamte vorhandene Zeitreihe aus der DB genutzt werden 
 
-    selected_data= {}
-    for module_name, module_data in data_mapping.items():
-        selected_data[module_name] = {}
-        expander = st.sidebar.expander(f"Analyse Data for {module_name}")
-        counter += 1
-        for data_name, column_name in module_data.items():
-            key = f"{module_name}_{data_name}_{counter}"
-            selected = expander.checkbox(data_name, value=False, key=key)
-            counter += 1
-            if selected:
-                # Dynamically import the module
-                module = importlib.import_module(f'pages.modules.{module_name}_module') #The module import from sub-pages must always direct to the main-script!
+    # set star and end time
+    start_time = None
+    end_time =  None
+    
+    #select time series 
+    if start_time and end_time is not None:
 
-                # Load the data from the API
+        newest_time = datetime.strptime(get_newest_timestamp_overall(st.session_state.selected_data), "%Y-%m-%d %H:%M:%S")
+        latest_time = datetime.strptime(get_latest_timestamp_overall(st.session_state.selected_data), "%Y-%m-%d %H:%M:%S")
+    else:
+        first_day = f'{current_year}-01-01'
+        newest_time = datetime.strptime(first_day, "%Y-%m-%d")
 
-                with st.expander (f"Change time frequenz of {data_name} "):
-                    freq = st.number_input("Input a frequnz in Minutes:",value =0 , help = "If value is 0 the original frequenz of the data is used", key = counter)
+        last_day = f'{current_year}-12-31'
+        latest_time = datetime.strptime(last_day, "%Y-%m-%d")
 
-                    if freq <= 0:
-                        freq = None
-                    else:
-                        freq = f'{freq}T'
 
-                loaded_data = module.load_module_data(data_mapping, [module_name], filename, freq)
+    selected_times = date_range_selector(newest_time.date(), latest_time.date())
+    start_time = selected_times[0]
+    end_time =  selected_times[1]
 
-                # Store the loaded data in the selected_data_mapping
-                selected_data[module_name][data_name] = loaded_data[module_name][data_name]
 
+
+    selected_data = process_selected_data(data_mapping, filename, start_time, end_time)
+    # Store the selected data in the Streamlit session state
     st.session_state.selected_data = selected_data
-
 
 
 
     # Check if any data has been selected
     if any(selected_data.values()):
 
-
-        #select time series 
-
-        newest_time = datetime.strptime(get_newest_timestamp_overall(st.session_state.selected_data), "%Y-%m-%d %H:%M:%S")
-        latest_time = datetime.strptime(get_latest_timestamp_overall(st.session_state.selected_data), "%Y-%m-%d %H:%M:%S")
-
-        selected_times = date_range_selector(newest_time.date(), latest_time.date())
-        start_time = selected_times[0]
-        end_time =  selected_times[1]
+        
 
         # Create and display the combined chart
         figures = create_figure(st.session_state.selected_data,start_time, end_time)
