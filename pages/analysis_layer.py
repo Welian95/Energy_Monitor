@@ -248,7 +248,7 @@ def main():
 
     
     
-    current_year = st.number_input("Year:", value=2022,step=1)
+    current_year = st.number_input("Year:", value=2020,step=1)
     #Hier Könnte als default Value das Aktuelle Jahr oder direkt die gesamte vorhandene Zeitreihe aus der DB genutzt werden 
 
     # set star and end time

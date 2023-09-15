@@ -197,9 +197,8 @@ def main():
     os.chdir(current_file_directory)
 
 
-    #Filname for API:
-    # csv_file_path = r"C:/Users/Jwesterhorstmann/Desktop/Masterarbeit/Energy_monitor/example/energy_daten.csv" #abs path 
-    csv_file_path = r"example/energy_daten.csv" # rel path 
+    #Filname for API: 
+    csv_file_path = r"example/example_data.csv" # rel path 
 
     ####  ####
 

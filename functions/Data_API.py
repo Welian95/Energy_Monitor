@@ -11,7 +11,8 @@ def get_column_names(filename):
         A list of column names 
     """
     
-    df = pd.read_csv(filename, nrows=0)
+    
+    df = pd.read_csv(filename, sep=';', decimal=',', encoding=None)
 
     column_names = df.columns.tolist()
 
@@ -27,6 +28,8 @@ def read_data_from_csv_with_time_range(filename, column_names=None, start_time=N
     Function to filter a csv-file and return a pandas DataFrame of filtered data within a specific time range.
     Reads data in chunks for efficiency. If start_time and end_time are None, all data is read.
     If column_names is None, all columns are read.
+    Note:   - the first column in the csv has to be the timestamp column 
+            - csv file conditions: sep=';', decimal=','
 
     Args:
         filename (str): Name of the CSV file if it is in the same directory as this script or the full path to the file.
@@ -40,9 +43,9 @@ def read_data_from_csv_with_time_range(filename, column_names=None, start_time=N
     Returns:
         pandas.DataFrame: DataFrame containing the filtered data with a datetime index. (filtered by column names and time-range)
     """
-    # Get all column names from the file
+     # Get all column names from the file
     all_columns = get_column_names(filename)
-
+    
     # Include the position of the timestamp column and the selected columns if column_names is not None
     columns_to_read = [0] if column_names is None else [0] + [all_columns.index(col) + 1 for col in column_names]
 
@@ -56,21 +59,23 @@ def read_data_from_csv_with_time_range(filename, column_names=None, start_time=N
     result_data = pd.DataFrame()
 
     # Read data in chunks
-    for chunk in pd.read_csv(filename, usecols=columns_to_read if column_names else None, chunksize=chunksize):
-        # Convert the timestamp column to datetime
-        chunk.columns.values[0] = 'timestamp'
-        chunk['timestamp'] = pd.to_datetime(chunk['timestamp'])
+    for chunk in pd.read_csv(filename, sep=';', decimal=',', usecols=columns_to_read if column_names else None, chunksize=chunksize, encoding=None):
+        # Convert the first column to datetime, regardless of its name
+        first_column_name = chunk.columns[0]
+        chunk[first_column_name] = pd.to_datetime(chunk[first_column_name])
 
         # Filter data by the time range if start_time and end_time are not None
         if start_time and end_time:
-            mask = (chunk['timestamp'] >= start_time) & (chunk['timestamp'] <= end_time)
+            mask = (chunk[first_column_name] >= start_time) & (chunk[first_column_name] <= end_time)
             chunk = chunk.loc[mask]
 
         # Append the filtered chunk to the result
         result_data = pd.concat([result_data, chunk], ignore_index=True)
 
-    result_data = result_data.set_index('timestamp')
-
+    # Set the first column as the index and rename it to 'timestamp'
+    result_data = result_data.set_index(first_column_name)
+    result_data.index.name = 'timestamp'
+    
     return result_data
 
 
@@ -109,13 +114,13 @@ if __name__ == "__main__":
     st.title("Test of API")
    
     
-    csv_file_path = r"C:/Users/Jwesterhorstmann/Desktop/Masterarbeit/Energy_monitor/example/energy_daten.csv"
+    csv_file_path = r"C:/Users/Jwesterhorstmann/Desktop/Masterarbeit/Energy_monitor/example/example1.csv"
 
     st.text_input("Path to csv-file:",value=csv_file_path)
 
     #Test funktions 
     column_names = get_column_names(csv_file_path)
-    data = read_data_from_api(csv_file_path, column_names)
+    data = read_data_from_csv_with_time_range(csv_file_path, column_names)
     
     
     st.write("Dataframe:")
