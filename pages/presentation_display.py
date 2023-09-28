@@ -16,6 +16,17 @@ st.set_page_config(
     }
     )
 
+
+
+
+
+
+
+data_interface = st.session_state.data_interface 
+
+
+
+
 def main():
     
     
@@ -26,7 +37,36 @@ def main():
 
 
     data_mapping = st.session_state.data_mapping
+
+    st.session_state.sankey_mapping
+
+    columns = list(st.session_state.sankey_mapping.keys())
+
+    st.write(columns[0])
+
     st.write(data_mapping)
+
+
+
+
+    #last_data = read_data_from_csv_with_time_range(,only_last_row=True)
+
+    "last_data:"
+    last_row = data_interface.get_data(column_names= None, num_rows=1, ascending=False)
+    last_row
+
+
+    freq = data_interface.get_time_frequency()
+    "freq"
+    freq
+
+    
+
+    
+
+
+
+    
 
 
 

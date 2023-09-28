@@ -1,0 +1,140 @@
+import importlib
+import streamlit as st
+import pandas as pd
+import pint
+import numpy as np
+
+ureg = pint.UnitRegistry()
+
+
+
+
+if __name__ != "__main__":
+    
+    from functions import Imputation
+
+
+
+
+def convert_dataframe(df, input_unit, output_unit, column_name=None):
+    """
+    Converts the values of a specific column in a DataFrame from one unit to another.
+
+    Args:
+    - df (pandas.DataFrame): The DataFrame whose values need to be converted.
+    - input_unit (str): The original unit of the values in the DataFrame. Must be a valid pint unit, e.g., 'meter', 'kilogram', 'second'.
+    - output_unit (str): The desired unit for the values in the DataFrame. Must be a valid pint unit and compatible with the input_unit, e.g., 'kilometer', 'gram'.
+    - column_name (str): The name of the column to convert.
+
+    Returns:
+    - pandas.DataFrame: A DataFrame with the converted values in the specified column.
+    """
+     # If no column name is specified, use the first column
+    if column_name is None:
+        column_name = df.columns[0]
+
+     # Extract the values of the specified column and convert them to a pint Quantity
+    values_with_unit = df[column_name].values.astype(float) * ureg(input_unit)
+
+    # Convert the Quantity to the desired output unit
+    converted_values = values_with_unit.to(output_unit).magnitude
+    
+    # Replace the values in the specified column with the converted values
+    converted_df = df.copy()
+    converted_df[column_name] = converted_values
+    
+    return converted_df
+
+
+
+
+
+
+
+
+def find_compatible_units(base_unit):
+    """
+    Finds all units in the Pint unit registry that have the same dimensionality as the specified base unit.
+
+    Parameters:
+        base_unit (str): The name of the base unit against which compatibility is to be checked.
+                         This should be the name of a unit defined in the Pint unit registry, such as 'joule'.
+
+    Returns:
+        list: A list of strings containing the names of all units that have the same dimensionality as the base unit.
+              For example, for the base unit 'joule', the results might include 'calorie', 'kilowatt_hour', etc.
+
+    Example:
+        compatible_energy_units = find_compatible_units('joule')
+        print(compatible_energy_units)  # Outputs all units compatible with joule
+    """
+    base_dimensionality = ureg[base_unit].dimensionality
+    compatible_units = []
+
+    # Durchsuchen Sie alle in der Einheitenregistrierung definierten Einheiten
+    for unit_name in ureg:
+        try:
+            # Versuchen Sie, die Einheit in eine Quantity umzuwandeln
+            unit = ureg.Quantity(1, unit_name)
+            
+            # Überprüfen Sie, ob die Dimensionalität der Einheit mit der der Basiseinheit übereinstimmt
+            if unit.dimensionality == base_dimensionality:
+                compatible_units.append(unit_name)
+        except:
+            # Wenn ein Fehler auftritt, ignorieren Sie diese Einheit
+            pass
+
+    return compatible_units
+
+
+
+
+
+
+
+
+
+
+# Test Funktion if only this skript is running
+
+
+if __name__ == "__main__":
+    import Imputation
+
+    st.title("Test Functions.py")
+
+
+    st.subheader("Unit conversion")
+
+    
+
+    #Choose Unit
+
+
+    
+    input_unit = st.text_input("Choose input unit:")
+
+    compatible_energy_units = find_compatible_units(input_unit)
+
+    output_unit = st.selectbox("Choose your output unit:",compatible_energy_units ) 
+
+    col1, col2 = st.columns(2)
+
+    # Erstellen eines Beispiel-DataFrames zur Überprüfung der Funktion
+    example_data = {
+        f'Data [{input_unit}]': [12, 7, 10, 9, 11, 5],}
+    
+    example_timestamps = pd.to_datetime(['2023-08-11 10:00:00', '2023-08-11 10:10:00', '2023-08-11 10:20:00', '2023-08-11 10:30:00', '2023-08-11 10:40:00', '2023-08-11 10:50:00',])
+    example_df = pd.DataFrame(data=example_data, index=example_timestamps)
+
+    col1.write("Input Dataframe:")
+    col1.write(example_df)
+
+
+    #Umrechnung 
+    converted_df = convert_dataframe(example_df, input_unit, output_unit, )
+
+    converted_df.columns = converted_df.columns.str.replace(r'\[.*\]', f'[{output_unit}]')
+
+    col2.write(f"Dataframe converted from {input_unit} to {output_unit}:")
+    col2.write(converted_df)

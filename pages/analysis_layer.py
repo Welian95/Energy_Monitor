@@ -180,7 +180,7 @@ def date_range_selector(start_date: dt.date, end_date: dt.date):
     
     return selected_start_date, selected_end_date
 
-def process_selected_data(data_mapping, filename, start_time, end_time):
+def process_selected_data(data_mapping, start_time, end_time):
     """
     Process selected data based on user input from the Streamlit sidebar.
     
@@ -224,7 +224,7 @@ def process_selected_data(data_mapping, filename, start_time, end_time):
                     else:
                         freq = f'{freq}T'
                 
-                loaded_data = module.load_module_data(data_mapping, [module_name], filename, freq, start_time, end_time)
+                loaded_data = module.load_module_data(data_mapping, [module_name], freq, start_time, end_time)
                 
                 # Store the loaded data in the selected_data dictionary
                 selected_data[module_name][data_name] = loaded_data[module_name][data_name]
@@ -238,8 +238,7 @@ def main():
     columns[0].title(page_title)
     st.warning("Attention, currently it is only possible to display whole days, so if new data is added that does not yet represent a whole day, it cannot be displayed yet.", icon="⚠️")
 
-    # Specify the filename or path of the file to read from the API
-    filename = st.session_state.filename
+
 
     # Sidebar
     st.sidebar.title("Module Data Selection")
@@ -274,7 +273,7 @@ def main():
 
 
 
-    selected_data = process_selected_data(data_mapping, filename, start_time, end_time)
+    selected_data = process_selected_data(data_mapping, start_time, end_time)
     # Store the selected data in the Streamlit session state
     st.session_state.selected_data = selected_data
 

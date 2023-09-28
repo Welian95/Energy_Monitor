@@ -1,9 +1,13 @@
 import streamlit as st
 import importlib
 import os
-from functions.Data_API import *
 import json
 from streamlit_extras.switch_page_button import switch_page
+import inspect
+
+
+
+api_module = importlib.import_module('functions.api')
 
 #Configer streamlit page
 page_title="Main-Skript"
@@ -17,35 +21,62 @@ st.set_page_config(
     }
     )
 
+
+def list_available_interfaces():
+    subclasses = []
+    for name, obj in inspect.getmembers(api_module):  # Verwenden Sie das importierte Modul als Argument
+        if inspect.isclass(obj):
+            if issubclass(obj, api_module.DataInterface) and obj is not api_module.DataInterface:
+                subclasses.append(obj.__name__)
+    return subclasses
+
+def create_data_interface(selected_interface, **kwargs):
+    for name, obj in inspect.getmembers(api_module):
+        if name == selected_interface:
+            return obj(**kwargs)
+        
+
+
+def choose_interface(default=None):
+    st.subheader("Available Interfaces:")
+    available_interfaces = list_available_interfaces()
+    selected_interface = st.selectbox("Choose your interface:", available_interfaces, index=available_interfaces.index(default) if default in available_interfaces else 0)  
+    return selected_interface
+
+
+
+
 def load_saved_mapping(config_file):
     """
-    Load the saved data mapping and system modules from a configuration file.
+    Load the saved data mapping, system modules, and selected interface from a configuration file.
 
     Args:
         config_file (str): Path to the configuration file.
 
     Returns:
-        tuple: The saved data mapping and the selected system modules.
+        tuple: The saved data mapping, the selected system modules, and the selected interface.
     """
     if os.path.exists(config_file):
         with open(config_file, "r") as file:
             saved_data = json.load(file)
-            return saved_data.get("data_mapping", {}), saved_data.get("system_modules", [])
+        return saved_data.get("data_mapping", {}), saved_data.get("system_modules", []), saved_data.get("selected_interface", None)
     else:
-        return {}, []
+        return {}, [], None
 
-def save_current_mapping(data_mapping, system_modules, config_file):
+def save_current_mapping(data_mapping, system_modules, selected_interface, config_file):
     """
-    Save the current data mapping and selected system modules to a configuration file.
+    Save the current data mapping, selected system modules, and selected interface to a configuration file.
 
     Args:
         data_mapping (dict): The current data mapping to be saved.
         system_modules (list): The selected system modules to be saved.
+        selected_interface (str): The selected data interface to be saved.
         config_file (str): Path to the configuration file.
     """
     saved_data = {
         "data_mapping": data_mapping,
-        "system_modules": system_modules
+        "system_modules": system_modules,
+        "selected_interface": selected_interface
     }
     with open(config_file, "w") as file:
         json.dump(saved_data, file)
@@ -142,6 +173,27 @@ def display_data_mapping(column_names, active_system_modules, saved_data_mapping
 
 
 
+def sankey_mapping():
+    sankey_mapping = {}
+
+    # Create a Counter to change the selectbox-key in every iteration
+    counter = 1000
+
+    for module_name in active_system_modules:
+        module = importlib.import_module(f"pages.modules.{module_name}_module")
+
+        # Check if the module has the function "get_required_data"
+        if not hasattr(module, "get_sankey_mapping"):
+            st.warning(f"The selected system module '{module_name}' does not contain the function 'get_sankey_mapping'. Please update this system module or choose another module.")
+            continue
+
+        sankey_mapping = module.get_sankey_mapping()
+        
+
+    return sankey_mapping
+
+
+
 
 # Main function of the main script
 def main():
@@ -164,16 +216,19 @@ def main():
     if columns[1].button("Analysis Layer"):
         switch_page("analysis_layer")
 
+
+
+
+
     st.sidebar.title("Select System Modules")
     # List all available system modules (retrieve dynamically)
     available_system_modules = get_available_system_modules()
 
     # Load the saved configuration
     config_file = os.path.join(os.path.dirname(__file__), "Configuration.json")
-    saved_data_mapping = load_saved_mapping(config_file)[0]
-    saved_system_modules = load_saved_mapping(config_file)[1]
 
-    
+    saved_data_mapping, saved_system_modules, saved_interface = load_saved_mapping(config_file)
+
     
     global active_system_modules # This is required to run the other functions!
     # List of selected system modules (select from Streamlit sidebar)
@@ -183,12 +238,7 @@ def main():
         help="All system modules that are present in the modules folder are listed here. If components are not available in your measuring system, you can deselect them here."
     )
 
-
-
-
-
-
-    #### Use csv as API ####
+    
 
     # Pfad zum Verzeichnis der aktuellen Datei (Main.py) ermitteln
     current_file_directory = os.path.dirname(__file__)
@@ -197,27 +247,44 @@ def main():
     os.chdir(current_file_directory)
 
 
-    #Filname for API: 
-    csv_file_path = r"example/example_data.csv" # rel path 
+    # Set interface
+    selected_interface = choose_interface(default=saved_interface)
 
-    ####  ####
+    # Check if the selected interface is CSVDataInterface to prompt for file path
+    if selected_interface == "CSVDataInterface":
+        #### Use csv as API ####
+        default_path = r"example/example_data1.csv" # rel path 
+        csv_file_path = st.text_input("Enter the CSV file path:", default_path)
+        c1,c2,c3,c4 = st.columns (4)
+        timestamp_col=c1.number_input("Index of timestamp column:",value=0) 
+        sep=c2.text_input("CSV seperator:", value=';') 
+        decimal=c3.text_input("Decimal divider:",value=',') 
+        encoding=c4.text_input("CSV encoding",value=None)
+        if encoding == "None":
+            encoding = None
+        data_interface = create_data_interface(selected_interface, filename=csv_file_path,timestamp_col=timestamp_col, sep=sep, decimal=decimal, encoding=encoding)
+    
+    else:
+        data_interface = create_data_interface(selected_interface)
+    
+    
+    st.session_state.data_interface = data_interface
 
-
-
-
-
-
-
-    st.session_state.filename = csv_file_path
-
-    column_names = get_column_names(csv_file_path)
+    #column_names = get_column_names(csv_file_path)
+    column_names = data_interface.get_column_names()
 
 
     # Display the data mapping user interface
     data_mapping = display_data_mapping(column_names, active_system_modules, saved_data_mapping)
 
-    # Save the updated data mapping to the configuration file
-    save_current_mapping(data_mapping,active_system_modules, config_file)
+
+    # Save sankey mapping in session state
+    #sankey_mapping = sankey_mapping() 
+    st.session_state.sankey_mapping = sankey_mapping()
+
+    # Save the current settings
+    save_current_mapping(data_mapping, active_system_modules, selected_interface, config_file)
+    
 
     # Store the updated data mapping in the session state
     st.session_state.data_mapping = data_mapping
@@ -233,6 +300,7 @@ def main():
     with st.expander("Show Mapping:"):
         st.write(saved_data_mapping)
         st.write(saved_system_modules)
+        st.write(selected_interface)
     
 
 
