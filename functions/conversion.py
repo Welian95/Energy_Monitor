@@ -11,12 +11,31 @@ ureg = pint.UnitRegistry()
 
 if __name__ != "__main__":
     
-    from functions import Imputation
+    from functions import imputation
+    
+
+def convert_unit_of_value(value, input_unit, output_unit):
+    """
+    Converts a single value from one unit to another using pint.
+    
+    Parameters:
+    - value (float): The value to be converted.
+    - input_unit (str): The original unit of the value. Must be a valid pint unit, e.g., 'W' for Watt.
+    - output_unit (str): The desired unit for the value. Must be a valid pint unit and compatible with the input_unit, e.g., 'kW' for kiloWatt.
+    
+    Returns:
+    - float: The converted value.
+    """
+    # Create a pint Quantity for the value and input unit
+    value_with_unit = ureg.Quantity(value, input_unit)
+    
+    # Convert the value to the output unit
+    converted_value = value_with_unit.to(output_unit).magnitude
+    
+    return converted_value
 
 
-
-
-def convert_dataframe(df, input_unit, output_unit, column_name=None):
+def convert_unit_of_dataframe(df, input_unit, output_unit, column_name=None):
     """
     Converts the values of a specific column in a DataFrame from one unit to another.
 
@@ -99,7 +118,7 @@ def find_compatible_units(base_unit):
 
 
 if __name__ == "__main__":
-    import Imputation
+    import imputation
 
     st.title("Test Functions.py")
 
@@ -132,7 +151,7 @@ if __name__ == "__main__":
 
 
     #Umrechnung 
-    converted_df = convert_dataframe(example_df, input_unit, output_unit, )
+    converted_df = convert_unit_of_dataframe(example_df, input_unit, output_unit, )
 
     converted_df.columns = converted_df.columns.str.replace(r'\[.*\]', f'[{output_unit}]')
 

@@ -173,7 +173,7 @@ def display_data_mapping(column_names, active_system_modules, saved_data_mapping
 
 
 
-def sankey_mapping():
+def set_sankey_mapping():
     sankey_mapping = {}
 
     # Create a Counter to change the selectbox-key in every iteration
@@ -192,7 +192,42 @@ def sankey_mapping():
 
     return sankey_mapping
 
-
+def map_consumption_values(data_mapping: dict, sankey_mapping: dict) -> dict:
+    """
+    Maps the 'Consumption' values in sankey_mapping using the values from data_mapping.
+    Also includes units in the keys of the sankey_mapping.
+    
+    Parameters:
+    - data_mapping (dict): A dictionary containing the mapping between data fields and their labels.
+    - sankey_mapping (dict): A dictionary defining Sankey diagram attributes like 'Label', 'Consumption', etc.
+    
+    Returns:
+    - dict: The updated sankey_mapping with 'Consumption' values and units in keys.
+    """
+    
+    # Create an empty dictionary to hold the new sankey_mapping with units
+    new_sankey_mapping = {}
+    
+    # Loop through each key-value pair in data_mapping
+    for main_key, sub_dict in data_mapping.items():
+        # Loop through each sub-key-value pair in the sub-dictionary
+        for sub_key, sub_value in sub_dict.items():
+            # Retrieve the unit from the key (e.g., get '_[W]' from 'Compressor_Power_[W]')
+            unit = sub_key.split('_[')[1][:-1] if '_[' in sub_key else ''
+            
+            # Check if the clean key exists in sankey_mapping
+            clean_sub_key = sub_key.split('_[')[0]
+            if clean_sub_key in sankey_mapping:
+                # Create a new key by appending the unit to the clean key
+                new_key = f"{clean_sub_key}_[{unit}]" if unit else clean_sub_key
+                
+                # Copy the existing attributes to the new key
+                new_sankey_mapping[new_key] = sankey_mapping[clean_sub_key].copy()
+                
+                # Update the 'Consumption' value for that key in the new sankey_mapping
+                new_sankey_mapping[new_key]['Consumption'] = sub_value
+                
+    return new_sankey_mapping
 
 
 # Main function of the main script
@@ -279,8 +314,10 @@ def main():
 
 
     # Save sankey mapping in session state
-    #sankey_mapping = sankey_mapping() 
-    st.session_state.sankey_mapping = sankey_mapping()
+    sankey_mapping = set_sankey_mapping()
+    updated_sankey_mapping = map_consumption_values(data_mapping, sankey_mapping)
+    st.session_state.sankey_mapping = updated_sankey_mapping
+
 
     # Save the current settings
     save_current_mapping(data_mapping, active_system_modules, selected_interface, config_file)
@@ -298,10 +335,17 @@ def main():
     # show mapping 
 
     with st.expander("Show Mapping:"):
-        st.write(saved_data_mapping)
-        st.write(saved_system_modules)
+        "selected_interface:"
         st.write(selected_interface)
-    
+        "sankey_mapping:"
+        st.write(sankey_mapping)
+       
+        
+        "saved_system_modules:"
+        st.write(saved_system_modules)
+        "saved_data_mapping:"
+        st.write(saved_data_mapping)
+        
 
 
 

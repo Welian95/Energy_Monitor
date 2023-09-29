@@ -49,7 +49,36 @@ def fig_to_image(fig):
     return img_stream
 
 
+#Funktion zum Lesen von csv Dateien
+def read_last_row_and_headers(csv_file_path):
+    """
+    Read the headers and the last row from a CSV file.
 
+    Parameters:
+    - csv_file_path (str): The path to the CSV file.
+
+    Returns:
+    - tuple: A tuple containing the headers as a list and the last row as a list.
+    """
+    headers = None
+    last_row = None
+    
+    # Open the CSV file
+    with open(csv_file_path, 'r', encoding=None) as file:
+        reader = csv.reader(file, delimiter=';')
+        
+        # Read headers (first row)
+        headers = next(reader)
+        
+        # Read rows and only keep the last one
+        for row in reader:
+            last_row = row
+
+    return headers, last_row
+
+
+
+from random import randint
 
 def mix_colors(color1, color2):
     """
@@ -177,12 +206,9 @@ def create_dynamic_plotly_sankey(table):
             color=node_color  # Set color for nodes here
         ),
         link=dict(
-            arrowlen=15,
             source=source,
             target=target,
             value=value,
-            label=labels,
-            #label=["Link 1", "Link 2", "Link 3"],  # Label the links
             color=color  # Add color parameter here
         )
     ))
@@ -191,25 +217,143 @@ def create_dynamic_plotly_sankey(table):
 
 
 
+
+
+
+
+##########################################################################################################################################################
+
+
 if __name__ == "__main__":
 
 
-   
+    ##################################CODE, welcher in den Anlagen Modulen geamcht werden muss ######################################
+    csv_file_path = r"C:\Users\Jwesterhorstmann\Desktop\Masterarbeit\Energy_monitor\example\example_data1.csv" # Replace with the path to your CSV file
+    Columns, data = read_last_row_and_headers(csv_file_path)
+
+    #data[1:] = list(map(float, data[1:]))
+    data[1:] = [float(x.replace(',', '.')) for x in data[1:]]
 
 
-    sample_data1 = {
-        'Label': ['Wärmepumpenantrieb', 'Umgebungswärme', 'Wärmeabgabe'], 
-        'Consumption': [0.6998817114217672, 1.7497042785544181, 1.3997634228435345], 
-        'Type': ['Transformer', 'Source', 'Sink'], 
-        'EnergyTypeInput': ['electricity', '-', 'heat'], 
-        'EnergyTypeOutput': ['heat', 'heat', '-']}
-    
-    sample_data2 = {
-        'Label': ['PV_yield_IN', 'PV_supply_OUT', 'grid_supply_IN', 'battery_charge_OUT', 'battery_discharge_IN', 'heat_pump_power_OUT', 'ambient_heat_IN', 'room_OUT_1', 'Server_OUT', 'e_mobility_OUT', 'rest_OUT', 'transported_energy_IN', 'room_OUT_2'], 
-        'Consumption': [3000.0, 0.0, 0.0, 0, 7078.296644473448, 4199.2902685306035, 10498.225671326509, 8398.580537061207, 419.92902685306035, 2519.574161118362, 1259.787080559181, 1679.7161074122414, 7978.651510208147], 
-        'Type': ['Source', 'Sink', 'Source', 'Sink', 'Source', 'Transformer', 'Source', 'Sink', 'Sink', 'Sink', 'Sink', 'Transformer', 'Sink'], 
-        'EnergyTypeInput': ['-', 'electricity', '-', 'electricity', '-', 'electricity', '-', 'heat', 'electricity', 'electricity', 'electricity', 'electricity', 'heat'], 
-        'EnergyTypeOutput': ['electricity', '-', 'electricity', '-', 'electricity', 'heat', 'heat', '-', '-', '-', '-', 'heat', '-']}
+
+
+    ############################################################################# DATA for Snakey - wich has to be Created in Anlagen-Komponenten! #############################################################################
+
+
+    transported_energy_IN = data [13] 
+    room_conditioning_IN = data [14]  #Waermebezug_RLT + Kaeltebezug_RLT
+    room_heating_IN = data [8] # Waermebezug_HZ + Kaeltebezug_HZ
+    e_mobility_OUT = data [11]  
+    Server_OUT = data [10]  
+    e_consumers_IN = data [9]  
+    ambient_heat_IN = data [6]  #Waermebezug_Sonden + Kaeltebezug_Sonden
+    heat_pump_power_IN = data [7]  
+    battery_charge = data [16]  
+    PV_yield_IN = data [3] 
+    grid_supply_IN = data [5] 
+    PV_supply_OUT = data [4] 
+
+    if battery_charge <= 0:
+        battery_discharge_OUT = battery_charge
+        battery_charge_IN = 0
+
+    else:
+        battery_charge_IN = battery_charge
+        battery_discharge_OUT = 0
+
+
+
+    if battery_charge <= 0:
+        battery_charge_OUT = battery_charge
+        battery_discharge_IN = 0
+
+    else:
+        battery_discharge_IN = battery_charge
+        battery_charge_OUT = 0
+
+
+
+
+    ############Raumkonditionierung_Belüftung######### Prior: 5
+    room_OUT_2 = (transported_energy_IN + room_conditioning_IN) *-1
+    #############################
+
+    #############Energieverteilungssysteme#########Prior:4
+    transported_energy_OUT = transported_energy_IN *-1  
+    auxiliary_energy_IN = transported_energy_IN                       #M: HLS_Strom   
+    ###############################
+
+    ################Elektro-Nutzer#################PRIOR:3
+    rest_OUT = ( e_consumers_IN + Server_OUT + e_mobility_OUT ) *-1
+    ############################################
+
+    ############Raumkonditionierung_Wärmeübertragungsflächen################# Prior:2
+    room_OUT_1 = room_heating_IN *-1 
+    ########################################
+
+    ############Wärme#########Prior:1
+    room_conditioning_OUT = room_conditioning_IN *-1
+    room_heating_OUT = room_heating_IN * -1
+    #########################################
+
+    ##########Elektro-Gebäude###############PRIOR:0
+    e_consumers_OUT =  e_consumers_IN * -1
+    auxiliary_energy_OUT = auxiliary_energy_IN * -1
+    heat_pump_power_OUT = heat_pump_power_IN *-1
+    #################################################
+    ##########################################################################################################################################################
+
+
+
+
+    #############################################################################DATA for PLOTLY #############################################################################
+
+
+
+
+    sample_data = {
+        'Label': ['PV_yield_IN','PV_supply_OUT','grid_supply_IN','battery_charge_OUT','battery_discharge_IN','heat_pump_power_OUT','ambient_heat_IN','room_OUT_1','Server_OUT','e_mobility_OUT','rest_OUT','transported_energy_IN','room_OUT_2']
+    ,
+        'Consumption': [ abs(PV_yield_IN), abs(PV_supply_OUT) , abs(grid_supply_IN) ,abs(battery_charge_OUT) ,abs(battery_discharge_IN) ,abs(heat_pump_power_OUT) ,abs(ambient_heat_IN) ,abs(room_OUT_1), abs(Server_OUT) , abs(e_mobility_OUT) , abs(rest_OUT) , abs(transported_energy_IN) , abs(room_OUT_2)]
+    ,
+        'Type': ['Source','Sink','Source','Sink','Source','Transformer','Source','Sink','Sink','Sink','Sink','Transformer','Sink']
+    ,
+        'EnergyTypeInput': ['-','electricity','-','electricity','-','electricity','-','heat','electricity','electricity','electricity','electricity','heat']
+    ,
+        'EnergyTypeOutput': ['electricity','-','electricity','-','electricity','heat','heat','-','-','-','-','heat','-']
+    }
+
+
+    print (sample_data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -220,24 +364,15 @@ if __name__ == "__main__":
 
     toggle1 , toggle2 = st.columns(2)
     test = toggle1.toggle("Create Sankey", value=False,)
-    choose_data = toggle2.toggle("Sankey2", value=False,)
-
-    if choose_data == True:
-        sample_data = sample_data2
-
-    else:
-        sample_data = sample_data1
-    
+    auto_rerun = toggle2.toggle("Auto_rerun", value=False,)
 
     
     if test == True:
 
         with st.expander("Show data"):
-
-
-            
-            st.write(pd.DataFrame(sample_data))
-            
+            col1, col2 = st.columns(2)
+            col1.write(Columns)
+            col2.write(data)
 
 
         st.subheader("Plotly - Sankey")
@@ -250,6 +385,16 @@ if __name__ == "__main__":
         st.plotly_chart(sample_sankey_fig,use_container_width=True)
 
 
+
+
+
+
+        if auto_rerun == True:
+            # Sleep for 1 second
+            time.sleep(1)
+            
+            # Rerun the app
+            st.experimental_rerun()
 
 
 

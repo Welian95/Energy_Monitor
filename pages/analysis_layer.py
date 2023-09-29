@@ -6,6 +6,7 @@ from datetime import datetime, timedelta, time
 import datetime as dt
 import pandas as pd
 import importlib
+from functions import imputation
 
 
 
@@ -186,7 +187,6 @@ def process_selected_data(data_mapping, start_time, end_time):
     
     Parameters:
     - data_mapping (dict): A mapping of module names to data names and column names.
-    - filename (str): The name of the file to load data from.
     - start_time (datetime): The start time for data filtering.
     - end_time (datetime): The end time for data filtering.
     
@@ -216,6 +216,11 @@ def process_selected_data(data_mapping, start_time, end_time):
                 module = importlib.import_module(f'pages.modules.{module_name}_module')
                 
                 # Load the data from the API
+
+                loaded_data = module.load_module_data(data_mapping, [module_name], start_time, end_time)
+
+
+                #Check or get frequenz
                 with st.expander(f"Change time frequency of {data_name}"):
                     freq = st.number_input("Input a frequency in Minutes:", value=0, help="If value is 0 the original frequency of the data is used", key=counter)
                     
@@ -223,14 +228,35 @@ def process_selected_data(data_mapping, start_time, end_time):
                         freq = None
                     else:
                         freq = f'{freq}T'
+
                 
-                loaded_data = module.load_module_data(data_mapping, [module_name], freq, start_time, end_time)
-                
-                # Store the loaded data in the selected_data dictionary
-                selected_data[module_name][data_name] = loaded_data[module_name][data_name]
-    
+                if freq is not None:
+                    freq = freq
+                else:
+                    try:
+                        freq = pd.infer_freq(loaded_data.index)
+                        if freq is None:
+                            raise ValueError
+                    except ValueError:
+                        freq = "1T"
+                        st.warning("The time series data contains fewer than 3 timestamps, so the frequency of the data cannot be determined. Defaulting to 1 minute. Please make sure you have at least 3 records with timestamps in your dataset.")
+
+                #Interpolate data
+                interpolated_data = imputation.interpolate_impute(loaded_data, freq=freq)
+
+
+                #Here comes the function to converse the units!!!!
+
+
+                #Organize data in dict
+                selected_data[module_name][data_name] = interpolated_data[column_name]
+
     
     return selected_data
+
+
+
+
 
 
 def main():
@@ -250,7 +276,7 @@ def main():
     current_year = st.number_input("Year:", value=2020,step=1)
     #Hier Könnte als default Value das Aktuelle Jahr oder direkt die gesamte vorhandene Zeitreihe aus der DB genutzt werden 
 
-    # set star and end time
+    # set start- and end- time
     start_time = None
     end_time =  None
     

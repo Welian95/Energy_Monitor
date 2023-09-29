@@ -1,6 +1,7 @@
 streamlit
-pandas
 streamlit_extras
+streamlit_echarts
+pandas
 plotly
 matplotlib
 pint

@@ -145,51 +145,36 @@ def get_sankey_mapping (measuring_list=measuring_list,Consumption=Consumption, l
 
 
 
-def load_module_data(data_mapping, module_names, freq_input=None, start_time=None, end_time=None,):
+def load_module_data(data_mapping, module_names, start_time=None, end_time=None,):
     """
     Load data for specified modules from the API and interpolate missing values.
 
     Args:
-        data_mapping: The data mapping dictionary.
-        module_names: List of module names for which data should be loaded.
-        filename: The filename or path to the file to read from the API.
-        freq_input: Desired frequency for data (default is '1T' for 1 minute).
+        data_mapping (dict): The data mapping dictionary.
+        module_names (list): List of module names for which data should be loaded.
+        start_time (str or datetime, optional): The start time for the data retrieval.
+        end_time (str or datetime, optional): The end time for the data retrieval.
 
     Returns:
-        A dictionary with the same structure as data_mapping, but with actual data 
+        pd.DataFrame: A DataFrame with the same structure as data_mapping, but with actual data 
         from the API instead of column names.
     """
 
-    loaded_data = {}
+    raw_df = pd.DataFrame()
     for module, data in data_mapping.items():
         if module in module_names:
-            loaded_data[module] = {}
+
             for data_name, column_name in data.items():
-                raw_data_from_api = data_interface.get_data([column_name], start_time, end_time,)
+                raw_df[column_name] = data_interface.get_data([column_name], start_time, end_time,)
 
-                if freq_input is not None:
-                    freq = freq_input
-                else:
-                    try:
-                        freq = pd.infer_freq(raw_data_from_api.index)
-                        if freq is None:
-                            raise ValueError
-                    except ValueError:
-                        freq = "1T"
-                        st.warning("The time series data contains fewer than 3 timestamps, so the frequency of the data cannot be determined. Defaulting to 1 minute. Please make sure you have at least 3 records with timestamps in your dataset.")
-
-                interpolated_data = Imputation.interpolate_impute(raw_data_from_api, freq=freq)
-                
-                loaded_data[module][data_name] = interpolated_data[column_name]
-
-    return loaded_data
+    return raw_df
 
 
 #Intilazie interface:
 data_interface = initialize_data_interface()
 
 if __name__ != "__main__":
-    from functions import Imputation
+    from functions import imputation
 
     
 
@@ -199,7 +184,7 @@ if __name__ == "__main__":
     # Change the working directory
     current_file_directory = os.path.dirname(__file__)
     os.chdir(os.path.join(current_file_directory, '../../'))
-    import Imputation
+    import imputation
 
     # Display data if the data_interface is initialized
     if data_interface:

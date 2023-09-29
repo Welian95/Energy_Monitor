@@ -37,18 +37,13 @@ The project is in an advanced stage of development with a clear structure and de
 
 1. **Download the Repository**: Clone or download the repository to your local machine.
 2. **Install Required Modules**: Navigate to the project folder and install all the modules from the `requirements.txt` file by running:
-pip install -r requirements.txt
-
-markdown
-Copy code
-3. **Configure the API**: Adapt the API to your datasets (CSV or Database), or use the "example" folder provided in the repository.
-4. **Start the Application**: Simply run the `Main.py` script to start the application.
+   `pip install -r requirements.txt`
+4. **Configure the API**: Adapt the API to your datasets (CSV or Database), or use the "example" folder provided in the repository.
+5. **Start the Application**: Simply run the `Main.py` script to start the application.
 
 ## Usage
 
 An instruction guide will follow shortly.
-
-## Data Access API Documentation
 
 ## Data Access API Documentation
 
@@ -93,7 +88,7 @@ The Data Access API is designed to provide a consistent interface for accessing 
 To create a new concrete class that, for example, works on an SQL or InfluxDB database, you need to implement the abstract methods from the **`DataInterface`** class.
 
 #### Example: SQLDataInterface
-
+```python
 import sqlite3
 import pandas as pd
 
@@ -122,6 +117,7 @@ class SQLDataInterface(DataInterface):
     def get_last_timestamp(self):
         # Implementation here
         pass
+```
 
 #### Note
 Make sure the get_data() method supports similar filter parameters as the CSVDataInterface class to maintain consistency.

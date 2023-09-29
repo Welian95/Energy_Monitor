@@ -85,7 +85,7 @@ def classify_unit(unit_str):
 # Main funktion of this skript 
 
 
-def power_energy(df, input_unit, output_unit):
+def power_energy(df, input_unit, output_unit, frequency):
     """
     Convert power values in a DataFrame to energy values or vice versa.
 
@@ -127,7 +127,7 @@ def power_energy(df, input_unit, output_unit):
     >>> power_energy(df, 'W', 'Wh')
     """
     
-    frequency = pd.infer_freq(df.index)
+    #frequency = pd.infer_freq(df.index)
     time_Unit = freq_to_pint(frequency)
 
     # Convert power values in the DataFrame to pint quantities
@@ -177,7 +177,7 @@ def power_energy(df, input_unit, output_unit):
 
 if __name__ == "__main__":
 
-    import Imputation
+    import imputation
 
     st.title("Test of compute_energy.py")
 
@@ -219,7 +219,7 @@ if __name__ == "__main__":
 
     
 
-    interpolated_data = Imputation.interpolate_impute(example_df, freq=freq)
+    interpolated_data = imputation.interpolate_impute(example_df, freq=freq)
 
     frequency = pd.infer_freq(interpolated_data.index)
 
