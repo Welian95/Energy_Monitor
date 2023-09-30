@@ -3,6 +3,7 @@
 # Standard Libraries
 from typing import Dict
 import copy 
+import importlib
 
 # Third-party Libraries
 import streamlit as st
@@ -131,16 +132,63 @@ def main():
     sankey_mapping = copy.deepcopy(st.session_state.sankey_mapping)
     
     #Load consumption data from api into sankey_mapping
-    sankey_mapping_w_data = update_sankey_consumption(sankey_mapping,frequency, unit)
-    
+    sankey_mapping_w_data = update_sankey_consumption(sankey_mapping,frequency, unit)    
     transformed_data = transform_data_for_sankey(sankey_mapping_w_data)
     #print(transformed_data)
     sankey_table = pd.DataFrame(transformed_data)
     
     # Sankey Diagram creation and display
-    #sankey_table
     sankey_fig = create_dynamic_plotly_sankey(sankey_table)  # Assuming this function exists and works as expected
-    st.plotly_chart(sankey_fig, use_container_width=True)
+    
+
+
+
+    data_mapping= copy.deepcopy(st.session_state.data_mapping)
+
+    figures = []
+
+    # Iterate through each module and its corresponding data
+    for module_name, module_data in data_mapping.items():
+        
+        for data_name, column_name in module_data.items():
+            
+            # Dynamically import the module
+            module = importlib.import_module(f'pages.modules.{module_name}_module')
+            
+            # Load the data from the API
+
+        figures += module.get_module_figs()
+
+
+
+
+
+
+
+   
+    sankey_height = 720
+    # Setze die Höhe des Sankey-Diagramms auf die kumulierte Höhe der anderen Grafiken
+    sankey_fig.update_layout(height=sankey_height)
+
+     # Setze die Höhe jeder Figur manuell
+    individual_height = sankey_height / len(figures)
+    for fig in figures:
+        fig.update_layout(height=individual_height)
+
+    # Streamlit Code
+    
+    col1, col2 = st.columns([5, 1])
+    
+    with col1:
+        st.plotly_chart(sankey_fig, use_container_width=True)
+        
+    with col2:
+        for fig in figures:
+            st.plotly_chart(fig, use_container_width=True)
+
+
+
+
     
 
     

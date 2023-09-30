@@ -76,18 +76,15 @@ def mix_colors(color1, color2):
 def generate_sankey_data_from_table(table): 
     """
     Generate Sankey diagram data (labels, source, target, value, color) from a given table.
-    
-    Parameters:
-        table (DataFrame): The DataFrame containing input data for Sankey diagram.
-        
-    Returns:
-        tuple: A tuple containing labels, source, target, value, and color lists for the Sankey diagram.
     """
     labels = []
     source = []
     target = []
     value = []
     color = []
+    
+    # New list to keep track of the values of nodes
+    node_values = []
     
     label_index_dict = {}
     energy_type_color_dict = {}
@@ -98,48 +95,39 @@ def generate_sankey_data_from_table(table):
         "heat": "rgba(255, 213, 128, 0.8)"
     }
 
-    # First pass: collect all unique labels and their corresponding index in the labels list
+    # Initialize node_values with zeros for each label and EnergyTypeInput/Output
     for index, row in table.iterrows():
-        label = row['Label'].strip()  # Remove any extra spaces
-        if label not in label_index_dict:
-            label_index_dict[label] = len(labels)
-            labels.append(label)
-        
-    # Second pass: populate source, target, value, and color lists based on the table rows
+        for col in ['Label', 'EnergyTypeInput', 'EnergyTypeOutput']:
+            label = row[col].strip()
+            if label and label != '-' and label not in label_index_dict:
+                label_index_dict[label] = len(labels)
+                labels.append(label)
+                node_values.append(0)  # Initialize with zero
+            
+    # Populate source, target, value, and color lists based on the table rows
     for index, row in table.iterrows():
-        label = row['Label'].strip()  # Remove any extra spaces
-        src = label_index_dict[label]
+        label = row['Label'].strip()
+        src = label_index_dict.get(label, None)
         tgt = None
+        
+        # Update node_values based on the Consumption
+        if src is not None:
+            node_values[src] += row['Consumption']
         
         if row['Consumption'] == 0:  # Skip rows with zero consumption
             continue
         
         if row['Type'] == 'Source':
-            if row['EnergyTypeOutput'].strip() not in label_index_dict:
-                label_index_dict[row['EnergyTypeOutput'].strip()] = len(labels)
-                labels.append(row['EnergyTypeOutput'].strip())
-            
-            tgt = label_index_dict[row['EnergyTypeOutput'].strip()]
+            tgt = label_index_dict.get(row['EnergyTypeOutput'].strip(), None)
             color.append(predefined_colors.get(row['EnergyTypeOutput'].strip(), "rgba(128, 128, 128, 0.8)"))
         elif row['Type'] == 'Transformer':
-            if row['EnergyTypeInput'].strip() not in label_index_dict:
-                label_index_dict[row['EnergyTypeInput'].strip()] = len(labels)
-                labels.append(row['EnergyTypeInput'].strip())
-            if row['EnergyTypeOutput'].strip() not in label_index_dict:
-                label_index_dict[row['EnergyTypeOutput'].strip()] = len(labels)
-                labels.append(row['EnergyTypeOutput'].strip())
-            
-            src = label_index_dict[row['EnergyTypeInput'].strip()]
-            tgt = label_index_dict[row['EnergyTypeOutput'].strip()]
+            src = label_index_dict.get(row['EnergyTypeInput'].strip(), None)
+            tgt = label_index_dict.get(row['EnergyTypeOutput'].strip(), None)
             color.append(mix_colors(predefined_colors.get(row['EnergyTypeInput'].strip(), "rgba(128, 128, 128, 0.8)"),
                                     predefined_colors.get(row['EnergyTypeOutput'].strip(), "rgba(128, 128, 128, 0.8)")))
         elif row['Type'] == 'Sink':
-            if row['EnergyTypeInput'].strip() not in label_index_dict:
-                label_index_dict[row['EnergyTypeInput'].strip()] = len(labels)
-                labels.append(row['EnergyTypeInput'].strip())
-            
-            src = label_index_dict[row['EnergyTypeInput'].strip()]
-            tgt = label_index_dict[label]
+            src = label_index_dict.get(row['EnergyTypeInput'].strip(), None)
+            tgt = label_index_dict.get(label, None)
             color.append(predefined_colors.get(row['EnergyTypeInput'].strip(), "rgba(128, 128, 128, 0.8)"))
         
         if src is not None and tgt is not None:
@@ -147,7 +135,15 @@ def generate_sankey_data_from_table(table):
             target.append(tgt)
             value.append(row['Consumption'])
     
-    return labels, source, target, value, color
+    
+    
+    # Combine labels and node_values to display next to nodes
+    labels_with_values = [f"{label} ({value:.2f})" for label, value in zip(labels, node_values)]
+
+    # Alternitive: Combine labels and node_values to display next to nodes, rounding to whole numbers
+    #labels_with_values = [f"{label} ({int(round(value))})" for label, value in zip(labels, node_values)]
+    
+    return labels_with_values, source, target, value, color
 
 
 
@@ -164,6 +160,7 @@ def create_dynamic_plotly_sankey(table):
     
     #print(table)
     labels, source, target, value, color = generate_sankey_data_from_table(table)
+
 
     
     node_color = ["rgba(128, 128, 128, 0.8)" for _ in labels]  # Gray color for all nodes

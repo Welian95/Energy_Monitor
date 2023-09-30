@@ -173,7 +173,7 @@ def display_data_mapping(column_names, active_system_modules, saved_data_mapping
 
 
 
-def set_sankey_mapping():
+def set_sankey_mapping_old():
     sankey_mapping = {}
 
     # Create a Counter to change the selectbox-key in every iteration
@@ -191,6 +191,41 @@ def set_sankey_mapping():
         
 
     return sankey_mapping
+
+def set_sankey_mapping(active_system_modules):
+    """
+    Create a sankey mapping dictionary based on active system modules.
+    
+    Parameters:
+    - active_system_modules: list of strings, names of the active system modules
+    
+    Returns:
+    - sankey_mapping: dictionary, the mapping created by merging all active system modules
+    """
+    sankey_mapping = {}
+    
+    for module_name in active_system_modules:
+        # Import the module dynamically
+        module = importlib.import_module(f"pages.modules.{module_name}_module")
+        
+        # Check if the module has the function "get_sankey_mapping"
+        if not hasattr(module, "get_sankey_mapping"):
+            # Assuming `st.warning` is a Streamlit function to show a warning message
+            st.warning(f"The selected system module '{module_name}' does not contain the function 'get_sankey_mapping'. Please update this system module or choose another module.")
+            continue
+        
+        # Get the mapping for the current module
+        module_mapping = module.get_sankey_mapping()
+        
+        # Merge the mapping into the existing sankey_mapping
+        for key, value in module_mapping.items():
+            if key in sankey_mapping:
+                sankey_mapping[key].extend(value)
+            else:
+                sankey_mapping[key] = value
+                
+    return sankey_mapping
+
 
 def map_consumption_values(data_mapping: dict, sankey_mapping: dict) -> dict:
     """
@@ -314,7 +349,7 @@ def main():
 
 
     # Save sankey mapping in session state
-    sankey_mapping = set_sankey_mapping()
+    sankey_mapping = set_sankey_mapping(active_system_modules)
     updated_sankey_mapping = map_consumption_values(data_mapping, sankey_mapping)
     st.session_state.sankey_mapping = updated_sankey_mapping
 

@@ -1,6 +1,7 @@
 streamlit
 streamlit_extras
 streamlit_echarts
+streamlit_elements==0.1.*
 pandas
 plotly
 matplotlib
