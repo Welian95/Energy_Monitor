@@ -1,4 +1,3 @@
-import importlib
 import streamlit as st
 import pandas as pd
 import pint
@@ -52,11 +51,14 @@ def convert_unit_of_dataframe(df, input_unit, output_unit, column_name=None):
     if column_name is None:
         column_name = df.columns[0]
 
+    input_quantity = ureg.parse_expression(input_unit)
+    output_quantity = ureg.parse_expression(output_unit)
+
      # Extract the values of the specified column and convert them to a pint Quantity
-    values_with_unit = df[column_name].values.astype(float) * ureg(input_unit)
+    values_with_unit = df[column_name].values.astype(float) * input_quantity
 
     # Convert the Quantity to the desired output unit
-    converted_values = values_with_unit.to(output_unit).magnitude
+    converted_values = values_with_unit.to(output_quantity).magnitude
     
     # Replace the values in the specified column with the converted values
     converted_df = df.copy()
@@ -120,7 +122,7 @@ def find_compatible_units(base_unit):
 if __name__ == "__main__":
     import imputation
 
-    st.title("Test Functions.py")
+    st.title("Conversion.py")
 
 
     st.subheader("Unit conversion")

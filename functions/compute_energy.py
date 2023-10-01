@@ -98,66 +98,43 @@ def power_energy(df, input_unit, output_unit, frequency):
     df : pd.DataFrame
         A DataFrame containing power or energy data with a consistent timestamp 
         as its index. The timestamp index must have a fixed time interval frequency.
-        
     input_unit : str
         The unit of the values in the input DataFrame. 
         Supported power units include: W, mW, kW, MW, GW, J/s, cal/s, BTU/h, etc.
         Supported energy units include: J, mJ, kJ, MJ, GJ, cal, kcal, Wh, kWh, MWh, BTU, etc.
-
     output_unit : str
         The desired unit for the output values. This must be dimensionally 
         consistent with the input_unit.
-        For power conversion: W, mW, kW, MW, GW, J/s, cal/s, BTU/h, etc.
-        For energy conversion: J, mJ, kJ, MJ, GJ, cal, kcal, Wh, kWh, MWh, BTU, etc.
 
     Returns:
     -------
     pd.DataFrame
         A DataFrame with values converted to the specified output unit and 
         retaining the original timestamp index.
-
-    Note:
-    ----
-    This function assumes that the input DataFrame has a consistent frequency
-    in its timestamp index. If not, errors may arise during conversion.
-
-    Examples:
-    --------
-    >>> df = pd.DataFrame({'Power': [10, 20]}, index=[pd.Timestamp('2023-08-11 10:00:00'), pd.Timestamp('2023-08-11 11:00:00')])
-    >>> power_energy(df, 'W', 'Wh')
     """
-    
-    #frequency = pd.infer_freq(df.index)
     time_Unit = freq_to_pint(frequency)
 
     # Convert power values in the DataFrame to pint quantities
     values_with_unit = df.values * ureg(input_unit)
 
     if classify_unit(input_unit) == "power" and classify_unit(output_unit) == "energy":
-    
-        # Convert the values to energy
         energy_values = (values_with_unit * time_Unit).to(output_unit)
-
-        # Create column name with unit
         column_name = f"Energy [{energy_values.units}]"
-
-        # Convert to DataFrame
         output_df = pd.DataFrame(energy_values.magnitude, index=df.index, columns=[column_name])
-
     elif classify_unit(input_unit) == "energy" and classify_unit(output_unit) == "power":
-
-        # Convert the values to energy
         power_values = (values_with_unit / time_Unit).to(output_unit)
-
-        # Create column name with unit
-        column_name = f"power [{power_values.units}]"
-
-        # Convert to DataFrame
+        column_name = f"Power [{power_values.units}]"
         output_df = pd.DataFrame(power_values.magnitude, index=df.index, columns=[column_name])
-
+    elif classify_unit(input_unit) == "power" and classify_unit(output_unit) == "power":
+        power_values = values_with_unit.to(output_unit)
+        column_name = f"Power [{power_values.units}]"
+        output_df = pd.DataFrame(power_values.magnitude, index=df.index, columns=[column_name])
+    elif classify_unit(input_unit) == "energy" and classify_unit(output_unit) == "energy":
+        energy_values = values_with_unit.to(output_unit)
+        column_name = f"Energy [{energy_values.units}]"
+        output_df = pd.DataFrame(energy_values.magnitude, index=df.index, columns=[column_name])
     else:
         output_df = f"Wrong input-{input_unit} or output-{output_unit} variable"
-    
     
     return output_df
 
