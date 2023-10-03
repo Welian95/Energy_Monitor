@@ -1,11 +1,13 @@
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
-from plotly.subplots import make_subplots
 import plotly.graph_objects as go
-from datetime import datetime, timedelta, time
+from plotly.subplots import make_subplots
 import datetime as dt
 import pandas as pd
 import importlib
+import re
+from collections import defaultdict
+import numpy as np
 from functions import imputation
 from functions import compute_energy
 from functions import conversion 
@@ -26,11 +28,20 @@ st.set_page_config(
 )
 
 def extract_unit(column_name):
-    return column_name[column_name.find("[")+1:column_name.find("]")]
+    """
+    Extract the unit from a column name enclosed in square brackets.
+    
+    Args:
+        column_name (str): The name of the column, e.g., "Temperature [C]"
+    
+    Returns:
+        str: The unit extracted from the column name, e.g., "C"
+    """
+    match = re.search(r'\[(.*?)\]', column_name)
+    return match.group(1) if match else None
 
 
-
-def create_figure(selected_data, start_date, end_date):
+def create_line_figure(selected_data, start_date, end_date):
     """
     Creates a list of combined plotly figures based on the selected data.
     
@@ -67,7 +78,7 @@ def create_figure(selected_data, start_date, end_date):
                 x=column_data.index, 
                 y=column_data, 
                 name=column_name,
-                fill='tozeroy',
+                #fill='tozeroy',
                 mode='lines',
                 hovertemplate=
                 '<br>Date: %{x}<br>' +
@@ -76,9 +87,12 @@ def create_figure(selected_data, start_date, end_date):
                 hoverlabel=dict(namelength=-1)
             ), secondary_y=secondary_y)
     
-    # If there's a figure with less than 2 units, add it to the list
     if len(fig.data) > 0:
+
+        # If there's a figure with more than 2 units, add it to the list
         figures.append((fig, unit_list[:]))
+
+
 
     for fig, unit_list in figures:
         fig.update_layout(
@@ -101,6 +115,310 @@ def create_figure(selected_data, start_date, end_date):
     return [fig for fig, _ in figures]
 
 
+def create_bar_figure(selected_data, start_date, end_date):
+    """
+    Creates a list of combined plotly bar charts based on the selected data.
+    
+    Args:
+        selected_data (dict): A dictionary containing the selected data.
+        start_date (str or datetime): A string or datetime object indicating the start date.
+        end_date (str or datetime): A string or datetime object indicating the end date.
+    
+    Returns:
+        list: A list of plotly figures.
+    """
+    figures = []
+    fig = make_subplots(specs=[[{"secondary_y": True}]])  # Create a subplot with secondary y-axis
+    unit_list = []
+    
+    # Iterate over each module and its data
+    for module, data in selected_data.items():
+        for column_name, column_data in data.items():
+            unit = extract_unit(column_name)  # Extract the unit from the column name
+            
+            # Add the unit to the list if it's not already there
+            if unit not in unit_list:
+                unit_list.append(unit)
+            
+            # If we've added 2 units to the current figure, add it to the list and start a new one
+            if len(unit_list) > 2:
+                figures.append((fig, unit_list[:]))
+                fig = make_subplots(specs=[[{"secondary_y": True}]])  # Create a new subplot
+                unit_list = [unit]
+            
+            secondary_y = unit_list.index(unit) == 1  # Check if this is a secondary y-axis
+            
+            # Add the data as a bar chart
+            fig.add_trace(go.Bar(
+                x=column_data.index,
+                y=column_data,
+                name=column_name,
+                hovertemplate=
+                '<br>Date: %{x}<br>' +
+                'Year: %{x|%Y}<br>' +
+                'Value: %{y} [' + unit + ']<br>',
+                hoverlabel=dict(namelength=-1)
+            ), secondary_y=secondary_y)
+    
+    # Check if there is any data in the figure
+    if len(fig.data) > 0:
+        figures.append((fig, unit_list[:]))
+        
+    # Update the layout and axis titles
+    for fig, unit_list in figures:
+        fig.update_layout(
+            showlegend=True,
+            legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.02,
+                xanchor="right",
+                x=1
+            )
+        )
+        fig.update_yaxes(title_text=f"[{unit_list[0]}]", secondary_y=False)
+        if len(unit_list) > 1:
+            fig.update_yaxes(title_text=f"[{unit_list[1]}]", secondary_y=True)
+
+        # Update the x-axis range
+        fig.update_xaxes(range=[start_date, end_date], autorange=False)
+
+    return [fig for fig, _ in figures]
+
+
+def create_duration_curve_figure(selected_data, start_date, end_date):
+    """
+    Creates a list of combined plotly duration curve charts with the x-axis in hours based on the selected data.
+    The function automatically infers the time frequency from the data index using pd.infer_freq and converts it to minutes.
+    
+    Args:
+        selected_data (dict): A dictionary containing the selected data.
+        start_date (str or datetime): A string or datetime object indicating the start date.
+        end_date (str or datetime): A string or datetime object indicating the end date.
+    
+    Returns:
+        list: A list of plotly figures.
+    """
+    figures = []
+    fig = make_subplots(specs=[[{"secondary_y": True}]])  # Create a subplot with secondary y-axis
+    unit_list = []
+    
+    # Iterate over each module and its data
+    for module, data in selected_data.items():
+        for column_name, column_data in data.items():
+            unit = extract_unit(column_name)  # Extract the unit from the column name
+            
+            # Add the unit to the list if it's not already there
+            if unit not in unit_list:
+                unit_list.append(unit)
+            
+            # If we've added 2 units to the current figure, add it to the list and start a new one
+            if len(unit_list) > 2:
+                figures.append((fig, unit_list[:]))
+                fig = make_subplots(specs=[[{"secondary_y": True}]])  # Create a new subplot
+                unit_list = [unit]
+            
+            secondary_y = unit_list.index(unit) == 1  # Check if this is a secondary y-axis
+            
+            # Sort the data in descending order and create a duration curve
+            sorted_data = column_data.sort_values(ascending=False).reset_index(drop=True)
+            
+            # Infer the frequency
+            freq_str = pd.infer_freq(column_data.index)
+            if freq_str:
+                freq_offset = pd.tseries.frequencies.to_offset(freq_str)
+                # Check if the offset object has a 'delta' attribute
+                if hasattr(freq_offset, 'delta'):
+                    freq_seconds = freq_offset.delta.total_seconds()
+                else:
+                    # Manually convert the frequency to seconds for special offsets like 'W' for week
+                    if freq_str == 'W':
+                        freq_seconds = 7 * 24 * 60 * 60
+                    elif freq_str == 'M':
+                        freq_seconds = 30 * 24 * 60 * 60  # Approximation
+                    else:
+                        freq_seconds = None  # Unknown frequency
+                
+                if freq_seconds is not None:
+                    freq_minutes = freq_seconds / 60
+                    intervals_per_hour = 60 / freq_minutes
+            
+                    # Calculate the duration in hours
+                    duration_in_hours = sorted_data.index / intervals_per_hour
+                else:
+                    duration_in_hours = sorted_data.index  # Unknown frequency, use index as is
+            else:
+                # If frequency cannot be inferred, use the index as is
+                duration_in_hours = sorted_data.index
+            
+            # Add the data as a scatter plot
+            fig.add_trace(go.Scatter(
+                x=duration_in_hours,
+                y=sorted_data,
+                name=column_name,
+                mode='lines',
+                hovertemplate=
+                '<br>Duration: %{x} hours<br>' +
+                'Value: %{y} [' + unit + ']<br>',
+                hoverlabel=dict(namelength=-1)
+            ), secondary_y=secondary_y)
+    
+    # Check if there is any data in the figure
+    if len(fig.data) > 0:
+        figures.append((fig, unit_list[:]))
+        
+    # Update the layout and axis titles
+    for fig, unit_list in figures:
+        fig.update_layout(
+            showlegend=True,
+            legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.02,
+                xanchor="right",
+                x=1
+            )
+        )
+        fig.update_yaxes(title_text=f"[{unit_list[0]}]", secondary_y=False)
+        if len(unit_list) > 1:
+            fig.update_yaxes(title_text=f"[{unit_list[1]}]", secondary_y=True)
+
+        # Update the x-axis range and title
+        fig.update_xaxes(title_text="Duration [hours]", autorange=True)
+
+    return [fig for fig, _ in figures]
+
+
+def create_heatmap_figure(selected_data, start_date, end_date):
+    """
+    Creates a list of plotly heatmap figures based on the selected data. Each data series will have its own figure.
+    The x-axis represents the date, the y-axis represents the hours of the day, and the color represents the value.
+    
+    Args:
+        selected_data (dict): A dictionary containing the selected data.
+        start_date (str or datetime): A string or datetime object indicating the start date.
+        end_date (str or datetime): A string or datetime object indicating the end date.
+    
+    Returns:
+        list: A list of plotly figures.
+    """
+    figures = []
+    
+    # Iterate over each module and its data
+    for module, data in selected_data.items():
+        for column_name, column_data in data.items():
+            unit = extract_unit(column_name)  # Extract the unit from the column name
+            
+            # Resample the data to hourly frequency and calculate the mean
+            column_data = column_data.resample('H').mean()
+            
+            # Create a DataFrame to hold the heatmap data
+            heatmap_data = pd.DataFrame(index=pd.date_range(start=start_date, end=end_date, freq='H'))
+            
+            # Fill the DataFrame with the data from the selected series
+            heatmap_data = heatmap_data.join(column_data).rename(columns={column_data.name: 'value'})
+            
+            # Drop the date component to keep only the time (hour) as index
+            heatmap_data.index = heatmap_data.index.time
+            
+            # Create a pivot table for the heatmap
+            heatmap_data['date'] = [d.date() for d in column_data.index]
+            heatmap_data.reset_index(inplace=True)
+            heatmap_data = heatmap_data.pivot(index='index', columns='date', values='value')
+            
+            # Create the heatmap figure
+            fig = go.Figure(data=go.Heatmap(
+                z=heatmap_data.values,
+                x=heatmap_data.columns,
+                y=heatmap_data.index,
+                colorscale='Viridis',
+                colorbar=dict(title=f"[{unit}]"),
+            ))
+            
+            fig.update_layout(
+                title=column_name,
+                xaxis_title="Date",
+                yaxis_title="Hour of Day",
+            )
+            
+            figures.append(fig)
+    
+    return figures
+
+
+def create_themeriver_figure(selected_data, start_date, end_date):
+    """
+    Creates a list of plotly ThemeRiver figures based on the selected data.
+    Each figure represents a group of data series with the same unit.
+    The y-values of the series are summed up to create the 'river' shape.
+    The hover mode is customized to only show the sum of the river.
+    The fill between lines is also implemented to represent the stacked nature of the series.
+    
+    Args:
+        selected_data (dict): A dictionary containing the selected data.
+        start_date (str or datetime): A string or datetime object indicating the start date.
+        end_date (str or datetime): A string or datetime object indicating the end date.
+    
+    Returns:
+        list: A list of plotly figures.
+    """
+    figures = []
+    
+    # Group data by unit
+    data_by_unit = defaultdict(dict)
+    for module, data in selected_data.items():
+        for column_name, column_data in data.items():
+            unit = extract_unit(column_name)  # Extract the unit from the column name
+            data_by_unit[unit][column_name] = column_data
+
+    # Create a figure for each unit
+    for unit, data in data_by_unit.items():
+        fig = go.Figure()
+        
+        # Sort columns by their mean values (ascending), so that negative values are plotted first
+        sorted_columns = sorted(data.keys(), key=lambda x: data[x].mean())
+        
+        # Sum up the y-values to create the 'river' shape
+        y_values_sum = np.zeros(len(data[list(data.keys())[0]]))
+        prev_y_values_sum = np.zeros(len(data[list(data.keys())[0]]))
+        
+        for column_name in sorted_columns:
+            column_data = data[column_name]
+            prev_y_values_sum = y_values_sum.copy()
+            y_values_sum += column_data.values
+            
+            fill_target = 'tonexty' if column_name != sorted_columns[0] else 'tozeroy'
+            
+            fig.add_trace(go.Scatter(
+                x=column_data.index,
+                y=y_values_sum,
+                fill=fill_target,
+                mode='lines',
+                name=column_name,
+                hovertemplate=
+                '<br>Date: %{x}<br>' +
+                'Total Value: %{y} [' + unit + ']<br>',
+                hoverlabel=dict(namelength=-1)
+            ))
+        
+        # Update the layout and axis titles
+        fig.update_layout(
+            title=f"ThemeRiver [{unit}]",
+            showlegend=True,
+            legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.02,
+                xanchor="right",
+                x=1
+            )
+        )
+        fig.update_yaxes(title_text=f"[{unit}]")
+        fig.update_xaxes(title_text="Date", autorange=True)
+
+        figures.append(fig)
+    
+    return figures
 
 
 
@@ -154,10 +472,6 @@ def date_range_selector(start_date: dt.date, end_date: dt.date):
     return st.session_state.start_date, st.session_state.end_date
 
 
-
-
-
-# Updated version of the process_selected_data function
 def get_selected_data(data_mapping, start_time, end_time):
     """
     Process selected data based on user input from the Streamlit sidebar.
@@ -194,7 +508,13 @@ def get_selected_data(data_mapping, start_time, end_time):
                 module = importlib.import_module(f'pages.modules.{module_name}_module')
                 
                 # Load the data from the API
-                loaded_data = module.load_module_data(data_mapping, [module_name], start_time, end_time)
+                try:
+                    loaded_data = module.load_module_data(data_mapping, [module_name], start_time, end_time)
+                except Exception as e:
+                    st.write(f"Ein Fehler ist aufgetreten: {e}")
+
+
+                #loaded_data = module.load_module_data(data_mapping, [module_name], start_time, end_time)
                 
                 # Organize data in dict
                 selected_data[module_name][data_name] = loaded_data[column_name]
@@ -204,13 +524,18 @@ def get_selected_data(data_mapping, start_time, end_time):
 
 def convert_processed_data(selected_data):
     """
-    Process and convert selected data based on user input from the Streamlit UI.
+    Processes and converts the selected data entered by the user via the Streamlit user interface.
+    
+    This function performs several tasks:
+    1. it provides unit conversion for the selected data.
+    2. it interpolates the data based on a user-specified frequency.
+    3. it converts energy and power data to a uniform unit, if so specified by the user.
     
     Parameters:
-    - selected_data (dict): A dictionary containing the selected data from different modules.
-    
+        selected_data (dict): A dictionary containing the selected data from different modules.
+        
     Returns:
-    - processed_data (dict): A dictionary containing the processed and possibly converted data.
+        processed_data (dict): A dictionary containing the processed and possibly converted data.
     """
     
     # Initialize an empty dictionary to store processed data
@@ -220,6 +545,9 @@ def convert_processed_data(selected_data):
     general_expander = st.expander("General Settings for Selected Data")
 
     col1, col2 = general_expander.columns([1,3])
+
+
+    col_imputation_1, col_imputation_2 = general_expander.columns([1,3])
 
     # Unit conversion settings
     display_option = col1.radio(
@@ -240,10 +568,41 @@ def convert_processed_data(selected_data):
         selected_unit = col2.selectbox("Select power unit:", unit_options, index=0)
     
     # Interpolation settings
-    freq = general_expander.number_input("Input a frequency in Minutes:", value=0, help="If value is 0 the original frequency of the data is used")
+    freq_dict = {
+                "None" : 0,
+                "15 minutes" : 15,
+                "30 minutes" : 30,
+                "hour" : 60,
+                "day" : 1440,
+                "week": 10080,
+                "month": 43800,
+                }
+    
+    #selected_key = st.selectbox("Choose a time frequency:", list(freq_dict.keys()))
+    selected_key = col_imputation_1.selectbox("Choose a time frequency:", list(freq_dict.keys()))
+    freq_range = freq_dict[selected_key]
+
+
+
+    freq = col_imputation_2.number_input("Input a frequency in Minutes:", value=freq_range, help="If value is 0 the original frequency of the data is used")
     
     if freq <= 0:
         freq = None
+
+    elif freq == 60:
+        freq = "1H"
+
+    elif freq == 1440:
+        freq = "1D"
+
+    elif freq == 10080:
+        st.warning("The selected time frequency is calculated as a fixed frequency in minutes, which means that the real time interval is not considered. This function still has to be implemented.", icon="⚠️")
+        freq = f"{freq}T"
+        
+    elif freq == 43800:
+        st.warning("The selected time frequency is calculated as a fixed frequency in minutes, which means that the real time interval is not considered. This function still has to be implemented.", icon="⚠️")
+        freq = f"{freq}T"
+
     else:
         freq = f"{freq}T"
     
@@ -311,6 +670,30 @@ def convert_processed_data(selected_data):
     return processed_data
 
 
+def convert_to_dataframe(nested_dict):
+    """
+    Converts a nested dictionary to a single-level Pandas DataFrame.
+    
+    Args:
+        nested_dict (dict): The nested dictionary containing the data.
+    
+    Returns:
+        pd.DataFrame: A DataFrame containing the flattened data.
+    """
+    # Initialize an empty DataFrame to hold the final data
+    final_df = pd.DataFrame()
+    
+    # Loop through each module and its series
+    for module, series_dict in nested_dict.items():
+        for series_name, series_data in series_dict.items():
+            # Create a new column name based on the module and series name
+            new_col_name = f"{module}_{series_name}"
+            
+            # Add the series to the final DataFrame
+            final_df[new_col_name] = series_data
+            
+    return final_df
+
 
 
 def main():
@@ -325,19 +708,24 @@ def main():
     # Sidebar
     st.sidebar.title("Module Data Selection")
 
+
     data_mapping = st.session_state.data_mapping
 
 
     #Get timestamps from api
-    
-    first_timstamp = data_interface.get_first_timestamp()
-    last_timestamp = data_interface.get_last_timestamp()
+    try:
+        first_timstamp = data_interface.get_first_timestamp()
+        last_timestamp = data_interface.get_last_timestamp()
+    except Exception as e:
+        st.write(f"Ein Fehler ist aufgetreten: {e}")
+
     
 
     # set start- and end- time
     start_time = None
     end_time =  None
     
+
     #select time series 
     if start_time and end_time is not None:
 
@@ -347,15 +735,16 @@ def main():
         newest_time = first_timstamp
         latest_time = last_timestamp
 
+
     selected_times = date_range_selector(newest_time.date(), latest_time.date())
     start_time = selected_times[0]
     end_time =  selected_times[1]
+
 
     #Load and change Data:
     selected_data = get_selected_data(data_mapping, start_time, end_time)
     
     processed_data = convert_processed_data(selected_data)
-    
 
     # Store the selected data in the Streamlit session state
     st.session_state.processed_data = processed_data
@@ -365,10 +754,44 @@ def main():
     if any(processed_data.values()):
 
 
-        # Create and display the combined chart
-        figures = create_figure(st.session_state.processed_data,start_time, end_time)
+        # Allow the user to select the figure type
+        figure_type = st.selectbox("Choose your figure type:", options=['Line Chart', 'Bar Chart', 'Duration Curve', 'Heatmap', 'ThemeRiver'])
+
+        # Initialize an empty list to hold the figures
+        figures = []
+
+        # Create and display the selected figure type
+        if figure_type == 'Line Chart':
+            figures = create_line_figure(st.session_state.processed_data, start_time, end_time)
+        elif figure_type == 'Bar Chart':
+            figures = create_bar_figure(st.session_state.processed_data, start_time, end_time)
+        elif figure_type == 'Duration Curve':
+            figures = create_duration_curve_figure(st.session_state.processed_data, start_time, end_time)
+        elif figure_type == 'Heatmap':
+            figures = create_heatmap_figure(st.session_state.processed_data, start_time, end_time)
+        elif figure_type == 'ThemeRiver':
+            figures = create_themeriver_figure(st.session_state.processed_data, start_time, end_time)
+
+        # Display the figures
         for fig in figures:
             st.plotly_chart(fig, use_container_width=True)
+
+
+        export_df = convert_to_dataframe(st.session_state.processed_data)
+
+        for col in export_df.select_dtypes(include=['number']).columns:
+            export_df[col] = export_df[col].astype(float)
+
+        csv_data = export_df.to_csv(index=True, sep=';', decimal=',',)
+
+        st.markdown("Download selected data:")
+
+        st.download_button(
+            label="CSV-Export",
+            data=csv_data,
+            file_name="export.csv",
+            mime="text/csv",
+        )
 
     else:
         st.write("Please select data to display.")

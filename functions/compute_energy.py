@@ -33,12 +33,13 @@ def freq_to_pint(freq):
     This function currently supports a subset of pandas frequency strings. 
     For a comprehensive list of pandas frequency strings, consult the pandas documentation.
     """
-    
+
     mapping = {
         'S': ureg.second,
         'T': ureg.minute,
         'Min': ureg.minute,
         'H': ureg.hour,
+        'D': ureg.day,
     }
     
     # Find the first non-digit character to separate magnitude and unit
@@ -189,7 +190,7 @@ if __name__ == "__main__":
 
     ### 2. Konsistenter Datensatz mit vorgegebener Frequnz erstellen 
 
-    freq = "10T" # 1 minute time Intervall
+    freq = "1W" # 1 minute time Intervall
 
 
     c2.subheader(f"Interploated DATA (time interval = {freq})")
@@ -219,7 +220,7 @@ if __name__ == "__main__":
     c3.subheader(f"Convert Power to Energy [{input_unit} -> {output_unit}] ")
 
 
-    convertedP2E_df = power_energy (interpolated_data, input_unit, output_unit )
+    convertedP2E_df = power_energy (interpolated_data, input_unit, output_unit ,frequency)
     
     c3.write(convertedP2E_df)
 
@@ -236,7 +237,7 @@ if __name__ == "__main__":
     c4.subheader(f"Convert Power to Energy [{input_unit} -> {output_unit}] ")
 
 
-    convertedE2P_df = power_energy (convertedP2E_df, input_unit, output_unit )
+    convertedE2P_df = power_energy (convertedP2E_df, input_unit, output_unit ,frequency)
     
     c4.write(convertedE2P_df)
 

@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def interpolate_impute(df, freq=None):
+def interpolate_impute_old(df, freq=None):
     '''
     This function interpolates missing values in a DataFrame based on time gaps, 
     and then filters the result to keep only timestamps that match the specified frequency.
@@ -17,7 +17,9 @@ def interpolate_impute(df, freq=None):
         '15T' or '15Min' : 15 minutes
         '30T' or '30Min' : 30 minutes
         '1H' : 1 hour
-      Default is '1T' (1 minute).
+        '1D' : 1 day
+        '1W' : 1 week
+        '1M' : 1 month
     
     Returns:
     - pd.DataFrame: The interpolated and filtered DataFrame.
@@ -56,9 +58,6 @@ def interpolate_impute(df, freq=None):
         st.warning( f"Your Data: {df.columns} has been interpolated the Data gaps are larger than {gap_threshold} detected.", icon="⚠️")
 
 
-
-
-
     # Calculate Mean Squared Error between interpolated and original values for shared timestamps
     common_indices = df.index.intersection(interpolated.index)
     mse = ((df.loc[common_indices] - interpolated.loc[common_indices]) ** 2).mean()
@@ -69,6 +68,76 @@ def interpolate_impute(df, freq=None):
 
 
     return filtered
+
+
+
+def interpolate_impute(df, freq=None):
+    '''
+    This function interpolates missing values in a DataFrame based on time gaps, 
+    only for existing data points. It then filters the result to keep only timestamps 
+    that match the specified frequency. Any cell containing "None" will not be interpolated.
+    
+    If freq is None, the original DataFrame index will be preserved.
+    
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame with timestamps as the index.
+    - freq (str, optional): The desired frequency. The options are same as in the original function.
+    
+    Returns:
+    - pd.DataFrame: The interpolated and filtered DataFrame.
+    '''
+    
+    def round_up_timestamp(ts, freq):
+        """Round up a timestamp according to the given frequency."""
+        return (ts + pd.to_timedelta(freq) - pd.Timedelta(seconds=1)).floor(freq)
+    
+    # Initialize DataFrame to hold the interpolated values
+    interpolated = pd.DataFrame(index=df.index)
+    
+    # Loop through each column and interpolate only existing data points
+    for col in df.columns:
+        # Drop NaN values to form valid segments for interpolation
+        valid_segments = df[col].dropna()
+        if not valid_segments.empty:
+            # Interpolate considering the time difference for each valid segment
+            interpolated_segment = valid_segments.interpolate(method='time')
+            # Fill the corresponding column in the interpolated DataFrame
+            interpolated[col] = interpolated_segment
+
+    if freq:
+        # Adjust the start time to the next full time unit according to the given frequency
+        adjusted_start = round_up_timestamp(df.index.min(), freq)
+        
+        # Create a new index with the desired frequency, starting from the adjusted start time
+        new_index = pd.date_range(start=adjusted_start, end=df.index.max(), freq=freq)
+        
+        # Merge the original index with the new index
+        combined_index = df.index.union(new_index)
+        
+        # Reindex the DataFrame with the combined index
+        interpolated = interpolated.reindex(combined_index)
+
+        # Filter the DataFrame to keep only timestamps that match the frequency
+        interpolated = interpolated.loc[new_index]
+    
+    # Calculate the gap threshold as twice the specified frequency
+    if freq:
+        gap_threshold = pd.to_timedelta(freq) * 1
+        time_diffs = df.index.to_series().diff()
+        if any(time_diffs > gap_threshold):
+            st.warning(f"Your Data: {df.columns} has been interpolated. Data gaps larger than {gap_threshold} detected.", icon="⚠️")
+    
+    # Calculate Mean Squared Error between interpolated and original values for shared timestamps
+    common_indices = df.index.intersection(interpolated.index)
+    mse = ((df.loc[common_indices] - interpolated.loc[common_indices]) ** 2).mean()
+    
+    for value in mse.tolist():
+        if value != 0:
+            st.warning(f"Your Data has been interpolated. The Mean Squared Error between interpolated and original values is: {mse}", icon="⚠️")
+    
+    return interpolated
+
+
 
 
 def plot_series_with_matplotlib(series, title='Pandas Series Visualization'):
@@ -109,7 +178,7 @@ if __name__ == "__main__":
 
     # Erstellen eines Beispiel-DataFrames zur Überprüfung der Funktion
     example_data = {
-        'Leistung (Watt)': [100, 150, 180, 200, 230, 255, 270],
+        'Leistung (Watt)': [100, None, 180, 200, None, 255, 270],
         'Energie (Wattstunden)': [25, 17, 16, 2, 51, 56, 66],
     }
     example_timestamps = pd.to_datetime(['2023-08-11 10:00:50', '2023-08-11 10:01:30', '2023-08-11 10:03:00', '2023-08-11 10:05:20', '2023-08-11 10:07:05', '2023-08-11 10:08:27', '2023-08-11 10:10:00'])
@@ -118,6 +187,9 @@ if __name__ == "__main__":
     frequency = pd.infer_freq(example_df.index)
 
     st.write("F:", frequency)
+
+    test  = interpolate_impute(example_df, None)
+    test
 
     
 

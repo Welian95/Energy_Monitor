@@ -216,6 +216,7 @@ def set_sankey_mapping(active_system_modules):
         
         # Get the mapping for the current module
         module_mapping = module.get_sankey_mapping()
+
         
         # Merge the mapping into the existing sankey_mapping
         for key, value in module_mapping.items():
@@ -227,7 +228,7 @@ def set_sankey_mapping(active_system_modules):
     return sankey_mapping
 
 
-def map_consumption_values(data_mapping: dict, sankey_mapping: dict) -> dict:
+def map_consumption_values_old(data_mapping: dict, sankey_mapping: dict) -> dict:
     """
     Maps the 'Consumption' values in sankey_mapping using the values from data_mapping.
     Also includes units in the keys of the sankey_mapping.
@@ -263,6 +264,62 @@ def map_consumption_values(data_mapping: dict, sankey_mapping: dict) -> dict:
                 new_sankey_mapping[new_key]['Consumption'] = sub_value
                 
     return new_sankey_mapping
+
+def map_consumption_values(data_mapping: dict, sankey_mapping: dict) -> dict:
+    """
+    Maps the 'Consumption' values in sankey_mapping using the values from data_mapping.
+    Also includes units in the keys of the sankey_mapping.
+    
+    Parameters:
+    - data_mapping (dict): A dictionary containing the mapping between data fields and their labels.
+    - sankey_mapping (dict): A dictionary defining Sankey diagram attributes like 'Label', 'Consumption', etc.
+    
+    Returns:
+    - dict: The updated sankey_mapping with 'Consumption' values and units in keys.
+    """
+    
+    # Flatten the data_mapping dictionary for easier lookup
+    flat_data_mapping = {}
+    for main_key, sub_dict in data_mapping.items():
+        flat_data_mapping.update(sub_dict)
+    
+    # New sankey_mapping
+    new_sankey_mapping = {}
+    
+    for sankey_key, attributes in sankey_mapping.items():
+        # Copy the attributes to keep other fields
+        new_attributes = attributes.copy()
+        
+        # Case 1: Consumption is None
+        if attributes['Consumption'] is None:
+            for sub_key, sub_value in flat_data_mapping.items():
+                clean_sub_key = sub_key.split('_[')[0]
+                if clean_sub_key == sankey_key:
+                    new_attributes['Consumption'] = sub_value
+                    # Append unit to the sankey_key
+                    unit = sub_key.split('_[')[1][:-1] if '_[' in sub_key else ''
+                    new_key = f"{sankey_key}_[{unit}]" if unit else sankey_key
+                    new_sankey_mapping[new_key] = new_attributes
+                    break  # No need to continue the loop once we've found a match
+            else:  # This else clause corresponds to the for-loop, not the if-statement
+                new_sankey_mapping[sankey_key] = new_attributes
+                
+        # Case 2: Consumption is not None (i.e., it's an expression)
+        else:
+            expression = attributes['Consumption']
+            for sub_key, sub_value in flat_data_mapping.items():
+                clean_sub_key = sub_key.split('_[')[0]
+                expression = expression.replace(clean_sub_key, sub_value)
+            new_attributes['Consumption'] = expression
+            new_sankey_mapping[sankey_key] = new_attributes
+    
+    return new_sankey_mapping
+
+
+
+
+
+
 
 
 # Main function of the main script
@@ -348,9 +405,14 @@ def main():
     data_mapping = display_data_mapping(column_names, active_system_modules, saved_data_mapping)
 
 
+
     # Save sankey mapping in session state
     sankey_mapping = set_sankey_mapping(active_system_modules)
+
+
     updated_sankey_mapping = map_consumption_values(data_mapping, sankey_mapping)
+
+
     st.session_state.sankey_mapping = updated_sankey_mapping
 
 

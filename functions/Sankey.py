@@ -178,7 +178,7 @@ def create_dynamic_plotly_sankey(table):
             source=source,
             target=target,
             value=value,
-            label=labels,
+            #label=labels,
             #label=["Link 1", "Link 2", "Link 3"],  # Label the links
             color=color  # Add color parameter here
         )
