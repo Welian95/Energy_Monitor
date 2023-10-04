@@ -574,8 +574,8 @@ def convert_processed_data(selected_data):
                 "30 minutes" : 30,
                 "hour" : 60,
                 "day" : 1440,
-                "week": 10080,
-                "month": 43800,
+                "week (fixed frequency)": 10080,
+                "month (fixed frequency)": 43800,
                 }
     
     #selected_key = st.selectbox("Choose a time frequency:", list(freq_dict.keys()))

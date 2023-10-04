@@ -33,13 +33,44 @@ The project is in an advanced stage of development with a clear structure and de
 - **Testing and Validation**: Implementing quality assurance tests.
 - **Documentation and Training**: Creating comprehensive documentation.
 
-## Installation
+## Installation Guide
 
-1. **Download the Repository**: Clone or download the repository to your local machine.
-2. **Install Required Modules**: Navigate to the project folder and install all the modules from the `requirements.txt` file by running:
-   `pip install -r requirements.txt`
-4. **Configure the API**: Adapt the API to your datasets (CSV or Database), or use the "example" folder provided in the repository.
-5. **Start the Application**: Simply run the `Main.py` script to start the application.
+1. Ensure that Python and pip are installed on your machine.
+2. Open the Terminal.
+3. Execute the command:
+    ```bash
+    pip install virtualenv
+    ```
+4. Create a virtual environment with:
+    ```bash
+    virtualenv venv
+    ```
+5. Activate the virtual environment using:
+    ```bash
+    source venv/bin/activate
+    ```
+6. Clone the repository using:
+    ```bash
+    git clone https://github.com/Welian95/Energy_Monitor
+    ```
+    (If git is not installed, download the repository from GitHub into your desired folder).
+7. Navigate to the project directory:
+    ```bash
+    cd Energy_Monitor
+    ```
+8. Install the required packages using:
+    ```bash
+    pip install -r requirements.txt
+    ```
+9. Run the program using:
+    ```bash
+    python Main.py
+    ```
+10. Launch the Streamlit interface with:
+    ```bash
+    streamlit run Main.py
+    ```
+
 
 ## Usage
 
