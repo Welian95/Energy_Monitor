@@ -150,7 +150,8 @@ def create_gauge_chart(value: float, title: str = None, reference_value: float =
     # Update chart layout for a transparent background
     fig.update_layout(paper_bgcolor="rgba(0,0,0,0)", 
                       plot_bgcolor='rgba(0,0,0,0)', 
-                      font={'color': "white", 'family': "Arial"})
+                      font={'color': "gray", 'family': "Arial"}
+                      )
     
     return fig
 
@@ -165,8 +166,8 @@ def get_module_figs():
     - A list of charts which can be called with "st.plotly_chart()".
     
     """
-    import streamlit as st
-    #HP_spezific
+
+ 
     last_row_from_api = data_interface.get_data(["battery_[W]"] ,num_rows=1, ascending=False)
 
 
@@ -174,6 +175,8 @@ def get_module_figs():
 
 
     if float(battery) == 0:
+        battery_status = 0
+    elif float(battery) == None:
         battery_status = 0
     else:
         battery_status = float(battery) /10000 *100

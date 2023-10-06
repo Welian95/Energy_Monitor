@@ -158,7 +158,9 @@ def create_dynamic_plotly_sankey(table):
         fig: Plotly figure object containing the Sankey diagram.
     """
     
-    #print(table)
+
+    table['Consumption'] = abs(table['Consumption'])
+
     labels, source, target, value, color = generate_sankey_data_from_table(table)
 
 

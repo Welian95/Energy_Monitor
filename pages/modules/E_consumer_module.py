@@ -100,7 +100,7 @@ measuring_list = ['Server_OUT','e_mobility_OUT',  ]
 measuring_list_sankey =['Server_OUT','e_mobility_OUT', "Rest_[W]"]
 
 Label = ['server','e_mobility', "rest"]
-Consumption = [None, None,  "e_consumers_IN - Server_OUT - e_mobility_OUT" ]
+Consumption = [None, None,  " e_consumers_IN - Server_OUT - e_mobility_OUT" ]
 Type =  ['Sink','Sink', 'Sink']
 EnergyTypeInput = ['electricity','electricity','electricity',]
 EnergyTypeOutput = ['-','-','-',]

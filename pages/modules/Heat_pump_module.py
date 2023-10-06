@@ -106,9 +106,9 @@ units = ["W", "kW", "Wh", "kWh", "J", "°C", "K", ] #Units List (has to be pint 
 
 
 
-measuring_list = ["Compressor_Power", "ambient_heat_IN","room_heating_IN", "thermal_hp_OUT"]
+measuring_list = ["Compressor_Power", "ambient_heat_IN","room_heating_OUT", "thermal_hp_OUT"]
 
-measuring_list_sankey = ["Compressor_Power", "ambient_heat_IN","room_heating_IN"]
+measuring_list_sankey = ["Compressor_Power", "ambient_heat_IN","room_heating_OUT"]
 
 Label = ["Compressor_Power" , "ambient_heat", "room_heating"]
 Consumption = [None, None, None ]
@@ -157,7 +157,7 @@ def create_gauge_chart(value: float, title : str= None , reference_value: float 
     # Update chart layout for a transparent background
     fig.update_layout(paper_bgcolor = "rgba(0,0,0,0)", 
                   plot_bgcolor = 'rgba(0,0,0,0)', 
-                  font = {'color': "white", 'family': "Arial"})
+                  font = {'color': "gray", 'family': "Arial"})
     
     return fig
 
@@ -176,11 +176,12 @@ def get_module_figs():
     """
 
     #HP_spezific
-    last_row_from_api = data_interface.get_data(["heat_pump_power_IN_[W]","thermal_hp_OUT"] ,num_rows=1, ascending=False)
+    last_row_from_api = data_interface.get_data(["heat_pump_power_IN_[W]","thermal_hp_OUT_[W]"] ,num_rows=1, ascending=False)
 
-    thermal_hp_OUT = last_row_from_api["thermal_hp_OUT"]
+    thermal_hp_OUT = last_row_from_api["thermal_hp_OUT_[W]"]
     heat_pump_power = last_row_from_api["heat_pump_power_IN_[W]"]
-    HP_power_rating = thermal_hp_OUT/heat_pump_power
+
+    HP_power_rating = abs(thermal_hp_OUT) /heat_pump_power
 
     title = "Heat pump power rating"
 
@@ -291,12 +292,12 @@ if __name__ == "__main__":
 
         #test_columns = ['heat_pump_power_IN_[W]',  'ambient_heat_IN_[W]', 'room_heating_IN_[W]']
         "last_row_from_api"
-        last_row_from_api = data_interface.get_data(["heat_pump_power_IN_[W]","thermal_hp_OUT"] ,num_rows=1, ascending=False)
+        last_row_from_api = data_interface.get_data(["heat_pump_power_IN_[W]","thermal_hp_OUT_[W]"] ,num_rows=1, ascending=False)
         last_row_from_api
 
 
         "thermal_hp_OUT"
-        thermal_hp_OUT = last_row_from_api["thermal_hp_OUT"]
+        thermal_hp_OUT = last_row_from_api["thermal_hp_OUT_[W]"]
         thermal_hp_OUT
 
         "heat_pump_power"

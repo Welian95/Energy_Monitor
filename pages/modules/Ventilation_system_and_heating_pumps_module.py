@@ -96,9 +96,9 @@ providing a comprehensive view of the energy system.
 units = ["W", "kW", "Wh", "kWh", "J", "°C", "K", ] #Units List (has to be pint Units)
 
 
-measuring_list = ['auxiliary_energy_IN' ,'transported_energy_IN','room_conditioning_IN',]
+measuring_list = ['auxiliary_energy_IN' ,'transported_energy_OUT','room_conditioning_OUT',]
 
-measuring_list_sankey = ['auxiliary_energy_IN', 'transported_energy_IN','room_conditioning_IN',]  #Calculatede Values must have an Unit!
+measuring_list_sankey = ['auxiliary_energy_IN', 'transported_energy_OUT','room_conditioning_OUT',]  #Calculatede Values must have an Unit!
 
 Label = ['auxiliary_energy', 'transported_energy','room_conditioning', ]
 Consumption = [None,None, None]

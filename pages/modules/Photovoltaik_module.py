@@ -96,10 +96,10 @@ units = ["W", "kW", "Wh", "kWh", "J", "°C", "K", ] #Units List (has to be pint 
 
 measuring_list = ['PV_yield_IN','PV_supply_OUT','grid_supply_IN']
 
-measuring_list_sankey = ['PV_yield_IN','PV_supply_OUT_[W]','grid_supply_IN']
+measuring_list_sankey = ['PV_yield_IN','PV_supply_OUT','grid_supply_IN']
 
 Label = ['PV_yield','PV_feed-in','grid_supply']
-Consumption = [None, "PV_supply_OUT * - 1", None]
+Consumption = [None, None, None]
 Type =  ['Source','Sink','Source']
 EnergyTypeInput = ['-','electricity','-']
 EnergyTypeOutput = ['electricity','-','electricity']
@@ -152,7 +152,7 @@ def create_gauge_chart(value: float, title : str= None , reference_value: float 
     # Update chart layout for a transparent background
     fig.update_layout(paper_bgcolor="rgba(0,0,0,0)", 
                       plot_bgcolor='rgba(0,0,0,0)', 
-                      font={'color': "white", 'family': "Arial"})
+                      font={'color': "gray", 'family': "Arial"})
     
     return fig
 
@@ -171,26 +171,32 @@ def get_module_figs():
     """
 
     #HP_spezific
-    last_row_from_api = data_interface.get_data(["grid_supply_IN_[W]","room_heating_IN_[W]", "e_consumers_IN_[W]", "transported_energy_IN_[W]", "room_conditioning_IN_[W]" ] ,num_rows=1, ascending=False)
+    last_row_from_api = data_interface.get_data(["grid_supply_IN_[W]","room_heating_OUT_[W]", "e_consumers_IN_[W]", "transported_energy_OUT_[W]", "room_conditioning_OUT_[W]" ] ,num_rows=1, ascending=False)
 
     grid_supply = last_row_from_api["grid_supply_IN_[W]"]
 
-    room_heating = last_row_from_api ["room_heating_IN_[W]"]
+    room_heating = last_row_from_api ["room_heating_OUT_[W]"]
     e_consumer = last_row_from_api ["e_consumers_IN_[W]"]
-    transported_energy = last_row_from_api ["transported_energy_IN_[W]"]
-    room_conditioning = last_row_from_api ["room_conditioning_IN_[W]"]
+    transported_energy = last_row_from_api ["transported_energy_OUT_[W]"]
+    room_conditioning = last_row_from_api ["room_conditioning_OUT_[W]"]
 
-    Consumption = room_heating + e_consumer +transported_energy + room_conditioning
+    
+    Consumption = abs(room_heating) + e_consumer + abs(transported_energy) + abs(room_conditioning)
 
-    degree_of_autarky = 100 - grid_supply/Consumption * 100
+
+    if Consumption[0] == 0:
+        degree_of_autarky = 100 
+    else:
+        degree_of_autarky = 100 - grid_supply/Consumption * 100
 
  
 
     title = "Degree of autarky [%]"
 
 
-
+   
     fig = create_gauge_chart(int(degree_of_autarky), title, reference_value=None)
+ 
 
 
     figures = [fig]

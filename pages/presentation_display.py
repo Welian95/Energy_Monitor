@@ -33,7 +33,7 @@ st.set_page_config(
 
 
 
-def update_sankey_consumption_old_old(sankey_mapping: dict, frequency, unit="kWh") -> dict:
+def update_sankey_consumption_old_old(sankey_mapping: dict, frequency, unit="kW") -> dict:
     """
     Updates the 'Consumption' fields in sankey_mapping using data from an external data interface.
     Converts the unit of the consumption value to a specified unit (default is "kWh"), irrespective of the input unit.
@@ -254,7 +254,7 @@ def main():
         switch_page("Main")
 
     #Define the output unit for sankey values
-    unit = "kWh"
+    unit = "kW"
     frequency = data_interface.get_time_frequency()
 
     last_timestamp = data_interface.get_last_timestamp()
@@ -264,7 +264,7 @@ def main():
     
     # Data preparation for Sankey Diagram
     sankey_mapping = copy.deepcopy(st.session_state.sankey_mapping)
-   
+
 
     #Load consumption data from api into sankey_mapping
     sankey_mapping_w_data = update_sankey_consumption(sankey_mapping,frequency, unit)    
@@ -316,11 +316,11 @@ def main():
     col1, col2, = st.columns([5, 1, ])
     
     with col1:
-        st.plotly_chart(sankey_fig, use_container_width=True)
+        st.plotly_chart(sankey_fig, use_container_width=True, theme="streamlit",)
         
     with col2:
         for fig in figures:
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True, theme="streamlit",)
 
 
 
