@@ -15,9 +15,8 @@ The project follows a modular architecture, subdivided into:
 
 ## Main Features
 
-- **Data Access**: Support for CSV files and InfluxDB.
+- **Data Access**: Support for CSV files.
 - **Modular Analysis**: Various modules for specific techniques like heat pumps, PV modules, etc.
-- **Data Imputation**: Interpolates missing data points.
 - **Visualization**: Displays energy flows and technology-specific metrics.
 - **Analysis Layer**: Enables historical analyses with interactive Plotly charts.
 
@@ -29,9 +28,12 @@ The project is in an advanced stage of development with a clear structure and de
 
 - **Expand Modules**: Additional analysis and visualization functions.
 - **Integration of Additional Data Sources**: Support for more databases or APIs.
-- **User Interface and UX Optimization**: Enhancing user experience.
+- **User Interface and UX Optimization**: The possibility of adding calculated data sets via the UI. Make system modules integrable via the UI.
 - **Testing and Validation**: Implementing quality assurance tests.
 - **Documentation and Training**: Creating comprehensive documentation.
+- **Warning Systems**:Integration of a warning system for key figures
+- Revised calculation methods: Calculation of weeks and months in analyselayer with dynamic frequencies
+- Revise data mapping:Implement the possibility for calculated datasets in the analyselayer.
 
 ## Installation Guide
 
@@ -74,81 +76,41 @@ The project is in an advanced stage of development with a clear structure and de
 
 ## Usage
 
-An instruction guide will follow shortly.
+1. After you have connected your database to the datamapping via an interface, you can start the Main.py. 
+
+2. Select your interface. 
+
+3. Select your System Modules. (Currently only modules for the sample dataset are available, if you want to add new modules you can do so. 
+
+4. after the module selection you can start the data mapping. Select a measurement series from your database for each measurement point required by the selected modules. 
+
+5. After correct assignment, you can view the energy balance of your system in the presentation dsiplay. The key figures of the technology modules are also displayed here.
+
+6. In the analysis layer, you can now visually display historical data from your database. You have a choice of 5 diagram types, such as a Theme River. You can also convert your data or adjust the time frequency. A detailed explanation will follow shortly.
+
+   
 
 ## Data Access API Documentation
 
-### Overview
+#### Overview
 
 The Data Access API is designed to provide a consistent interface for accessing different data sources. Currently, there is an implementation for accessing CSV files, but the API is extensible and can be adapted for other data sources like SQL databases, InfluxDB, APIs, etc.
 
-### Main Components
+#### Main Components
 
-- **DataInterface (Abstract Base Class)**: Defines the basic methods that must be provided by concrete implementations.
-    - **`get_column_names()`**: Returns the names of the columns.
-    - **`get_time_frequency()`**: Returns the time frequency of the measurement data.
-    - **`get_data()`**: Reads and filters the data based on various parameters. It allows multi-dimensional filtering based on columns, rows (both forward and backward), and timestamps.
-    - **`get_first_timestamp()`**: Returns the first timestamp in the data.
-    - **`get_last_timestamp()`**: Returns the last timestamp in the data.
-- **CSVDataInterface (Concrete Class)**: Implements the **`DataInterface`** methods for accessing CSV files.
+- **`get_column_names()`**: Returns the names of the columns.
+- **`get_time_frequency()`**: Returns the time frequency of the measurement data.
+- **`get_data()`**: Reads and filters the data based on various parameters. It allows multi-dimensional filtering based on columns, rows (both forward and backward), and timestamps.
+- **`get_first_timestamp()`**: Returns the first timestamp in the data.
+- **`get_last_timestamp()`**: Returns the last timestamp in the data.
+      
+Each interface must have these components with the same outputs and functions. 
+The **Abstract Base Class** Defines the basic methods that must be provided by concrete implementations.
 
-### Usage
 
-1. **Initialization**: Create an instance of the concrete class (e.g., **`CSVDataInterface`**) and specify the file path and the index of the timestamp column.
-    
-    ```python
-    csv_interface = CSVDataInterface("path/to/file.csv", timestamp_col=0)
-    ```
-    
-2. **Retrieve Metadata**: Use methods like **`get_column_names()`** and **`get_time_frequency()`** to get metadata.
-    
-    ```python
-    columns = csv_interface.get_column_names()
-    frequency = csv_interface.get_time_frequency()
-    ```
-    
-3. **Read Data**: Use the **`get_data()`** method to retrieve data with various filters.
-    
-    ```python
-    data = csv_interface.get_data(column_names=['Temperature', 'Humidity'], start_time='2022-01-01', end_time='2022-01-10')
-    ```
-    
-
-### Creating a New Concrete Class
+#### Creating a New Concrete Class
 
 To create a new concrete class that, for example, works on an SQL or InfluxDB database, you need to implement the abstract methods from the **`DataInterface`** class.
-
-#### Example: SQLDataInterface
-```python
-import sqlite3
-import pandas as pd
-
-class SQLDataInterface(DataInterface):
-    def __init__(self, db_path, table_name, timestamp_col="timestamp"):
-        self.db_path = db_path
-        self.table_name = table_name
-        self.timestamp_col = timestamp_col
-
-    def get_column_names(self):
-        # Implementation here
-        pass
-
-    def get_time_frequency(self):
-        # Implementation here
-        pass
-
-    def get_data(self, column_names=None, start_time=None, end_time=None, num_rows=None, ascending=True):
-        # Implementation here
-        pass
-
-    def get_first_timestamp(self):
-        # Implementation here
-        pass
-
-    def get_last_timestamp(self):
-        # Implementation here
-        pass
-```
 
 #### Note
 Make sure the get_data() method supports similar filter parameters as the CSVDataInterface class to maintain consistency.
