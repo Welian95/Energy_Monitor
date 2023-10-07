@@ -80,13 +80,28 @@ The project is in an advanced stage of development with a clear structure and de
 
 2. Select your interface. 
 
-3. Select your System Modules. (Currently only modules for the sample dataset are available, if you want to add new modules you can do so. 
+![choose_api](images/choose_api.png)
 
-4. after the module selection you can start the data mapping. Select a measurement series from your database for each measurement point required by the selected modules. 
+
+3. Select your System Modules. (Currently only modules for the sample dataset are available, if you want to add new modules you can do so.)
+
+![select_modules](images/select_modules.png)
+
+
+4. After the module selection you can start the data mapping. Select a measurement series from your database for each measurement point required by the selected modules. 
+
+![data_mapping](images/data_mapping.png)
+
 
 5. After correct assignment, you can view the energy balance of your system in the presentation dsiplay. The key figures of the technology modules are also displayed here.
 
+![presentation_display](images/presentation_display.gif)
+
+
 6. In the analysis layer, you can now visually display historical data from your database. You have a choice of 5 diagram types, such as a Theme River. You can also convert your data or adjust the time frequency. A detailed explanation will follow shortly.
+
+![themeriver](images/themeriver.png)
+
 
    
 
