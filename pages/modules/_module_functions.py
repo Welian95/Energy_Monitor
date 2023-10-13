@@ -124,32 +124,6 @@ def get_sankey_mapping_S (measuring_list,Consumption, labels, types, energy_type
 
 
 
-
-def load_module_data_old(data_mapping, module_names, start_time=None, end_time=None,):
-    """
-    Load data for specified modules from the API and interpolate missing values.
-
-    Args:
-        data_mapping (dict): The data mapping dictionary.
-        module_names (list): List of module names for which data should be loaded.
-        start_time (str or datetime, optional): The start time for the data retrieval.
-        end_time (str or datetime, optional): The end time for the data retrieval.
-
-    Returns:
-        pd.DataFrame: A DataFrame with the same structure as data_mapping, but with actual data 
-        from the API instead of column names.
-    """
-
-    raw_df = pd.DataFrame()
-    for module, data in data_mapping.items():
-        if module in module_names:
-
-            for data_name, column_name in data.items():
-                raw_df[column_name] = data_interface.get_data([column_name], start_time, end_time,)
-
-    return raw_df
-
-
 def load_module_data(data_mapping, module_names, start_time=None, end_time=None):
     """
     Load data for specified modules from the API and interpolate missing values.

@@ -1,5 +1,3 @@
-# Optimized and well-commented code example
-
 # Standard Libraries
 from typing import Dict
 import copy 
@@ -30,94 +28,6 @@ st.set_page_config(
     )
 
 
-
-
-
-def update_sankey_consumption_old_old(sankey_mapping: dict, frequency, unit="kW") -> dict:
-    """
-    Updates the 'Consumption' fields in sankey_mapping using data from an external data interface.
-    Converts the unit of the consumption value to a specified unit (default is "kWh"), irrespective of the input unit.
-    
-    Parameters:
-    - sankey_mapping (dict): A dictionary defining Sankey diagram attributes.
-    - frequency (str): The frequency of the time index in the DataFrame, e.g., 'H' for hourly, 'D' for daily, etc.
-                        This is used for unit conversion.
-    - unit (str, optional): The desired output unit for the consumption values. Default is "kWh".
-    
-    Returns:
-    - dict: Updated sankey_mapping with 'Consumption' values filled and converted to the specified unit.
-    """
-    for key, attributes in sankey_mapping.items():
-        column_name = attributes['Consumption']
-        if column_name is not None:
-            # Fetch the consumption value
-            consumption_value = float(st.session_state.data_interface.get_data(column_names=column_name, num_rows=1, ascending=False))
-            
-            # Extract the unit from the key
-            unit_str = key.split('_[')[1][:-1] if '_[' in key and ']' in key else None
-            
-            # Create a DataFrame with a single value and a None index
-            df = pd.DataFrame({'Value': [consumption_value]}, index=None)
-
-            
-            # Convert the unit to "kWh" using the power_energy function
-            output_df = power_energy(df, unit_str, unit,frequency)
-            converted_value = output_df.iloc[0, 0]
-           
-            # Update the 'Consumption' value in sankey_mapping
-            sankey_mapping[key]['Consumption'] = converted_value
-            
-    return sankey_mapping
-
-def update_sankey_consumption_old(sankey_mapping: dict, frequency, unit="kWh") -> dict:
-    """
-    Updates the 'Consumption' fields in sankey_mapping using data from an external data interface.
-    Allows mathematical expressions in the 'Consumption' fields.
-    Converts the unit of the consumption value to a specified unit (default is "kWh").
-    
-    Parameters:
-    - sankey_mapping (dict): A dictionary defining Sankey diagram attributes.
-    - frequency (str): The frequency of the time index in the DataFrame.
-    - unit (str, optional): The desired output unit for the consumption values. Default is "kWh".
-    
-    Returns:
-    - dict: Updated sankey_mapping with 'Consumption' values filled and converted to the specified unit.
-    """
-    data_cache = {}  # Cache to store data from the interface
-
-    for key, attributes in sankey_mapping.items():
-        expression = attributes['Consumption']
-
-        # Identify all unique column names in the expression
-        column_names = [name.strip() for name in expression.split('+') if name.strip()]
-
-        for column_name in column_names:
-            # If the data is not already in cache, fetch it
-            if column_name not in data_cache:
-                # Fetch the data
-                data_cache[column_name] = float(st.session_state.data_interface.get_data(column_names=column_name, num_rows=1, ascending=False))
-
-            # Replace the placeholder with the actual value
-            expression = expression.replace(column_name, str(data_cache[column_name]))
-
-        # Evaluate the expression
-        consumption_value = eval(expression)
-
-        # Extract the unit from the key
-        unit_str = key.split('_[')[1][:-1] if '_[' in key and ']' in key else None
-        
-        # Create a DataFrame with a single value and a None index
-        df = pd.DataFrame({'Value': [consumption_value]}, index=None)
-
-        
-        # Convert the unit to "kWh" using the power_energy function
-        output_df = power_energy(df, unit_str, unit,frequency)
-        converted_value = output_df.iloc[0, 0]
-        
-        # Update the 'Consumption' value in sankey_mapping
-        sankey_mapping[key]['Consumption'] = converted_value
-            
-    return sankey_mapping
 
 
 def update_sankey_consumption(sankey_mapping: dict, frequency, unit="kWh") -> dict:
@@ -229,13 +139,12 @@ def transform_data_for_sankey(sankey_mapping: Dict) -> Dict:
 
 
 
-
-
-
-
-
 #Set datainterface
-data_interface = st.session_state.data_interface 
+if "data_interface" in st.session_state:
+    data_interface = st.session_state.data_interface
+else:
+    st.error("data_interface wurde nicht initialisiert.")
+    st.stop()
 
 
 
@@ -333,14 +242,6 @@ def main():
         st.rerun()
 
     
-
-
-
-
-    
-
-    
-
 
 
 

@@ -1,0 +1,53 @@
+Energy\_monitor.functions package
+=================================
+
+Submodules
+----------
+
+Energy\_monitor.functions.api module
+------------------------------------
+
+.. automodule:: Energy_monitor.functions.api
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Energy\_monitor.functions.compute\_energy module
+------------------------------------------------
+
+.. automodule:: Energy_monitor.functions.compute_energy
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Energy\_monitor.functions.conversion module
+-------------------------------------------
+
+.. automodule:: Energy_monitor.functions.conversion
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Energy\_monitor.functions.imputation module
+-------------------------------------------
+
+.. automodule:: Energy_monitor.functions.imputation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Energy\_monitor.functions.sankey module
+---------------------------------------
+
+.. automodule:: Energy_monitor.functions.sankey
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: Energy_monitor.functions
+   :members:
+   :undoc-members:
+   :show-inheritance:

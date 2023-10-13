@@ -1,0 +1,37 @@
+Energy\_monitor.pages package
+=============================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   Energy_monitor.pages.modules
+
+Submodules
+----------
+
+Energy\_monitor.pages.analysis\_layer module
+--------------------------------------------
+
+.. automodule:: Energy_monitor.pages.analysis_layer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Energy\_monitor.pages.presentation\_display module
+--------------------------------------------------
+
+.. automodule:: Energy_monitor.pages.presentation_display
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: Energy_monitor.pages
+   :members:
+   :undoc-members:
+   :show-inheritance:

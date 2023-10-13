@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pages.modules._module_functions &mdash; Energy_Monitor 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Energy_Monitor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Energy_monitor Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Energy_Monitor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pages.modules._module_functions</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pages.modules._module_functions</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">re</span> 
+
+
+
+<div class="viewcode-block" id="initialize_data_interface"><a class="viewcode-back" href="../../../modules/modules.html#pages.modules._module_functions.initialize_data_interface">[docs]</a><span class="k">def</span> <span class="nf">initialize_data_interface</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initialize the data interface based on the saved interface in Configuration.json.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Add the directory containing api.py to the Python path</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;../../functions&#39;</span><span class="p">))</span>
+
+    <span class="c1"># Function to load saved interface from Configuration.json</span>
+    <span class="k">def</span> <span class="nf">load_saved_interface</span><span class="p">(</span><span class="n">config_file</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">config_file</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">saved_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">saved_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;selected_interface&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># Load the saved interface</span>
+    <span class="n">config_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;../../Configuration.json&#39;</span><span class="p">)</span>
+    <span class="n">saved_interface</span> <span class="o">=</span> <span class="n">load_saved_interface</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+
+    <span class="c1"># Import the API module dynamically</span>
+    <span class="kn">import</span> <span class="nn">api</span>
+
+    <span class="c1"># Function to create a data interface dynamically</span>
+    <span class="k">def</span> <span class="nf">create_data_interface</span><span class="p">(</span><span class="n">selected_interface</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">api</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="n">saved_interface</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">obj</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="c1"># Create the data interface</span>
+    <span class="k">if</span> <span class="n">saved_interface</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">create_data_interface</span><span class="p">(</span><span class="n">saved_interface</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+
+<div class="viewcode-block" id="get_required_data_S"><a class="viewcode-back" href="../../../modules/modules.html#pages.modules._module_functions.get_required_data_S">[docs]</a><span class="k">def</span> <span class="nf">get_required_data_S</span><span class="p">(</span><span class="n">measuring_list</span><span class="p">,</span> <span class="n">units</span> <span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retrieve the required data names and their possible units for this system component.</span>
+
+<span class="sd">    This function provides a dictionary where keys represent the names of data </span>
+<span class="sd">    variables relevant for this system component. Each key is mapped to a list </span>
+<span class="sd">    of possible units in which that data variable might be recorded.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: A dictionary where:</span>
+<span class="sd">            - keys are strings representing the names of data variables required by this component.</span>
+<span class="sd">            - values are lists of strings representing the possible units for the respective data variable.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        For a component that requires power yield (P_yield) and battery charge (Battery_charge), </span>
+<span class="sd">        the function might return:</span>
+<span class="sd">        {</span>
+<span class="sd">            &quot;P_yield&quot; : [&quot;W&quot;, &quot;kW&quot;,],</span>
+<span class="sd">            &quot;Battery_charge&quot; : [&quot;Wh&quot;, &quot;kWh&quot;]</span>
+<span class="sd">        }</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        The returned structure is used for data mapping in the main application, helping users </span>
+<span class="sd">        match their data columns to the requirements of this system component and specify the </span>
+<span class="sd">        units of their data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Return the list of required data for this module</span>
+    
+    <span class="n">required_data</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">measuring_list</span><span class="p">:</span>
+        <span class="n">required_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">units</span>
+
+    <span class="k">return</span> <span class="n">required_data</span></div>
+
+
+
+
+<div class="viewcode-block" id="get_sankey_mapping_S"><a class="viewcode-back" href="../../../modules/modules.html#pages.modules._module_functions.get_sankey_mapping_S">[docs]</a><span class="k">def</span> <span class="nf">get_sankey_mapping_S</span> <span class="p">(</span><span class="n">measuring_list</span><span class="p">,</span><span class="n">Consumption</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">energy_type_inputs</span><span class="p">,</span> <span class="n">energy_type_outputs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a data mapping dictionary from lists of labels, types, energy_type_inputs and energy_type_outputs.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">    If a value is present in &quot;measuring_list&quot; but does not have a corresponding &quot;Label&quot; (and &quot;Type&quot;, &quot;EnergyTypeInput&quot;, &quot;EnergyTypeOutput&quot;) value, it is not taken into account in &quot;get_sankey_mapping&quot;.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    - dataframe (pd.DataFrame): The DataFrame containing the data series.</span>
+<span class="sd">    - labels (list): List of labels corresponding to each data series in the DataFrame.</span>
+<span class="sd">    - types (list): List of types corresponding to each data series in the DataFrame.</span>
+<span class="sd">    - energy_type_inputs (list): List of energy type inputs corresponding to each data series in the DataFrame.</span>
+<span class="sd">    - energy_type_outputs (list): List of energy type outputs corresponding to each data series in the DataFrame.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">    - dict: The data mapping dictionary.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># Initialize an empty dictionary to hold the mapping</span>
+    <span class="n">sankey_mapping</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="c1"># Loop through each column in the DataFrame to populate the mapping</span>
+    <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">Consumption</span><span class="p">,</span> <span class="n">typ</span><span class="p">,</span> <span class="n">energy_type_input</span><span class="p">,</span> <span class="n">energy_type_output</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">measuring_list</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">Consumption</span><span class="p">,</span>  <span class="n">types</span><span class="p">,</span> <span class="n">energy_type_inputs</span><span class="p">,</span> <span class="n">energy_type_outputs</span><span class="p">):</span>
+        
+        <span class="c1"># Populate the mapping dictionary for the current data series</span>
+        <span class="n">sankey_mapping</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Label&quot;</span><span class="p">:</span> <span class="n">label</span><span class="p">,</span>
+            <span class="s2">&quot;Consumption&quot;</span><span class="p">:</span> <span class="n">Consumption</span><span class="p">,</span>
+            <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="n">typ</span><span class="p">,</span>
+            <span class="s2">&quot;EnergyTypeInput&quot;</span><span class="p">:</span> <span class="n">energy_type_input</span><span class="p">,</span>
+            <span class="s2">&quot;EnergyTypeOutput&quot;</span><span class="p">:</span> <span class="n">energy_type_output</span>
+        <span class="p">}</span>
+    
+    <span class="k">return</span> <span class="n">sankey_mapping</span></div>
+    
+
+
+
+
+<div class="viewcode-block" id="load_module_data"><a class="viewcode-back" href="../../../modules/modules.html#pages.modules._module_functions.load_module_data">[docs]</a><span class="k">def</span> <span class="nf">load_module_data</span><span class="p">(</span><span class="n">data_mapping</span><span class="p">,</span> <span class="n">module_names</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load data for specified modules from the API and interpolate missing values.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data_mapping (dict): The data mapping dictionary.</span>
+<span class="sd">        module_names (list): List of module names for which data should be loaded.</span>
+<span class="sd">        start_time (str or datetime, optional): The start time for the data retrieval.</span>
+<span class="sd">        end_time (str or datetime, optional): The end time for the data retrieval.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        pd.DataFrame: A DataFrame with the same structure as data_mapping, but with actual data </span>
+<span class="sd">        from the API instead of column names.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">raw_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="n">data_cache</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">operators</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="s2">&quot;(&quot;</span><span class="p">,</span> <span class="s2">&quot;)&quot;</span><span class="p">,</span> <span class="s2">&quot;if&quot;</span><span class="p">,</span> <span class="s2">&quot;else&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;=&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">,</span> <span class="s2">&quot;==&quot;</span><span class="p">])</span>
+    
+    <span class="k">for</span> <span class="n">module</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">data_mapping</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">module_names</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">data_name</span><span class="p">,</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                
+                <span class="c1"># Check if the column_name is a simple column name or a mathematical expression</span>
+                <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">column_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">))</span><span class="o">.</span><span class="n">isdisjoint</span><span class="p">(</span><span class="n">operators</span><span class="p">):</span>
+                    <span class="c1"># It&#39;s a simple column name</span>
+                    <span class="n">raw_df</span><span class="p">[</span><span class="n">column_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_interface</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">column_name</span><span class="p">],</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># It&#39;s a mathematical expression</span>
+                    <span class="n">expression</span> <span class="o">=</span> <span class="n">column_name</span>
+                    
+                    <span class="c1"># Replace IF(condition, true_value, false_value) with Python&#39;s ternary operator</span>
+                    <span class="k">while</span> <span class="s2">&quot;IF(&quot;</span> <span class="ow">in</span> <span class="n">expression</span><span class="p">:</span>
+                        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;IF\(([^,]+),([^,]+),([^)]+)\)&#39;</span><span class="p">,</span> <span class="n">expression</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+                            <span class="n">condition</span><span class="p">,</span> <span class="n">true_value</span><span class="p">,</span> <span class="n">false_value</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+                            <span class="n">ternary_expression</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">true_value</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2"> if </span><span class="si">{</span><span class="n">condition</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2"> else </span><span class="si">{</span><span class="n">false_value</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+                            <span class="n">expression</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(),</span> <span class="n">ternary_expression</span><span class="p">)</span>
+                    
+                    <span class="c1"># Split the expression by spaces</span>
+                    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">expression</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+                    
+                    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">operators</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                            <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data_cache</span><span class="p">:</span>
+                                <span class="n">data_output</span> <span class="o">=</span> <span class="n">data_interface</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">token</span><span class="p">],</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+                                
+                                <span class="c1"># Store the data in the cache</span>
+                                <span class="n">data_cache</span><span class="p">[</span><span class="n">token</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_output</span>
+
+                            <span class="c1"># Replace the token with the actual data value</span>
+                            <span class="n">expression</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;data_cache[&#39;</span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&#39;]&quot;</span><span class="p">)</span>
+                    
+                    <span class="c1"># Evaluate the expression and store it in raw_df</span>
+                    <span class="n">raw_df</span><span class="p">[</span><span class="n">column_name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+                    
+    <span class="k">return</span> <span class="n">raw_df</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="get_module_figs"><a class="viewcode-back" href="../../../modules/modules.html#pages.modules._module_functions.get_module_figs">[docs]</a><span class="k">def</span> <span class="nf">get_module_figs</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a function to create plant module specific images. This function must be created specifically for each plant module. </span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -None</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - A list of charts which can be called with &quot;st.plotly_chart()&quot;.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">figures</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">return</span> <span class="n">figures</span></div>
+
+
+<span class="n">data_interface</span> <span class="o">=</span> <span class="n">initialize_data_interface</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">!=</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1">#Intilazie interface:</span>
+    <span class="n">data_interface</span> <span class="o">=</span> <span class="n">initialize_data_interface</span><span class="p">()</span>
+
+    
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Julian W..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

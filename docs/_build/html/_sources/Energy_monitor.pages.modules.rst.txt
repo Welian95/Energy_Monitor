@@ -1,0 +1,61 @@
+Energy\_monitor.pages.modules package
+=====================================
+
+Submodules
+----------
+
+Energy\_monitor.pages.modules.Battery\_module module
+----------------------------------------------------
+
+.. automodule:: Energy_monitor.pages.modules.Battery_module
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Energy\_monitor.pages.modules.E\_consumer\_module module
+--------------------------------------------------------
+
+.. automodule:: Energy_monitor.pages.modules.E_consumer_module
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Energy\_monitor.pages.modules.Floors\_module module
+---------------------------------------------------
+
+.. automodule:: Energy_monitor.pages.modules.Floors_module
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Energy\_monitor.pages.modules.Heat\_pump\_module module
+-------------------------------------------------------
+
+.. automodule:: Energy_monitor.pages.modules.Heat_pump_module
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Energy\_monitor.pages.modules.Photovoltaik\_module module
+---------------------------------------------------------
+
+.. automodule:: Energy_monitor.pages.modules.Photovoltaik_module
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Energy\_monitor.pages.modules.Ventilation\_system\_and\_heating\_pumps\_module module
+-------------------------------------------------------------------------------------
+
+.. automodule:: Energy_monitor.pages.modules.Ventilation_system_and_heating_pumps_module
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: Energy_monitor.pages.modules
+   :members:
+   :undoc-members:
+   :show-inheritance:

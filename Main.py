@@ -23,6 +23,15 @@ st.set_page_config(
 
 
 def list_available_interfaces():
+    """
+    List all available data interfaces that are subclasses of `DataInterface` from the `api_module`.
+
+    This function dynamically inspects the `api_module` to find all subclasses of `DataInterface`.
+    It does not include `DataInterface` itself in the list.
+
+    Returns:
+        list: A list containing the names of all available data interface subclasses.
+    """
     subclasses = []
     for name, obj in inspect.getmembers(api_module):  # Verwenden Sie das importierte Modul als Argument
         if inspect.isclass(obj):
@@ -30,20 +39,41 @@ def list_available_interfaces():
                 subclasses.append(obj.__name__)
     return subclasses
 
+
 def create_data_interface(selected_interface, **kwargs):
+    """
+    Dynamically creates an instance of the selected data interface from `api_module`.
+
+    Args:
+        selected_interface (str): The name of the data interface class to instantiate.
+        **kwargs: Arbitrary keyword arguments that will be passed to the constructor of the selected interface.
+
+    Returns:
+        object: An instance of the selected data interface, initialized with the provided keyword arguments.
+    """
+
     for name, obj in inspect.getmembers(api_module):
         if name == selected_interface:
             return obj(**kwargs)
-        
 
 
 def choose_interface(default=None):
+    """
+    Display a Streamlit select box for the user to choose a data interface.
+
+    The function uses Streamlit to display a select box containing the names of all available data interface subclasses.
+    An optional default selection can be provided.
+
+    Args:
+        default (str, optional): The name of the data interface to be selected by default. Defaults to None.
+
+    Returns:
+        str: The name of the selected data interface.
+    """
     st.subheader("Available Interfaces:")
     available_interfaces = list_available_interfaces()
     selected_interface = st.selectbox("Choose your interface:", available_interfaces, index=available_interfaces.index(default) if default in available_interfaces else 0)  
     return selected_interface
-
-
 
 
 def load_saved_mapping(config_file):
@@ -62,6 +92,7 @@ def load_saved_mapping(config_file):
         return saved_data.get("data_mapping", {}), saved_data.get("system_modules", []), saved_data.get("selected_interface", None)
     else:
         return {}, [], None
+
 
 def save_current_mapping(data_mapping, system_modules, selected_interface, config_file):
     """
@@ -161,6 +192,8 @@ def display_data_mapping(column_names, active_system_modules, saved_data_mapping
 
             selected_unit = col2.selectbox(f"Select input unit from source  for {data_name}:", units, index=default_unit, key=counter, help="Here you must select the unit which the data from the data source was acquired. ")
             counter += 1
+       
+
 
             # Concatenate the selected column and the unit
             module_data_mapping[f"{data_name}_[{selected_unit}]"] = selected_column
@@ -172,25 +205,6 @@ def display_data_mapping(column_names, active_system_modules, saved_data_mapping
     return data_mapping
 
 
-
-def set_sankey_mapping_old():
-    sankey_mapping = {}
-
-    # Create a Counter to change the selectbox-key in every iteration
-    counter = 1000
-
-    for module_name in active_system_modules:
-        module = importlib.import_module(f"pages.modules.{module_name}_module")
-
-        # Check if the module has the function "get_required_data"
-        if not hasattr(module, "get_sankey_mapping"):
-            st.warning(f"The selected system module '{module_name}' does not contain the function 'get_sankey_mapping'. Please update this system module or choose another module.")
-            continue
-
-        sankey_mapping = module.get_sankey_mapping()
-        
-
-    return sankey_mapping
 
 def set_sankey_mapping(active_system_modules):
     """
@@ -228,42 +242,6 @@ def set_sankey_mapping(active_system_modules):
     return sankey_mapping
 
 
-def map_consumption_values_old(data_mapping: dict, sankey_mapping: dict) -> dict:
-    """
-    Maps the 'Consumption' values in sankey_mapping using the values from data_mapping.
-    Also includes units in the keys of the sankey_mapping.
-    
-    Parameters:
-    - data_mapping (dict): A dictionary containing the mapping between data fields and their labels.
-    - sankey_mapping (dict): A dictionary defining Sankey diagram attributes like 'Label', 'Consumption', etc.
-    
-    Returns:
-    - dict: The updated sankey_mapping with 'Consumption' values and units in keys.
-    """
-    
-    # Create an empty dictionary to hold the new sankey_mapping with units
-    new_sankey_mapping = {}
-    
-    # Loop through each key-value pair in data_mapping
-    for main_key, sub_dict in data_mapping.items():
-        # Loop through each sub-key-value pair in the sub-dictionary
-        for sub_key, sub_value in sub_dict.items():
-            # Retrieve the unit from the key (e.g., get '_[W]' from 'Compressor_Power_[W]')
-            unit = sub_key.split('_[')[1][:-1] if '_[' in sub_key else ''
-            
-            # Check if the clean key exists in sankey_mapping
-            clean_sub_key = sub_key.split('_[')[0]
-            if clean_sub_key in sankey_mapping:
-                # Create a new key by appending the unit to the clean key
-                new_key = f"{clean_sub_key}_[{unit}]" if unit else clean_sub_key
-                
-                # Copy the existing attributes to the new key
-                new_sankey_mapping[new_key] = sankey_mapping[clean_sub_key].copy()
-                
-                # Update the 'Consumption' value for that key in the new sankey_mapping
-                new_sankey_mapping[new_key]['Consumption'] = sub_value
-                
-    return new_sankey_mapping
 
 def map_consumption_values(data_mapping: dict, sankey_mapping: dict) -> dict:
     """

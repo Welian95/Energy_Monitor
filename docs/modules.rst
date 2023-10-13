@@ -1,0 +1,15 @@
+Energy_monitor Documentation
+==============================
+
+Main
+-----------
+
+.. automodule:: Main
+   :members:
+
+.. toctree::
+    :maxdepth: 4
+
+   pages
+   functions
+   

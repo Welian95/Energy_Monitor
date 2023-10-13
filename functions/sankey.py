@@ -1,53 +1,7 @@
 import streamlit as st
-from streamlit_extras.switch_page_button import switch_page
-import matplotlib.pyplot as plt
-from matplotlib.sankey import Sankey
-# Importieren des statistics Moduls
-from statistics import mean
-from io import BytesIO
-import base64
 from matplotlib.patheffects import withStroke
-import csv
-import time
 import pandas as pd
 import plotly.graph_objects as go
-
-def custom_style_text(text, fontsize=6):
-    """
-    Customizes the style of a Matplotlib text element, including font size.
-
-    Parameters:
-        text (matplotlib.text.Text): The text element to be styled.
-        fontsize (int, optional): The size of the font. Default is 12.
-
-    Returns:
-        None
-    """
-    text.set_color('white')
-    text.set_path_effects([
-        withStroke(linewidth=3, foreground='black')
-    ])
-    text.set_weight('bold')
-    text.set_fontsize(fontsize)
-
-
-
-# Funktion zum Konvertieren einer Matplotlib-Figur in ein Byte-Array
-def fig_to_image(fig):
-    """
-    Converts a Matplotlib figure to a byte array that can be displayed as an image in Streamlit.
-
-    Parameters:
-        fig (matplotlib.figure.Figure): The Matplotlib figure to convert.
-
-    Returns:
-        BytesIO: A byte array representation of the image.
-    """
-    img_stream = BytesIO()
-    fig.savefig(img_stream, format='png', transparent=True) # Set transparent=True to make the background transparent
-    img_stream.seek(0)
-    return img_stream
-
 
 
 
@@ -75,7 +29,32 @@ def mix_colors(color1, color2):
 
 def generate_sankey_data_from_table(table): 
     """
-    Generate Sankey diagram data (labels, source, target, value, color) from a given table.
+    Generate data required to plot a Sankey diagram from a given Pandas DataFrame table.
+
+    The table is expected to have the following columns:
+    - 'Label': Identifier for the node (e.g., "Plant A")
+    - 'Type': Type of the node ("Source", "Transformer", "Sink")
+    - 'EnergyTypeInput': Type of input energy (e.g., "electricity")
+    - 'EnergyTypeOutput': Type of output energy (e.g., "heat")
+    - 'Consumption': Energy consumption or transformation value
+    
+    The function generates five lists:
+    - labels_with_values: A list of node labels appended with their total energy value.
+    - source: A list of source node indices corresponding to 'labels_with_values'.
+    - target: A list of target node indices corresponding to 'labels_with_values'.
+    - value: A list of energy values (consumption or transformation) for each source-target pair.
+    - color: A list of colors for each flow link between source and target nodes.
+
+    Args:
+        table (pd.DataFrame): The input table containing columns for 'Label', 'Type', 'EnergyTypeInput', 
+                               'EnergyTypeOutput', and 'Consumption'.
+
+    Returns:
+        tuple: A tuple containing five lists - (labels_with_values, source, target, value, color).
+
+    Note:
+        - The function assumes that the 'table' DataFrame does not contain NaN or missing values in the relevant columns.
+        - It also assumes that the 'Consumption' column contains numerical values.
     """
     labels = []
     source = []

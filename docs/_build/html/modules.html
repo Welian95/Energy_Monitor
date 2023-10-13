@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Energy_monitor Documentation &mdash; Energy_Monitor 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Pages" href="pages.html" />
+    <link rel="prev" title="Welcome to Energy_Monitor’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Energy_Monitor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Energy_monitor Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-Main">Main</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pages.html">Pages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Energy_Monitor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Energy_monitor Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/modules.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="energy-monitor-documentation">
+<h1>Energy_monitor Documentation<a class="headerlink" href="#energy-monitor-documentation" title="Permalink to this heading"></a></h1>
+<section id="module-Main">
+<span id="main"></span><h2>Main<a class="headerlink" href="#module-Main" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.choose_interface">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">choose_interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#choose_interface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.choose_interface" title="Permalink to this definition"></a></dt>
+<dd><p>Display a Streamlit select box for the user to choose a data interface.</p>
+<p>The function uses Streamlit to display a select box containing the names of all available data interface subclasses.
+An optional default selection can be provided.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>default (str, optional): The name of the data interface to be selected by default. Defaults to None.</p>
+</dd>
+<dt>Returns:</dt><dd><p>str: The name of the selected data interface.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.create_data_interface">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">create_data_interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_interface</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#create_data_interface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.create_data_interface" title="Permalink to this definition"></a></dt>
+<dd><p>Dynamically creates an instance of the selected data interface from <cite>api_module</cite>.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>selected_interface (str): The name of the data interface class to instantiate.
+<a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: Arbitrary keyword arguments that will be passed to the constructor of the selected interface.</p>
+</dd>
+<dt>Returns:</dt><dd><p>object: An instance of the selected data interface, initialized with the provided keyword arguments.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.display_data_mapping">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">display_data_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">active_system_modules</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saved_data_mapping</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#display_data_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.display_data_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Display the data mapping interface for the user to map columns to system modules and select units.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>column_names (list): List of available columns.
+active_system_modules (list): List of active system modules.
+saved_data_mapping (dict, optional): A dictionary containing previously saved data mappings. Defaults to None.</p>
+</dd>
+<dt>Returns:</dt><dd><p>dict: A dictionary representing the user’s data mapping selections.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.get_available_system_modules">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">get_available_system_modules</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#get_available_system_modules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.get_available_system_modules" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve the list of available system modules.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>list: A list of module names that are available for selection.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.list_available_interfaces">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">list_available_interfaces</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#list_available_interfaces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.list_available_interfaces" title="Permalink to this definition"></a></dt>
+<dd><p>List all available data interfaces that are subclasses of <cite>DataInterface</cite> from the <cite>api_module</cite>.</p>
+<p>This function dynamically inspects the <cite>api_module</cite> to find all subclasses of <cite>DataInterface</cite>.
+It does not include <cite>DataInterface</cite> itself in the list.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>list: A list containing the names of all available data interface subclasses.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.load_saved_mapping">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">load_saved_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#load_saved_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.load_saved_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Load the saved data mapping, system modules, and selected interface from a configuration file.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>config_file (str): Path to the configuration file.</p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: The saved data mapping, the selected system modules, and the selected interface.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.main">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.main" title="Permalink to this definition"></a></dt>
+<dd><p>Main function to run the Streamlit application for data mapping.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.map_consumption_values">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">map_consumption_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sankey_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/Main.html#map_consumption_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.map_consumption_values" title="Permalink to this definition"></a></dt>
+<dd><p>Maps the ‘Consumption’ values in sankey_mapping using the values from data_mapping.
+Also includes units in the keys of the sankey_mapping.</p>
+<p>Parameters:
+- data_mapping (dict): A dictionary containing the mapping between data fields and their labels.
+- sankey_mapping (dict): A dictionary defining Sankey diagram attributes like ‘Label’, ‘Consumption’, etc.</p>
+<p>Returns:
+- dict: The updated sankey_mapping with ‘Consumption’ values and units in keys.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.save_current_mapping">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">save_current_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_mapping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_modules</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_interface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#save_current_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.save_current_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Save the current data mapping, selected system modules, and selected interface to a configuration file.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>data_mapping (dict): The current data mapping to be saved.
+system_modules (list): The selected system modules to be saved.
+selected_interface (str): The selected data interface to be saved.
+config_file (str): Path to the configuration file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.set_sankey_mapping">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">set_sankey_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">active_system_modules</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#set_sankey_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.set_sankey_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Create a sankey mapping dictionary based on active system modules.</p>
+<p>Parameters:
+- active_system_modules: list of strings, names of the active system modules</p>
+<p>Returns:
+- sankey_mapping: dictionary, the mapping created by merging all active system modules</p>
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pages.html">Pages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/modules.html">System Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/modules.html#module-pages.modules._module_functions">module_functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/modules.html#module-pages.modules._module_template">module_template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/modules.html#module-pages.modules.Heat_pump_module">Heat Pump Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/modules.html#pv-module">PV Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/modules.html#module-pages.modules.Battery_module">Battery_module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/modules.html#module-pages.modules.E_consumer_module">E_consumer_module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/modules.html#module-pages.modules.Floors_module">Floors_module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/modules.html#module-pages.modules.Ventilation_system_and_heating_pumps_module">Ventilation_system_and_heating_pumps_module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Energy_Monitor’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pages.html" class="btn btn-neutral float-right" title="Pages" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Julian W..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

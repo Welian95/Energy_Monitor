@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>functions.compute_energy &mdash; Energy_Monitor 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Energy_Monitor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Energy_monitor Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Energy_Monitor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">functions.compute_energy</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for functions.compute_energy</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pint</span>
+
+<span class="c1">#Help Funktions of this skript </span>
+
+<span class="c1"># Use pint </span>
+<span class="n">ureg</span> <span class="o">=</span> <span class="n">pint</span><span class="o">.</span><span class="n">UnitRegistry</span><span class="p">()</span>
+
+<div class="viewcode-block" id="freq_to_pint"><a class="viewcode-back" href="../../functions.html#functions.compute_energy.freq_to_pint">[docs]</a><span class="k">def</span> <span class="nf">freq_to_pint</span><span class="p">(</span><span class="n">freq</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a pandas frequency string to a pint quantity.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    - freq (str): A string representing the desired frequency in pandas format. </span>
+<span class="sd">                  Possible values include:</span>
+<span class="sd">                  &#39;1S&#39; : 1 second</span>
+<span class="sd">                  &#39;30S&#39; : 30 seconds</span>
+<span class="sd">                  &#39;1T&#39; or &#39;1Min&#39; : 1 minute</span>
+<span class="sd">                  &#39;5T&#39; or &#39;5Min&#39; : 5 minutes</span>
+<span class="sd">                  &#39;15T&#39; or &#39;15Min&#39; : 15 minutes</span>
+<span class="sd">                  &#39;30T&#39; or &#39;30Min&#39; : 30 minutes</span>
+<span class="sd">                  &#39;1H&#39; : 1 hour</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">    - pint.Quantity: The equivalent frequency as a pint quantity.</span>
+<span class="sd">    </span>
+<span class="sd">    Example:</span>
+<span class="sd">    &gt;&gt;&gt; freq_to_pint(&#39;1S&#39;)</span>
+<span class="sd">    &lt;Quantity(1, &#39;second&#39;)&gt;</span>
+<span class="sd">    </span>
+<span class="sd">    Note:</span>
+<span class="sd">    This function currently supports a subset of pandas frequency strings. </span>
+<span class="sd">    For a comprehensive list of pandas frequency strings, consult the pandas documentation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="n">ureg</span><span class="o">.</span><span class="n">second</span><span class="p">,</span>
+        <span class="s1">&#39;T&#39;</span><span class="p">:</span> <span class="n">ureg</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span>
+        <span class="s1">&#39;Min&#39;</span><span class="p">:</span> <span class="n">ureg</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span>
+        <span class="s1">&#39;H&#39;</span><span class="p">:</span> <span class="n">ureg</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span>
+        <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="n">ureg</span><span class="o">.</span><span class="n">day</span><span class="p">,</span>
+    <span class="p">}</span>
+    
+    <span class="c1"># Find the first non-digit character to separate magnitude and unit</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">char</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">freq</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">char</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="n">magnitude</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">freq</span><span class="p">[:</span><span class="n">i</span><span class="p">])</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span>
+            <span class="n">unit_str</span> <span class="o">=</span> <span class="n">freq</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span>
+            <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported frequency format: </span><span class="si">{</span><span class="n">freq</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="n">unit</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">[</span><span class="n">unit_str</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">magnitude</span> <span class="o">*</span> <span class="n">unit</span></div>
+
+
+<div class="viewcode-block" id="classify_unit"><a class="viewcode-back" href="../../functions.html#functions.compute_energy.classify_unit">[docs]</a><span class="k">def</span> <span class="nf">classify_unit</span><span class="p">(</span><span class="n">unit_str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Classifies the given unit as &quot;power&quot;, &quot;energy&quot;, or &quot;unknown&quot; based on its dimensionality.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    - unit_str (str): The unit to be classified, e.g., &quot;W&quot;, &quot;J&quot;, &quot;mW&quot;, etc.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - str: &quot;power&quot; if the unit is a power unit, &quot;energy&quot; if it&#39;s an energy unit, </span>
+<span class="sd">           or &quot;unknown&quot; if the unit is neither power nor energy.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Convert the unit string to a pint Quantity</span>
+    <span class="n">unit</span> <span class="o">=</span> <span class="n">ureg</span><span class="p">(</span><span class="n">unit_str</span><span class="p">)</span>
+    
+    <span class="c1"># Extract the dimensionality of the unit</span>
+    <span class="n">dim</span> <span class="o">=</span> <span class="n">unit</span><span class="o">.</span><span class="n">dimensionality</span>
+    
+    <span class="c1"># Check the dimensionality to classify the unit</span>
+    <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="n">ureg</span><span class="o">.</span><span class="n">watt</span><span class="o">.</span><span class="n">dimensionality</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;power&quot;</span>
+    <span class="k">elif</span> <span class="n">dim</span> <span class="o">==</span> <span class="n">ureg</span><span class="o">.</span><span class="n">joule</span><span class="o">.</span><span class="n">dimensionality</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;energy&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;unknown&quot;</span></div>
+    
+
+
+
+<span class="c1"># Main funktion of this skript </span>
+
+
+<div class="viewcode-block" id="power_energy"><a class="viewcode-back" href="../../functions.html#functions.compute_energy.power_energy">[docs]</a><span class="k">def</span> <span class="nf">power_energy</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">input_unit</span><span class="p">,</span> <span class="n">output_unit</span><span class="p">,</span> <span class="n">frequency</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert power values in a DataFrame to energy values or vice versa.</span>
+
+<span class="sd">    Given a DataFrame with power values and a specified time interval, this function</span>
+<span class="sd">    can convert the power values to energy values, or vice versa based on the </span>
+<span class="sd">    provided input and output units.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pd.DataFrame</span>
+<span class="sd">        A DataFrame containing power or energy data with a consistent timestamp </span>
+<span class="sd">        as its index. The timestamp index must have a fixed time interval frequency.</span>
+<span class="sd">    input_unit : str</span>
+<span class="sd">        The unit of the values in the input DataFrame. </span>
+<span class="sd">        Supported power units include: W, mW, kW, MW, GW, J/s, cal/s, BTU/h, etc.</span>
+<span class="sd">        Supported energy units include: J, mJ, kJ, MJ, GJ, cal, kcal, Wh, kWh, MWh, BTU, etc.</span>
+<span class="sd">    output_unit : str</span>
+<span class="sd">        The desired unit for the output values. This must be dimensionally </span>
+<span class="sd">        consistent with the input_unit.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    -------</span>
+<span class="sd">    pd.DataFrame</span>
+<span class="sd">        A DataFrame with values converted to the specified output unit and </span>
+<span class="sd">        retaining the original timestamp index.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">time_Unit</span> <span class="o">=</span> <span class="n">freq_to_pint</span><span class="p">(</span><span class="n">frequency</span><span class="p">)</span>
+
+    <span class="c1"># Convert power values in the DataFrame to pint quantities</span>
+    <span class="n">values_with_unit</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span> <span class="o">*</span> <span class="n">ureg</span><span class="p">(</span><span class="n">input_unit</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">classify_unit</span><span class="p">(</span><span class="n">input_unit</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;power&quot;</span> <span class="ow">and</span> <span class="n">classify_unit</span><span class="p">(</span><span class="n">output_unit</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;energy&quot;</span><span class="p">:</span>
+        <span class="n">energy_values</span> <span class="o">=</span> <span class="p">(</span><span class="n">values_with_unit</span> <span class="o">*</span> <span class="n">time_Unit</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">output_unit</span><span class="p">)</span>
+        <span class="n">column_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Energy [</span><span class="si">{</span><span class="n">energy_values</span><span class="o">.</span><span class="n">units</span><span class="si">}</span><span class="s2">]&quot;</span>
+        <span class="n">output_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">energy_values</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">column_name</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">classify_unit</span><span class="p">(</span><span class="n">input_unit</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;energy&quot;</span> <span class="ow">and</span> <span class="n">classify_unit</span><span class="p">(</span><span class="n">output_unit</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;power&quot;</span><span class="p">:</span>
+        <span class="n">power_values</span> <span class="o">=</span> <span class="p">(</span><span class="n">values_with_unit</span> <span class="o">/</span> <span class="n">time_Unit</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">output_unit</span><span class="p">)</span>
+        <span class="n">column_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Power [</span><span class="si">{</span><span class="n">power_values</span><span class="o">.</span><span class="n">units</span><span class="si">}</span><span class="s2">]&quot;</span>
+        <span class="n">output_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">power_values</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">column_name</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">classify_unit</span><span class="p">(</span><span class="n">input_unit</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;power&quot;</span> <span class="ow">and</span> <span class="n">classify_unit</span><span class="p">(</span><span class="n">output_unit</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;power&quot;</span><span class="p">:</span>
+        <span class="n">power_values</span> <span class="o">=</span> <span class="n">values_with_unit</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">output_unit</span><span class="p">)</span>
+        <span class="n">column_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Power [</span><span class="si">{</span><span class="n">power_values</span><span class="o">.</span><span class="n">units</span><span class="si">}</span><span class="s2">]&quot;</span>
+        <span class="n">output_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">power_values</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">column_name</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">classify_unit</span><span class="p">(</span><span class="n">input_unit</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;energy&quot;</span> <span class="ow">and</span> <span class="n">classify_unit</span><span class="p">(</span><span class="n">output_unit</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;energy&quot;</span><span class="p">:</span>
+        <span class="n">energy_values</span> <span class="o">=</span> <span class="n">values_with_unit</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">output_unit</span><span class="p">)</span>
+        <span class="n">column_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Energy [</span><span class="si">{</span><span class="n">energy_values</span><span class="o">.</span><span class="n">units</span><span class="si">}</span><span class="s2">]&quot;</span>
+        <span class="n">output_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">energy_values</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">column_name</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">output_df</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Wrong input-</span><span class="si">{</span><span class="n">input_unit</span><span class="si">}</span><span class="s2"> or output-</span><span class="si">{</span><span class="n">output_unit</span><span class="si">}</span><span class="s2"> variable&quot;</span>
+    
+    <span class="k">return</span> <span class="n">output_df</span></div>
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="c1"># Test Funktion if only this skript is running</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="kn">import</span> <span class="nn">imputation</span>
+
+    <span class="n">st</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Test of compute_energy.py&quot;</span><span class="p">)</span>
+
+    <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">,</span> <span class="n">c4</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">columns</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="c1">### 1. Example Data</span>
+
+     <span class="c1"># Erstellen eines Beispiel-DataFrames zur Überprüfung der Funktion</span>
+    <span class="n">example_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Power [watt]&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">5</span><span class="p">],}</span>
+    
+    <span class="n">example_timestamps</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([</span><span class="s1">&#39;2023-08-11 10:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;2023-08-11 10:10:00&#39;</span><span class="p">,</span> <span class="s1">&#39;2023-08-11 10:20:00&#39;</span><span class="p">,</span> <span class="s1">&#39;2023-08-11 10:30:00&#39;</span><span class="p">,</span> <span class="s1">&#39;2023-08-11 10:40:00&#39;</span><span class="p">,</span> <span class="s1">&#39;2023-08-11 10:50:00&#39;</span><span class="p">,])</span>
+    <span class="n">example_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">example_data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">example_timestamps</span><span class="p">)</span>
+
+     <span class="c1"># Erstellen eines Beispiel-DataFrames zur Überprüfung der Funktion</span>
+    <span class="n">example_data2</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Power [watt]&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">],}</span>
+    
+    <span class="n">example_timestamps</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([</span><span class="s1">&#39;2023-08-11 10:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;2023-08-11 10:15:00&#39;</span><span class="p">,</span> <span class="s1">&#39;2023-08-11 10:30:00&#39;</span><span class="p">,</span> <span class="s1">&#39;2023-08-11 10:45:00&#39;</span><span class="p">,])</span>
+    <span class="n">example_df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">example_data2</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">example_timestamps</span><span class="p">)</span>
+
+    <span class="n">frequency</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">infer_freq</span><span class="p">(</span><span class="n">example_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">example_df</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="n">c1</span><span class="o">.</span><span class="n">subheader</span><span class="p">(</span><span class="s2">&quot;Example DATA&quot;</span><span class="p">)</span>
+
+    <span class="n">c1</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">example_df</span><span class="p">)</span>
+
+    <span class="n">c1</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Frequency:&quot;</span><span class="p">)</span>
+    <span class="n">c1</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">frequency</span><span class="p">)</span>
+
+    <span class="c1">### 2. Konsistenter Datensatz mit vorgegebener Frequnz erstellen </span>
+
+    <span class="n">freq</span> <span class="o">=</span> <span class="s2">&quot;1W&quot;</span> <span class="c1"># 1 minute time Intervall</span>
+
+
+    <span class="n">c2</span><span class="o">.</span><span class="n">subheader</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Interploated DATA (time interval = </span><span class="si">{</span><span class="n">freq</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+    
+
+    <span class="n">interpolated_data</span> <span class="o">=</span> <span class="n">imputation</span><span class="o">.</span><span class="n">interpolate_impute</span><span class="p">(</span><span class="n">example_df</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="n">freq</span><span class="p">)</span>
+
+    <span class="n">frequency</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">infer_freq</span><span class="p">(</span><span class="n">interpolated_data</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">interpolated_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="n">c2</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">interpolated_data</span><span class="p">)</span>
+
+    <span class="n">c2</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Mean:&quot;</span><span class="p">)</span>
+    <span class="n">c2</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span> <span class="n">mean</span><span class="p">))</span>
+
+    <span class="n">c2</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Frequency:&quot;</span><span class="p">)</span>
+    <span class="n">c2</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">freq_to_pint</span><span class="p">(</span><span class="n">frequency</span><span class="p">))</span>
+
+
+
+    <span class="c1">### 3. Convert power to energy</span>
+
+    <span class="n">input_unit</span><span class="p">,</span> <span class="n">output_unit</span> <span class="o">=</span> <span class="s2">&quot;W&quot;</span> <span class="p">,</span> <span class="s2">&quot;Wh&quot;</span>
+
+    <span class="n">c3</span><span class="o">.</span><span class="n">subheader</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Convert Power to Energy [</span><span class="si">{</span><span class="n">input_unit</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">output_unit</span><span class="si">}</span><span class="s2">] &quot;</span><span class="p">)</span>
+
+
+    <span class="n">convertedP2E_df</span> <span class="o">=</span> <span class="n">power_energy</span> <span class="p">(</span><span class="n">interpolated_data</span><span class="p">,</span> <span class="n">input_unit</span><span class="p">,</span> <span class="n">output_unit</span> <span class="p">,</span><span class="n">frequency</span><span class="p">)</span>
+    
+    <span class="n">c3</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">convertedP2E_df</span><span class="p">)</span>
+
+    <span class="n">c3</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Sum:&quot;</span> <span class="p">)</span>
+    <span class="n">c3</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span> <span class="p">(</span><span class="n">convertedP2E_df</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
+
+
+
+
+    <span class="c1">### 4. Convert energy to power</span>
+
+    <span class="n">input_unit</span><span class="p">,</span> <span class="n">output_unit</span> <span class="o">=</span> <span class="s2">&quot;Wh&quot;</span> <span class="p">,</span> <span class="s2">&quot;J/s&quot;</span>
+
+    <span class="n">c4</span><span class="o">.</span><span class="n">subheader</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Convert Power to Energy [</span><span class="si">{</span><span class="n">input_unit</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">output_unit</span><span class="si">}</span><span class="s2">] &quot;</span><span class="p">)</span>
+
+
+    <span class="n">convertedE2P_df</span> <span class="o">=</span> <span class="n">power_energy</span> <span class="p">(</span><span class="n">convertedP2E_df</span><span class="p">,</span> <span class="n">input_unit</span><span class="p">,</span> <span class="n">output_unit</span> <span class="p">,</span><span class="n">frequency</span><span class="p">)</span>
+    
+    <span class="n">c4</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">convertedE2P_df</span><span class="p">)</span>
+
+    <span class="n">c4</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Mean:&quot;</span> <span class="p">)</span>
+    <span class="n">c4</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span> <span class="p">(</span><span class="n">convertedE2P_df</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="c1">### Summarry:</span>
+    <span class="k">with</span> <span class="n">st</span><span class="o">.</span><span class="n">expander</span><span class="p">(</span><span class="s2">&quot;Explanation of the relationship between power and energy&quot;</span><span class="p">):</span>
+        <span class="n">summary</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                    Summary:</span>
+
+<span class="s2">                    The relationship between Power (P), Energy (E), and Time (t) is described by the following formula:</span>
+<span class="s2">                    E = P × t</span>
+
+<span class="s2">                    - Power (P): The rate at which energy is transferred or converted over time. It is measured in Watts (W).</span>
+<span class="s2">                    - Energy (E): The total amount of energy consumed over a specific period. It is measured in Watt-hours (Wh).</span>
+<span class="s2">                    - Time (t): The duration over which the energy is consumed.</span>
+
+<span class="s2">                    If you calculate the average power over a specific time span and multiply this average power by the duration of that span, you get the total energy consumed during that span.</span>
+
+<span class="s2">                    Example 1:</span>
+
+<span class="s2">                    Measured power per unit of time (over an hour):</span>
+<span class="s2">                    - Average Power: 9 W</span>
+<span class="s2">                    - Time Span: 1 hour</span>
+<span class="s2">                    - Calculated Total Energy: E = 9 W × 1 hour = 9 Wh</span>
+
+<span class="s2">                    Example 2:</span>
+
+<span class="s2">                    Measured power per unit of time (over 50 minutes):</span>
+<span class="s2">                    - Average Power: 9.045455 W</span>
+<span class="s2">                    - Time Span: 50/60 hour (or 5/6 hour)</span>
+<span class="s2">                    - Sum of calculated energy for each 5-minute interval: 8.291667 Wh</span>
+
+<span class="s2">                    In this case, the time series does not cover a full hour but only 50 minutes. Therefore, the sum of the energy will not exactly match the average power over a full hour.</span>
+
+<span class="s2">                    Conclusion:</span>
+
+<span class="s2">                    The sum of energy over a specific time span corresponds to the average power multiplied by that span. However, if the time span is not exactly one hour, the sum of the energy will not necessarily match the average power over a full hour.</span>
+<span class="s2">                &quot;&quot;&quot;</span>
+
+        <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Julian W..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

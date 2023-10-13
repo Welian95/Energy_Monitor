@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Modules &mdash; Energy_Monitor 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Functions" href="../functions.html" />
+    <link rel="prev" title="Pages" href="../pages.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Energy_Monitor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Energy_monitor Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../modules.html#module-Main">Main</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../pages.html">Pages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">System Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../functions.html">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Energy_Monitor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../modules.html">Energy_monitor Documentation</a></li>
+          <li class="breadcrumb-item"><a href="../pages.html">Pages</a></li>
+      <li class="breadcrumb-item active">System Modules</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/modules.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="system-modules">
+<h1>System Modules<a class="headerlink" href="#system-modules" title="Permalink to this heading"></a></h1>
+<section id="module-pages.modules._module_functions">
+<span id="module-functions"></span><h2>module_functions<a class="headerlink" href="#module-pages.modules._module_functions" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules._module_functions.get_module_figs">
+<span class="sig-prename descclassname"><span class="pre">pages.modules._module_functions.</span></span><span class="sig-name descname"><span class="pre">get_module_figs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/_module_functions.html#get_module_figs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules._module_functions.get_module_figs" title="Permalink to this definition"></a></dt>
+<dd><p>This is a function to create plant module specific images. This function must be created specifically for each plant module.</p>
+<p>Parameters:
+-None</p>
+<p>Returns:
+- A list of charts which can be called with “st.plotly_chart()”.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules._module_functions.get_required_data_S">
+<span class="sig-prename descclassname"><span class="pre">pages.modules._module_functions.</span></span><span class="sig-name descname"><span class="pre">get_required_data_S</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/_module_functions.html#get_required_data_S"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules._module_functions.get_required_data_S" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve the required data names and their possible units for this system component.</p>
+<p>This function provides a dictionary where keys represent the names of data 
+variables relevant for this system component. Each key is mapped to a list 
+of possible units in which that data variable might be recorded.</p>
+<dl>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>dict: A dictionary where:</dt><dd><ul class="simple">
+<li><p>keys are strings representing the names of data variables required by this component.</p></li>
+<li><p>values are lists of strings representing the possible units for the respective data variable.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+<dt>Example:</dt><dd><p>For a component that requires power yield (P_yield) and battery charge (Battery_charge), 
+the function might return:
+{</p>
+<blockquote>
+<div><p>“P_yield” : [“W”, “kW”,],
+“Battery_charge” : [“Wh”, “kWh”]</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+<dt>Notes:</dt><dd><p>The returned structure is used for data mapping in the main application, helping users 
+match their data columns to the requirements of this system component and specify the 
+units of their data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules._module_functions.get_sankey_mapping_S">
+<span class="sig-prename descclassname"><span class="pre">pages.modules._module_functions.</span></span><span class="sig-name descname"><span class="pre">get_sankey_mapping_S</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Consumption</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy_type_inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy_type_outputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/_module_functions.html#get_sankey_mapping_S"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules._module_functions.get_sankey_mapping_S" title="Permalink to this definition"></a></dt>
+<dd><p>Create a data mapping dictionary from lists of labels, types, energy_type_inputs and energy_type_outputs.</p>
+<p>Note:
+If a value is present in “measuring_list” but does not have a corresponding “Label” (and “Type”, “EnergyTypeInput”, “EnergyTypeOutput”) value, it is not taken into account in “get_sankey_mapping”.</p>
+<p>Parameters:
+- dataframe (pd.DataFrame): The DataFrame containing the data series.
+- labels (list): List of labels corresponding to each data series in the DataFrame.
+- types (list): List of types corresponding to each data series in the DataFrame.
+- energy_type_inputs (list): List of energy type inputs corresponding to each data series in the DataFrame.
+- energy_type_outputs (list): List of energy type outputs corresponding to each data series in the DataFrame.</p>
+<p>Returns:
+- dict: The data mapping dictionary.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules._module_functions.initialize_data_interface">
+<span class="sig-prename descclassname"><span class="pre">pages.modules._module_functions.</span></span><span class="sig-name descname"><span class="pre">initialize_data_interface</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/_module_functions.html#initialize_data_interface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules._module_functions.initialize_data_interface" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize the data interface based on the saved interface in Configuration.json.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules._module_functions.load_module_data">
+<span class="sig-prename descclassname"><span class="pre">pages.modules._module_functions.</span></span><span class="sig-name descname"><span class="pre">load_module_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_mapping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/_module_functions.html#load_module_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules._module_functions.load_module_data" title="Permalink to this definition"></a></dt>
+<dd><p>Load data for specified modules from the API and interpolate missing values.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>data_mapping (dict): The data mapping dictionary.
+module_names (list): List of module names for which data should be loaded.
+start_time (str or datetime, optional): The start time for the data retrieval.
+end_time (str or datetime, optional): The end time for the data retrieval.</p>
+</dd>
+<dt>Returns:</dt><dd><p>pd.DataFrame: A DataFrame with the same structure as data_mapping, but with actual data 
+from the API instead of column names.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pages.modules._module_template">
+<span id="module-template"></span><h2>module_template<a class="headerlink" href="#module-pages.modules._module_template" title="Permalink to this heading"></a></h2>
+<p>Parameters:</p>
+<ul>
+<li><dl>
+<dt>units:    </dt><dd><p>A list of strings that should correspond to units supported by the pint module (<a class="reference external" href="https://pint.readthedocs.io/en/stable/">https://pint.readthedocs.io/en/stable/</a>).
+These units are presented to the user for selection, facilitating the representation of measurement series 
+in the unit of their choice. The specified units must be compatible with the measured values within the module.</p>
+<p>Example:
+units = [“W”, “kW”, “Wh”, “kWh”, “J”, “°C”, “K”]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>measuring_list:</dt><dd><p>This list contains the names of the measured values to be used in this system module. 
+These measured values will be the basis for the data flows in the Sankey diagram.</p>
+<p>Example:
+measuring_list = [‘transported_energy_IN’, ‘room_OUT_2’]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>measuring_list_sankey:</dt><dd><p>A list that includes both the measured and calculated values to be used in the Sankey diagram. 
+It’s crucial to append units to calculated values!</p>
+<p>Example:
+measuring_list_sankey = [‘transported_energy_IN’, ‘room_OUT_2’, “MATHTEST_[W]”]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Label:</dt><dd><p>A list of labels used to describe the measured or calculated values in the Sankey diagram. 
+If the length of the Label list is shorter than that of measuring_list, 
+those missing labels will not be displayed in the Sankey diagram.</p>
+<p>Example:
+Label = [‘transported_energy_IN’, ‘room_OUT_2’, “MATHTEST”]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Consumption:    </dt><dd><p>Initially set to None for all entries. It gets updated during the processing in the Main.py script. 
+This field can contain simple keys that map to data_mapping, numerical values, or complex mathematical expressions. 
+Mathematical expressions can include column names, numerical values, operators, and conditional statements (IF-ELSE).</p>
+<p>Example:
+- Consumption = [None, None, “Compressor_Power + ambient_heat_IN”]
+- Consumption = [None, None, “IF( battery &gt;= 0, battery, 0 )” ,”IF( battery &lt;= 0, battery * - 1  , 0 )” ]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Type:    </dt><dd><p>Each label must have an associated Type. There are three types: Source, Transformer, and Sink. 
+Sources appear on the left and serve as inputs; Transformers connect one form of energy to another; 
+Sinks appear on the right and serve as outputs.</p>
+<p>Example:
+Type = [‘Transformer’, ‘Sink’, ‘Sink’]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>EnergyTypeInput:    </dt><dd><p>Specifies what form of energy is going into a particular Sankey flow. 
+A hyphen (-) is used if the flow is not represented in the system. 
+For example, a ‘Source’ will always have EnergyTypeInput set to -.</p>
+<p>Example:
+EnergyTypeInput = [‘electricity’, ‘heat’, ‘heat’]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>EnergyTypeOutput:    </dt><dd><p>Specifies what form of energy is coming out of a particular Sankey flow. 
+A hyphen (-) is used if the flow is not represented in the system. 
+For example, a ‘Sink’ will always have EnergyTypeOutput set to -.</p>
+<p>Example:
+EnergyTypeOutput = [‘heat’, ‘-’, ‘-‘]</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Special Handling of Consumption:</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>Conditional Statements:    </dt><dd><p>If the Consumption field contains an IF-THEN-ELSE statement in the form IF(condition, true_value, false_value), 
+it’s converted into Python’s ternary operator: true_value if condition else false_value.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Tokenization:    </dt><dd><p>The expression in Consumption is broken down into individual tokens separated by spaces. 
+A token can be a column name, a numerical value, or an operator.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Data Retrieval and Caching:    </dt><dd><p>For each token that is neither a mathematical operator nor a numerical value, data is fetched from the DataFrame 
+and stored in a cache.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Token Replacement:    </dt><dd><p>Tokens in the Consumption expression are replaced by their actual values from the cache.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Expression Evaluation:    </dt><dd><p>The updated expression is then evaluated using Python’s eval function.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Unit Conversion and Sankey Diagram Update:    </dt><dd><p>The result is converted into the desired unit and updated in the Sankey diagram.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>By following these steps, the Sankey diagram can represent both simple and complex energy flows, 
+providing a comprehensive view of the energy system.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules._module_template.get_required_data">
+<span class="sig-prename descclassname"><span class="pre">pages.modules._module_template.</span></span><span class="sig-name descname"><span class="pre">get_required_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['W',</span> <span class="pre">'kW',</span> <span class="pre">'Wh',</span> <span class="pre">'kWh',</span> <span class="pre">'J',</span> <span class="pre">'°C',</span> <span class="pre">'K']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/_module_template.html#get_required_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules._module_template.get_required_data" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_required_data_S.
+Calls get_required_data_S and returns its output.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules._module_template.get_sankey_mapping">
+<span class="sig-prename descclassname"><span class="pre">pages.modules._module_template.</span></span><span class="sig-name descname"><span class="pre">get_sankey_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[None]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeInput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeOutput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/_module_template.html#get_sankey_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules._module_template.get_sankey_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_sankey_mapping_S.
+Calls get_sankey_mapping_S and returns its output.</p>
+</dd></dl>
+
+</section>
+<section id="module-pages.modules.Heat_pump_module">
+<span id="heat-pump-module"></span><h2>Heat Pump Module<a class="headerlink" href="#module-pages.modules.Heat_pump_module" title="Permalink to this heading"></a></h2>
+<p>Parameters:</p>
+<ul>
+<li><dl>
+<dt>units:    </dt><dd><p>A list of strings that should correspond to units supported by the pint module (<a class="reference external" href="https://pint.readthedocs.io/en/stable/">https://pint.readthedocs.io/en/stable/</a>).
+These units are presented to the user for selection, facilitating the representation of measurement series 
+in the unit of their choice. The specified units must be compatible with the measured values within the module.</p>
+<p>Example:
+units = [“W”, “kW”, “Wh”, “kWh”, “J”, “°C”, “K”]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>measuring_list:</dt><dd><p>This list contains the names of the measured values to be used in this system module. 
+These measured values will be the basis for the data flows in the Sankey diagram.</p>
+<p>Example:
+measuring_list = [‘transported_energy_IN’, ‘room_OUT_2’]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>measuring_list_sankey:</dt><dd><p>A list that includes both the measured and calculated values to be used in the Sankey diagram. 
+It’s crucial to append units to calculated values!</p>
+<p>Example:
+measuring_list_sankey = [‘transported_energy_IN’, ‘room_OUT_2’, “MATHTEST_[W]”]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Label:</dt><dd><p>A list of labels used to describe the measured or calculated values in the Sankey diagram. 
+If the length of the Label list is shorter than that of measuring_list, 
+those missing labels will not be displayed in the Sankey diagram.</p>
+<p>Example:
+Label = [‘transported_energy_IN’, ‘room_OUT_2’, “MATHTEST”]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Consumption:    </dt><dd><p>Initially set to None for all entries. It gets updated during the processing in the Main.py script. 
+This field can contain simple keys that map to data_mapping, numerical values, or complex mathematical expressions. 
+Mathematical expressions can include column names, numerical values, operators, and conditional statements (IF-ELSE).</p>
+<p>Example:
+- Consumption = [None, None, “Compressor_Power + ambient_heat_IN”]
+- Consumption = [None, None, “IF( battery &gt;= 0, battery, 0 )” ,”IF( battery &lt;= 0, battery * - 1  , 0 )” ]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Type:    </dt><dd><p>Each label must have an associated Type. There are three types: Source, Transformer, and Sink. 
+Sources appear on the left and serve as inputs; Transformers connect one form of energy to another; 
+Sinks appear on the right and serve as outputs.</p>
+<p>Example:
+Type = [‘Transformer’, ‘Sink’, ‘Sink’]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>EnergyTypeInput:    </dt><dd><p>Specifies what form of energy is going into a particular Sankey flow. 
+A hyphen (-) is used if the flow is not represented in the system. 
+For example, a ‘Source’ will always have EnergyTypeInput set to -.</p>
+<p>Example:
+EnergyTypeInput = [‘electricity’, ‘heat’, ‘heat’]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>EnergyTypeOutput:    </dt><dd><p>Specifies what form of energy is coming out of a particular Sankey flow. 
+A hyphen (-) is used if the flow is not represented in the system. 
+For example, a ‘Sink’ will always have EnergyTypeOutput set to -.</p>
+<p>Example:
+EnergyTypeOutput = [‘heat’, ‘-’, ‘-‘]</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Special Handling of Consumption:</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>Conditional Statements:    </dt><dd><p>If the Consumption field contains an IF-THEN-ELSE statement in the form IF(condition, true_value, false_value), 
+it’s converted into Python’s ternary operator: true_value if condition else false_value.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Tokenization:    </dt><dd><p>The expression in Consumption is broken down into individual tokens separated by spaces. 
+A token can be a column name, a numerical value, or an operator.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Data Retrieval and Caching:    </dt><dd><p>For each token that is neither a mathematical operator nor a numerical value, data is fetched from the DataFrame 
+and stored in a cache.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Token Replacement:    </dt><dd><p>Tokens in the Consumption expression are replaced by their actual values from the cache.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Expression Evaluation:    </dt><dd><p>The updated expression is then evaluated using Python’s eval function.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Unit Conversion and Sankey Diagram Update:    </dt><dd><p>The result is converted into the desired unit and updated in the Sankey diagram.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>By following these steps, the Sankey diagram can represent both simple and complex energy flows, 
+providing a comprehensive view of the energy system.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Heat_pump_module.create_gauge_chart">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Heat_pump_module.</span></span><span class="sig-name descname"><span class="pre">create_gauge_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="reference internal" href="../_modules/pages/modules/Heat_pump_module.html#create_gauge_chart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Heat_pump_module.create_gauge_chart" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a customized Plotly Gauge Chart based on the given value and reference value.</p>
+<p>Parameters:
+- value (float): The current value to be displayed on the gauge.
+- reference_value (float): The reference value for calculating the delta. Optional.</p>
+<p>Returns:
+- go.Figure: A Plotly Figure object representing the gauge chart.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Heat_pump_module.get_module_figs">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Heat_pump_module.</span></span><span class="sig-name descname"><span class="pre">get_module_figs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/Heat_pump_module.html#get_module_figs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Heat_pump_module.get_module_figs" title="Permalink to this definition"></a></dt>
+<dd><p>This is a function to create plant module specific images. This function must be created specifically for each plant module.</p>
+<p>Parameters:
+-None</p>
+<p>Returns:
+- A list of charts which can be called with “st.plotly_chart()”.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Heat_pump_module.get_required_data">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Heat_pump_module.</span></span><span class="sig-name descname"><span class="pre">get_required_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Compressor_Power',</span> <span class="pre">'ambient_heat_IN',</span> <span class="pre">'room_heating_OUT',</span> <span class="pre">'thermal_hp_OUT']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['W',</span> <span class="pre">'kW',</span> <span class="pre">'Wh',</span> <span class="pre">'kWh',</span> <span class="pre">'J',</span> <span class="pre">'°C',</span> <span class="pre">'K']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/Heat_pump_module.html#get_required_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Heat_pump_module.get_required_data" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_required_data_S.
+Calls get_required_data_S and returns its output.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Heat_pump_module.get_sankey_mapping">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Heat_pump_module.</span></span><span class="sig-name descname"><span class="pre">get_sankey_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Compressor_Power',</span> <span class="pre">'ambient_heat_IN',</span> <span class="pre">'room_heating_OUT']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[None,</span> <span class="pre">None,</span> <span class="pre">None]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Compressor_Power',</span> <span class="pre">'ambient_heat',</span> <span class="pre">'room_heating']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Transformer',</span> <span class="pre">'Source',</span> <span class="pre">'Sink']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeInput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['electricity',</span> <span class="pre">'-',</span> <span class="pre">'heat']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeOutput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['heat',</span> <span class="pre">'heat',</span> <span class="pre">'-']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/Heat_pump_module.html#get_sankey_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Heat_pump_module.get_sankey_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_sankey_mapping_S.
+Calls get_sankey_mapping_S and returns its output.</p>
+</dd></dl>
+
+</section>
+<section id="pv-module">
+<h2>PV Module<a class="headerlink" href="#pv-module" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-pages.modules.Battery_module">
+<span id="battery-module"></span><h2>Battery_module<a class="headerlink" href="#module-pages.modules.Battery_module" title="Permalink to this heading"></a></h2>
+<p>Parameters:</p>
+<ul>
+<li><dl>
+<dt>units:    </dt><dd><p>A list of strings that should correspond to units supported by the pint module (<a class="reference external" href="https://pint.readthedocs.io/en/stable/">https://pint.readthedocs.io/en/stable/</a>).
+These units are presented to the user for selection, facilitating the representation of measurement series 
+in the unit of their choice. The specified units must be compatible with the measured values within the module.</p>
+<p>Example:
+units = [“W”, “kW”, “Wh”, “kWh”, “J”, “°C”, “K”]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>measuring_list:</dt><dd><p>This list contains the names of the measured values to be used in this system module. 
+These measured values will be the basis for the data flows in the Sankey diagram.</p>
+<p>Example:
+measuring_list = [‘transported_energy_IN’, ‘room_OUT_2’]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>measuring_list_sankey:</dt><dd><p>A list that includes both the measured and calculated values to be used in the Sankey diagram. 
+It’s crucial to append units to calculated values!</p>
+<p>Example:
+measuring_list_sankey = [‘transported_energy_IN’, ‘room_OUT_2’, “MATHTEST_[W]”]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Label:</dt><dd><p>A list of labels used to describe the measured or calculated values in the Sankey diagram. 
+If the length of the Label list is shorter than that of measuring_list, 
+those missing labels will not be displayed in the Sankey diagram.</p>
+<p>Example:
+Label = [‘transported_energy_IN’, ‘room_OUT_2’, “MATHTEST”]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Consumption:    </dt><dd><p>Initially set to None for all entries. It gets updated during the processing in the Main.py script. 
+This field can contain simple keys that map to data_mapping, numerical values, or complex mathematical expressions. 
+Mathematical expressions can include column names, numerical values, operators, and conditional statements (IF-ELSE).</p>
+<p>Example:
+- Consumption = [None, None, “Compressor_Power + ambient_heat_IN”]
+- Consumption = [None, None, “IF( battery &gt;= 0, battery, 0 )” ,”IF( battery &lt;= 0, battery * - 1  , 0 )” ]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Type:    </dt><dd><p>Each label must have an associated Type. There are three types: Source, Transformer, and Sink. 
+Sources appear on the left and serve as inputs; Transformers connect one form of energy to another; 
+Sinks appear on the right and serve as outputs.</p>
+<p>Example:
+Type = [‘Transformer’, ‘Sink’, ‘Sink’]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>EnergyTypeInput:    </dt><dd><p>Specifies what form of energy is going into a particular Sankey flow. 
+A hyphen (-) is used if the flow is not represented in the system. 
+For example, a ‘Source’ will always have EnergyTypeInput set to -.</p>
+<p>Example:
+EnergyTypeInput = [‘electricity’, ‘heat’, ‘heat’]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>EnergyTypeOutput:    </dt><dd><p>Specifies what form of energy is coming out of a particular Sankey flow. 
+A hyphen (-) is used if the flow is not represented in the system. 
+For example, a ‘Sink’ will always have EnergyTypeOutput set to -.</p>
+<p>Example:
+EnergyTypeOutput = [‘heat’, ‘-’, ‘-‘]</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Special Handling of Consumption:</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>Conditional Statements:    </dt><dd><p>If the Consumption field contains an IF-THEN-ELSE statement in the form IF(condition, true_value, false_value), 
+it’s converted into Python’s ternary operator: true_value if condition else false_value.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Tokenization:    </dt><dd><p>The expression in Consumption is broken down into individual tokens separated by spaces. 
+A token can be a column name, a numerical value, or an operator.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Data Retrieval and Caching:    </dt><dd><p>For each token that is neither a mathematical operator nor a numerical value, data is fetched from the DataFrame 
+and stored in a cache.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Token Replacement:    </dt><dd><p>Tokens in the Consumption expression are replaced by their actual values from the cache.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Expression Evaluation:    </dt><dd><p>The updated expression is then evaluated using Python’s eval function.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Unit Conversion and Sankey Diagram Update:    </dt><dd><p>The result is converted into the desired unit and updated in the Sankey diagram.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>By following these steps, the Sankey diagram can represent both simple and complex energy flows, 
+providing a comprehensive view of the energy system.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Battery_module.create_gauge_chart">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Battery_module.</span></span><span class="sig-name descname"><span class="pre">create_gauge_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="reference internal" href="../_modules/pages/modules/Battery_module.html#create_gauge_chart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Battery_module.create_gauge_chart" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a customized Plotly Gauge Chart based on the given value and reference value.</p>
+<p>Parameters:
+- value (float): The current value to be displayed on the gauge.
+- title (str): The title of the gauge chart.
+- reference_value (float): The reference value for calculating the delta. Optional.</p>
+<p>Returns:
+- go.Figure: A Plotly Figure object representing the gauge chart.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Battery_module.get_module_figs">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Battery_module.</span></span><span class="sig-name descname"><span class="pre">get_module_figs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/Battery_module.html#get_module_figs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Battery_module.get_module_figs" title="Permalink to this definition"></a></dt>
+<dd><p>This is a function to create plant module specific images. This function must be created specifically for each plant module.</p>
+<p>Parameters:
+-None</p>
+<p>Returns:
+- A list of charts which can be called with “st.plotly_chart()”.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Battery_module.get_required_data">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Battery_module.</span></span><span class="sig-name descname"><span class="pre">get_required_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['battery']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['W',</span> <span class="pre">'kW',</span> <span class="pre">'Wh',</span> <span class="pre">'kWh',</span> <span class="pre">'J',</span> <span class="pre">'°C',</span> <span class="pre">'K']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/Battery_module.html#get_required_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Battery_module.get_required_data" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_required_data_S.
+Calls get_required_data_S and returns its output.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Battery_module.get_sankey_mapping">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Battery_module.</span></span><span class="sig-name descname"><span class="pre">get_sankey_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['battery_discharge_[W]',</span> <span class="pre">'battery_charge_[W]']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['IF(</span> <span class="pre">battery</span> <span class="pre">&gt;=</span> <span class="pre">0,</span> <span class="pre">battery,</span> <span class="pre">0</span> <span class="pre">)',</span> <span class="pre">'IF(</span> <span class="pre">battery</span> <span class="pre">&lt;=</span> <span class="pre">0,</span> <span class="pre">battery</span> <span class="pre">*</span> <span class="pre">-</span> <span class="pre">1</span>&#160; <span class="pre">,</span> <span class="pre">0</span> <span class="pre">)']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['battery_discharge',</span> <span class="pre">'battery_charge']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Source',</span> <span class="pre">'Sink']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeInput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['-',</span> <span class="pre">'electricity']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeOutput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['electricity',</span> <span class="pre">'-']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/Battery_module.html#get_sankey_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Battery_module.get_sankey_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_sankey_mapping_S.
+Calls get_sankey_mapping_S and returns its output.</p>
+</dd></dl>
+
+</section>
+<section id="module-pages.modules.E_consumer_module">
+<span id="e-consumer-module"></span><h2>E_consumer_module<a class="headerlink" href="#module-pages.modules.E_consumer_module" title="Permalink to this heading"></a></h2>
+<p>Parameters:</p>
+<ul>
+<li><dl>
+<dt>units:    </dt><dd><p>A list of strings that should correspond to units supported by the pint module (<a class="reference external" href="https://pint.readthedocs.io/en/stable/">https://pint.readthedocs.io/en/stable/</a>).
+These units are presented to the user for selection, facilitating the representation of measurement series 
+in the unit of their choice. The specified units must be compatible with the measured values within the module.</p>
+<p>Example:
+units = [“W”, “kW”, “Wh”, “kWh”, “J”, “°C”, “K”]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>measuring_list:</dt><dd><p>This list contains the names of the measured values to be used in this system module. 
+These measured values will be the basis for the data flows in the Sankey diagram.</p>
+<p>Example:
+measuring_list = [‘transported_energy_IN’, ‘room_OUT_2’]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>measuring_list_sankey:</dt><dd><p>A list that includes both the measured and calculated values to be used in the Sankey diagram. 
+It’s crucial to append units to calculated values!</p>
+<p>Example:
+measuring_list_sankey = [‘transported_energy_IN’, ‘room_OUT_2’, “MATHTEST_[W]”]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Label:</dt><dd><p>A list of labels used to describe the measured or calculated values in the Sankey diagram. 
+If the length of the Label list is shorter than that of measuring_list, 
+those missing labels will not be displayed in the Sankey diagram.</p>
+<p>Example:
+Label = [‘transported_energy_IN’, ‘room_OUT_2’, “MATHTEST”]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Consumption:    </dt><dd><p>Initially set to None for all entries. It gets updated during the processing in the Main.py script. 
+This field can contain simple keys that map to data_mapping, numerical values, or complex mathematical expressions. 
+Mathematical expressions can include column names, numerical values, operators, and conditional statements (IF-ELSE).</p>
+<p>Example:
+- Consumption = [None, None, “Compressor_Power + ambient_heat_IN”]
+- Consumption = [None, None, “IF( battery &gt;= 0, battery, 0 )” ,”IF( battery &lt;= 0, battery * - 1  , 0 )” ]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Type:    </dt><dd><p>Each label must have an associated Type. There are three types: Source, Transformer, and Sink. 
+Sources appear on the left and serve as inputs; Transformers connect one form of energy to another; 
+Sinks appear on the right and serve as outputs.</p>
+<p>Example:
+Type = [‘Transformer’, ‘Sink’, ‘Sink’]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>EnergyTypeInput:    </dt><dd><p>Specifies what form of energy is going into a particular Sankey flow. 
+A hyphen (-) is used if the flow is not represented in the system. 
+For example, a ‘Source’ will always have EnergyTypeInput set to -.</p>
+<p>Example:
+EnergyTypeInput = [‘electricity’, ‘heat’, ‘heat’]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>EnergyTypeOutput:    </dt><dd><p>Specifies what form of energy is coming out of a particular Sankey flow. 
+A hyphen (-) is used if the flow is not represented in the system. 
+For example, a ‘Sink’ will always have EnergyTypeOutput set to -.</p>
+<p>Example:
+EnergyTypeOutput = [‘heat’, ‘-’, ‘-‘]</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Special Handling of Consumption:</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>Conditional Statements:    </dt><dd><p>If the Consumption field contains an IF-THEN-ELSE statement in the form IF(condition, true_value, false_value), 
+it’s converted into Python’s ternary operator: true_value if condition else false_value.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Tokenization:    </dt><dd><p>The expression in Consumption is broken down into individual tokens separated by spaces. 
+A token can be a column name, a numerical value, or an operator.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Data Retrieval and Caching:    </dt><dd><p>For each token that is neither a mathematical operator nor a numerical value, data is fetched from the DataFrame 
+and stored in a cache.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Token Replacement:    </dt><dd><p>Tokens in the Consumption expression are replaced by their actual values from the cache.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Expression Evaluation:    </dt><dd><p>The updated expression is then evaluated using Python’s eval function.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Unit Conversion and Sankey Diagram Update:    </dt><dd><p>The result is converted into the desired unit and updated in the Sankey diagram.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>By following these steps, the Sankey diagram can represent both simple and complex energy flows, 
+providing a comprehensive view of the energy system.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.E_consumer_module.get_required_data">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.E_consumer_module.</span></span><span class="sig-name descname"><span class="pre">get_required_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Server_OUT',</span> <span class="pre">'e_mobility_OUT']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['W',</span> <span class="pre">'kW',</span> <span class="pre">'Wh',</span> <span class="pre">'kWh',</span> <span class="pre">'J',</span> <span class="pre">'°C',</span> <span class="pre">'K']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/E_consumer_module.html#get_required_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.E_consumer_module.get_required_data" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_required_data_S.
+Calls get_required_data_S and returns its output.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.E_consumer_module.get_sankey_mapping">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.E_consumer_module.</span></span><span class="sig-name descname"><span class="pre">get_sankey_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Server_OUT',</span> <span class="pre">'e_mobility_OUT',</span> <span class="pre">'Rest_[W]']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[None,</span> <span class="pre">None,</span> <span class="pre">'</span> <span class="pre">e_consumers_IN</span> <span class="pre">-</span> <span class="pre">Server_OUT</span> <span class="pre">-</span> <span class="pre">e_mobility_OUT']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['server',</span> <span class="pre">'e_mobility',</span> <span class="pre">'rest']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Sink',</span> <span class="pre">'Sink',</span> <span class="pre">'Sink']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeInput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['electricity',</span> <span class="pre">'electricity',</span> <span class="pre">'electricity']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeOutput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['-',</span> <span class="pre">'-',</span> <span class="pre">'-']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/E_consumer_module.html#get_sankey_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.E_consumer_module.get_sankey_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_sankey_mapping_S.
+Calls get_sankey_mapping_S and returns its output.</p>
+</dd></dl>
+
+</section>
+<section id="module-pages.modules.Floors_module">
+<span id="floors-module"></span><h2>Floors_module<a class="headerlink" href="#module-pages.modules.Floors_module" title="Permalink to this heading"></a></h2>
+<p>Parameters:</p>
+<ul>
+<li><dl>
+<dt>units:    </dt><dd><p>A list of strings that should correspond to units supported by the pint module (<a class="reference external" href="https://pint.readthedocs.io/en/stable/">https://pint.readthedocs.io/en/stable/</a>).
+These units are presented to the user for selection, facilitating the representation of measurement series 
+in the unit of their choice. The specified units must be compatible with the measured values within the module.</p>
+<p>Example:
+units = [“W”, “kW”, “Wh”, “kWh”, “J”, “°C”, “K”]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>measuring_list:</dt><dd><p>This list contains the names of the measured values to be used in this system module. 
+These measured values will be the basis for the data flows in the Sankey diagram.</p>
+<p>Example:
+measuring_list = [‘transported_energy_IN’, ‘room_OUT_2’]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>measuring_list_sankey:</dt><dd><p>A list that includes both the measured and calculated values to be used in the Sankey diagram. 
+It’s crucial to append units to calculated values!</p>
+<p>Example:
+measuring_list_sankey = [‘transported_energy_IN’, ‘room_OUT_2’, “MATHTEST_[W]”]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Label:</dt><dd><p>A list of labels used to describe the measured or calculated values in the Sankey diagram. 
+If the length of the Label list is shorter than that of measuring_list, 
+those missing labels will not be displayed in the Sankey diagram.</p>
+<p>Example:
+Label = [‘transported_energy_IN’, ‘room_OUT_2’, “MATHTEST”]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Consumption:    </dt><dd><p>Initially set to None for all entries. It gets updated during the processing in the Main.py script. 
+This field can contain simple keys that map to data_mapping, numerical values, or complex mathematical expressions. 
+Mathematical expressions can include column names, numerical values, operators, and conditional statements (IF-ELSE).</p>
+<p>Example:
+- Consumption = [None, None, “Compressor_Power + ambient_heat_IN”]
+- Consumption = [None, None, “IF( battery &gt;= 0, battery, 0 )” ,”IF( battery &lt;= 0, battery * - 1  , 0 )” ]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Type:    </dt><dd><p>Each label must have an associated Type. There are three types: Source, Transformer, and Sink. 
+Sources appear on the left and serve as inputs; Transformers connect one form of energy to another; 
+Sinks appear on the right and serve as outputs.</p>
+<p>Example:
+Type = [‘Transformer’, ‘Sink’, ‘Sink’]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>EnergyTypeInput:    </dt><dd><p>Specifies what form of energy is going into a particular Sankey flow. 
+A hyphen (-) is used if the flow is not represented in the system. 
+For example, a ‘Source’ will always have EnergyTypeInput set to -.</p>
+<p>Example:
+EnergyTypeInput = [‘electricity’, ‘heat’, ‘heat’]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>EnergyTypeOutput:    </dt><dd><p>Specifies what form of energy is coming out of a particular Sankey flow. 
+A hyphen (-) is used if the flow is not represented in the system. 
+For example, a ‘Sink’ will always have EnergyTypeOutput set to -.</p>
+<p>Example:
+EnergyTypeOutput = [‘heat’, ‘-’, ‘-‘]</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Special Handling of Consumption:</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>Conditional Statements:    </dt><dd><p>If the Consumption field contains an IF-THEN-ELSE statement in the form IF(condition, true_value, false_value), 
+it’s converted into Python’s ternary operator: true_value if condition else false_value.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Tokenization:    </dt><dd><p>The expression in Consumption is broken down into individual tokens separated by spaces. 
+A token can be a column name, a numerical value, or an operator.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Data Retrieval and Caching:    </dt><dd><p>For each token that is neither a mathematical operator nor a numerical value, data is fetched from the DataFrame 
+and stored in a cache.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Token Replacement:    </dt><dd><p>Tokens in the Consumption expression are replaced by their actual values from the cache.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Expression Evaluation:    </dt><dd><p>The updated expression is then evaluated using Python’s eval function.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Unit Conversion and Sankey Diagram Update:    </dt><dd><p>The result is converted into the desired unit and updated in the Sankey diagram.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>By following these steps, the Sankey diagram can represent both simple and complex energy flows, 
+providing a comprehensive view of the energy system.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Floors_module.get_required_data">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Floors_module.</span></span><span class="sig-name descname"><span class="pre">get_required_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['e_consumers_IN',</span> <span class="pre">'electricity_UG',</span> <span class="pre">'electricity_EG',</span> <span class="pre">'electricity_1OG',</span> <span class="pre">'electricity_2OG',</span> <span class="pre">'electricity_3OG']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['W',</span> <span class="pre">'kW',</span> <span class="pre">'Wh',</span> <span class="pre">'kWh',</span> <span class="pre">'J',</span> <span class="pre">'°C',</span> <span class="pre">'K']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/Floors_module.html#get_required_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Floors_module.get_required_data" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_required_data_S.
+Calls get_required_data_S and returns its output.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Floors_module.get_sankey_mapping">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Floors_module.</span></span><span class="sig-name descname"><span class="pre">get_sankey_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[None]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeInput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeOutput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/Floors_module.html#get_sankey_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Floors_module.get_sankey_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_sankey_mapping_S.
+Calls get_sankey_mapping_S and returns its output.</p>
+</dd></dl>
+
+</section>
+<section id="module-pages.modules.Ventilation_system_and_heating_pumps_module">
+<span id="ventilation-system-and-heating-pumps-module"></span><h2>Ventilation_system_and_heating_pumps_module<a class="headerlink" href="#module-pages.modules.Ventilation_system_and_heating_pumps_module" title="Permalink to this heading"></a></h2>
+<p>Parameters:</p>
+<ul>
+<li><dl>
+<dt>units:    </dt><dd><p>A list of strings that should correspond to units supported by the pint module (<a class="reference external" href="https://pint.readthedocs.io/en/stable/">https://pint.readthedocs.io/en/stable/</a>).
+These units are presented to the user for selection, facilitating the representation of measurement series 
+in the unit of their choice. The specified units must be compatible with the measured values within the module.</p>
+<p>Example:
+units = [“W”, “kW”, “Wh”, “kWh”, “J”, “°C”, “K”]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>measuring_list:</dt><dd><p>This list contains the names of the measured values to be used in this system module. 
+These measured values will be the basis for the data flows in the Sankey diagram.</p>
+<p>Example:
+measuring_list = [‘transported_energy_IN’, ‘room_OUT_2’]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>measuring_list_sankey:</dt><dd><p>A list that includes both the measured and calculated values to be used in the Sankey diagram. 
+It’s crucial to append units to calculated values!</p>
+<p>Example:
+measuring_list_sankey = [‘transported_energy_IN’, ‘room_OUT_2’, “MATHTEST_[W]”]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Label:</dt><dd><p>A list of labels used to describe the measured or calculated values in the Sankey diagram. 
+If the length of the Label list is shorter than that of measuring_list, 
+those missing labels will not be displayed in the Sankey diagram.</p>
+<p>Example:
+Label = [‘transported_energy_IN’, ‘room_OUT_2’, “MATHTEST”]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Consumption:    </dt><dd><p>Initially set to None for all entries. It gets updated during the processing in the Main.py script. 
+This field can contain simple keys that map to data_mapping, numerical values, or complex mathematical expressions. 
+Mathematical expressions can include column names, numerical values, operators, and conditional statements (IF-ELSE).</p>
+<p>Example:
+- Consumption = [None, None, “Compressor_Power + ambient_heat_IN”]
+- Consumption = [None, None, “IF( battery &gt;= 0, battery, 0 )” ,”IF( battery &lt;= 0, battery * - 1  , 0 )” ]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Type:    </dt><dd><p>Each label must have an associated Type. There are three types: Source, Transformer, and Sink. 
+Sources appear on the left and serve as inputs; Transformers connect one form of energy to another; 
+Sinks appear on the right and serve as outputs.</p>
+<p>Example:
+Type = [‘Transformer’, ‘Sink’, ‘Sink’]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>EnergyTypeInput:    </dt><dd><p>Specifies what form of energy is going into a particular Sankey flow. 
+A hyphen (-) is used if the flow is not represented in the system. 
+For example, a ‘Source’ will always have EnergyTypeInput set to -.</p>
+<p>Example:
+EnergyTypeInput = [‘electricity’, ‘heat’, ‘heat’]</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>EnergyTypeOutput:    </dt><dd><p>Specifies what form of energy is coming out of a particular Sankey flow. 
+A hyphen (-) is used if the flow is not represented in the system. 
+For example, a ‘Sink’ will always have EnergyTypeOutput set to -.</p>
+<p>Example:
+EnergyTypeOutput = [‘heat’, ‘-’, ‘-‘]</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Special Handling of Consumption:</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>Conditional Statements:    </dt><dd><p>If the Consumption field contains an IF-THEN-ELSE statement in the form IF(condition, true_value, false_value), 
+it’s converted into Python’s ternary operator: true_value if condition else false_value.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Tokenization:    </dt><dd><p>The expression in Consumption is broken down into individual tokens separated by spaces. 
+A token can be a column name, a numerical value, or an operator.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Data Retrieval and Caching:    </dt><dd><p>For each token that is neither a mathematical operator nor a numerical value, data is fetched from the DataFrame 
+and stored in a cache.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Token Replacement:    </dt><dd><p>Tokens in the Consumption expression are replaced by their actual values from the cache.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Expression Evaluation:    </dt><dd><p>The updated expression is then evaluated using Python’s eval function.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Unit Conversion and Sankey Diagram Update:    </dt><dd><p>The result is converted into the desired unit and updated in the Sankey diagram.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>By following these steps, the Sankey diagram can represent both simple and complex energy flows, 
+providing a comprehensive view of the energy system.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Ventilation_system_and_heating_pumps_module.get_required_data">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Ventilation_system_and_heating_pumps_module.</span></span><span class="sig-name descname"><span class="pre">get_required_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['auxiliary_energy_IN',</span> <span class="pre">'transported_energy_OUT',</span> <span class="pre">'room_conditioning_OUT']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['W',</span> <span class="pre">'kW',</span> <span class="pre">'Wh',</span> <span class="pre">'kWh',</span> <span class="pre">'J',</span> <span class="pre">'°C',</span> <span class="pre">'K']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/Ventilation_system_and_heating_pumps_module.html#get_required_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Ventilation_system_and_heating_pumps_module.get_required_data" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_required_data_S.
+Calls get_required_data_S and returns its output.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Ventilation_system_and_heating_pumps_module.get_sankey_mapping">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Ventilation_system_and_heating_pumps_module.</span></span><span class="sig-name descname"><span class="pre">get_sankey_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['auxiliary_energy_IN',</span> <span class="pre">'transported_energy_OUT',</span> <span class="pre">'room_conditioning_OUT']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[None,</span> <span class="pre">None,</span> <span class="pre">None]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['auxiliary_energy',</span> <span class="pre">'transported_energy',</span> <span class="pre">'room_conditioning']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Transformer',</span> <span class="pre">'Sink',</span> <span class="pre">'Sink']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeInput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['electricity',</span> <span class="pre">'heat',</span> <span class="pre">'heat']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeOutput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['heat',</span> <span class="pre">'-',</span> <span class="pre">'-']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/modules/Ventilation_system_and_heating_pumps_module.html#get_sankey_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Ventilation_system_and_heating_pumps_module.get_sankey_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_sankey_mapping_S.
+Calls get_sankey_mapping_S and returns its output.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../pages.html" class="btn btn-neutral float-left" title="Pages" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../functions.html" class="btn btn-neutral float-right" title="Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Julian W..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

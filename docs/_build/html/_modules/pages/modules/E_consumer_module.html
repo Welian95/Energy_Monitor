@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pages.modules.E_consumer_module &mdash; Energy_Monitor 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Energy_Monitor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Energy_monitor Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Energy_Monitor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pages.modules.E_consumer_module</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pages.modules.E_consumer_module</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Parameters:</span>
+
+<span class="sd">- units:    </span>
+<span class="sd">    A list of strings that should correspond to units supported by the pint module (https://pint.readthedocs.io/en/stable/).</span>
+<span class="sd">    These units are presented to the user for selection, facilitating the representation of measurement series </span>
+<span class="sd">    in the unit of their choice. The specified units must be compatible with the measured values within the module.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">    units = [&quot;W&quot;, &quot;kW&quot;, &quot;Wh&quot;, &quot;kWh&quot;, &quot;J&quot;, &quot;°C&quot;, &quot;K&quot;]</span>
+
+<span class="sd">- measuring_list:</span>
+<span class="sd">    This list contains the names of the measured values to be used in this system module. </span>
+<span class="sd">    These measured values will be the basis for the data flows in the Sankey diagram.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">    measuring_list = [&#39;transported_energy_IN&#39;, &#39;room_OUT_2&#39;]</span>
+
+<span class="sd">- measuring_list_sankey:</span>
+<span class="sd">    A list that includes both the measured and calculated values to be used in the Sankey diagram. </span>
+<span class="sd">    It&#39;s crucial to append units to calculated values!</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">    measuring_list_sankey = [&#39;transported_energy_IN&#39;, &#39;room_OUT_2&#39;, &quot;MATHTEST_[W]&quot;]</span>
+
+<span class="sd">- Label:</span>
+<span class="sd">    A list of labels used to describe the measured or calculated values in the Sankey diagram. </span>
+<span class="sd">    If the length of the Label list is shorter than that of measuring_list, </span>
+<span class="sd">    those missing labels will not be displayed in the Sankey diagram.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">    Label = [&#39;transported_energy_IN&#39;, &#39;room_OUT_2&#39;, &quot;MATHTEST&quot;]</span>
+
+<span class="sd">- Consumption:    </span>
+<span class="sd">    Initially set to None for all entries. It gets updated during the processing in the Main.py script. </span>
+<span class="sd">    This field can contain simple keys that map to data_mapping, numerical values, or complex mathematical expressions. </span>
+<span class="sd">    Mathematical expressions can include column names, numerical values, operators, and conditional statements (IF-ELSE).</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">    - Consumption = [None, None, &quot;Compressor_Power + ambient_heat_IN&quot;]</span>
+<span class="sd">    - Consumption = [None, None, &quot;IF( battery &gt;= 0, battery, 0 )&quot; ,&quot;IF( battery &lt;= 0, battery * - 1  , 0 )&quot; ]</span>
+
+<span class="sd">- Type:    </span>
+<span class="sd">    Each label must have an associated Type. There are three types: Source, Transformer, and Sink. </span>
+<span class="sd">    Sources appear on the left and serve as inputs; Transformers connect one form of energy to another; </span>
+<span class="sd">    Sinks appear on the right and serve as outputs.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">    Type = [&#39;Transformer&#39;, &#39;Sink&#39;, &#39;Sink&#39;]</span>
+
+<span class="sd">- EnergyTypeInput:    </span>
+<span class="sd">    Specifies what form of energy is going into a particular Sankey flow. </span>
+<span class="sd">    A hyphen (-) is used if the flow is not represented in the system. </span>
+<span class="sd">    For example, a &#39;Source&#39; will always have EnergyTypeInput set to -.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">    EnergyTypeInput = [&#39;electricity&#39;, &#39;heat&#39;, &#39;heat&#39;]</span>
+
+<span class="sd">- EnergyTypeOutput:    </span>
+<span class="sd">    Specifies what form of energy is coming out of a particular Sankey flow. </span>
+<span class="sd">    A hyphen (-) is used if the flow is not represented in the system. </span>
+<span class="sd">    For example, a &#39;Sink&#39; will always have EnergyTypeOutput set to -.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">    EnergyTypeOutput = [&#39;heat&#39;, &#39;-&#39;, &#39;-&#39;]</span>
+
+<span class="sd">Special Handling of Consumption:</span>
+
+<span class="sd">1. Conditional Statements:    </span>
+<span class="sd">    If the Consumption field contains an IF-THEN-ELSE statement in the form IF(condition, true_value, false_value), </span>
+<span class="sd">    it&#39;s converted into Python&#39;s ternary operator: true_value if condition else false_value.</span>
+
+<span class="sd">2. Tokenization:    </span>
+<span class="sd">    The expression in Consumption is broken down into individual tokens separated by spaces. </span>
+<span class="sd">    A token can be a column name, a numerical value, or an operator.</span>
+
+<span class="sd">3. Data Retrieval and Caching:    </span>
+<span class="sd">    For each token that is neither a mathematical operator nor a numerical value, data is fetched from the DataFrame </span>
+<span class="sd">    and stored in a cache.</span>
+
+<span class="sd">4. Token Replacement:    </span>
+<span class="sd">    Tokens in the Consumption expression are replaced by their actual values from the cache.</span>
+
+<span class="sd">5. Expression Evaluation:    </span>
+<span class="sd">    The updated expression is then evaluated using Python&#39;s eval function.</span>
+
+<span class="sd">6. Unit Conversion and Sankey Diagram Update:    </span>
+<span class="sd">    The result is converted into the desired unit and updated in the Sankey diagram.</span>
+
+<span class="sd">By following these steps, the Sankey diagram can represent both simple and complex energy flows, </span>
+<span class="sd">providing a comprehensive view of the energy system.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+
+<span class="n">units</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="s2">&quot;kW&quot;</span><span class="p">,</span> <span class="s2">&quot;Wh&quot;</span><span class="p">,</span> <span class="s2">&quot;kWh&quot;</span><span class="p">,</span> <span class="s2">&quot;J&quot;</span><span class="p">,</span> <span class="s2">&quot;°C&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="p">]</span> <span class="c1">#Units List (has to be pint Units)</span>
+
+
+<span class="n">measuring_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Server_OUT&#39;</span><span class="p">,</span><span class="s1">&#39;e_mobility_OUT&#39;</span><span class="p">,</span>  <span class="p">]</span>
+
+<span class="n">measuring_list_sankey</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;Server_OUT&#39;</span><span class="p">,</span><span class="s1">&#39;e_mobility_OUT&#39;</span><span class="p">,</span> <span class="s2">&quot;Rest_[W]&quot;</span><span class="p">]</span>
+
+<span class="n">Label</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;server&#39;</span><span class="p">,</span><span class="s1">&#39;e_mobility&#39;</span><span class="p">,</span> <span class="s2">&quot;rest&quot;</span><span class="p">]</span>
+<span class="n">Consumption</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>  <span class="s2">&quot; e_consumers_IN - Server_OUT - e_mobility_OUT&quot;</span> <span class="p">]</span>
+<span class="n">Type</span> <span class="o">=</span>  <span class="p">[</span><span class="s1">&#39;Sink&#39;</span><span class="p">,</span><span class="s1">&#39;Sink&#39;</span><span class="p">,</span> <span class="s1">&#39;Sink&#39;</span><span class="p">]</span>
+<span class="n">EnergyTypeInput</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;electricity&#39;</span><span class="p">,</span><span class="s1">&#39;electricity&#39;</span><span class="p">,</span><span class="s1">&#39;electricity&#39;</span><span class="p">,]</span>
+<span class="n">EnergyTypeOutput</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="s1">&#39;-&#39;</span><span class="p">,]</span>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">!=</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pages.modules._module_functions</span> <span class="kn">import</span> <span class="n">initialize_data_interface</span><span class="p">,</span> <span class="n">get_required_data_S</span><span class="p">,</span> <span class="n">get_sankey_mapping_S</span><span class="p">,</span> <span class="n">load_module_data</span><span class="p">,</span> <span class="n">get_module_figs</span>
+
+    <span class="k">def</span> <span class="nf">get_required_data</span><span class="p">(</span><span class="n">measuring_list</span><span class="o">=</span><span class="n">measuring_list</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span> <span class="n">units</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wrapper function for get_required_data_S.</span>
+<span class="sd">        Calls get_required_data_S and returns its output.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">get_required_data_S</span><span class="p">(</span><span class="n">measuring_list</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
+        
+
+
+    <span class="k">def</span> <span class="nf">get_sankey_mapping</span><span class="p">(</span><span class="n">measuring_list</span><span class="o">=</span><span class="n">measuring_list_sankey</span><span class="p">,</span> <span class="n">Consumption</span><span class="o">=</span><span class="n">Consumption</span><span class="p">,</span> <span class="n">Label</span><span class="o">=</span><span class="n">Label</span><span class="p">,</span> <span class="n">Type</span><span class="o">=</span><span class="n">Type</span><span class="p">,</span> <span class="n">EnergyTypeInput</span><span class="o">=</span><span class="n">EnergyTypeInput</span><span class="p">,</span> <span class="n">EnergyTypeOutput</span><span class="o">=</span><span class="n">EnergyTypeOutput</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wrapper function for get_sankey_mapping_S.</span>
+<span class="sd">        Calls get_sankey_mapping_S and returns its output.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">get_sankey_mapping_S</span><span class="p">(</span><span class="n">measuring_list</span><span class="p">,</span> <span class="n">Consumption</span><span class="p">,</span> <span class="n">Label</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">EnergyTypeInput</span><span class="p">,</span> <span class="n">EnergyTypeOutput</span><span class="p">)</span>
+    
+    <span class="c1">#Intilazie interface:</span>
+    <span class="n">data_interface</span> <span class="o">=</span> <span class="n">initialize_data_interface</span><span class="p">()</span>
+    
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="nn">st</span>
+
+    <span class="kn">from</span> <span class="nn">_module_functions</span> <span class="kn">import</span> <span class="n">initialize_data_interface</span><span class="p">,</span> <span class="n">get_required_data_S</span><span class="p">,</span> <span class="n">get_sankey_mapping_S</span><span class="p">,</span> <span class="n">load_module_data</span><span class="p">,</span> <span class="n">get_module_figs</span>
+
+<div class="viewcode-block" id="get_required_data"><a class="viewcode-back" href="../../../modules/modules.html#pages.modules.E_consumer_module.get_required_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_required_data</span><span class="p">(</span><span class="n">measuring_list</span><span class="o">=</span><span class="n">measuring_list</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span> <span class="n">units</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wrapper function for get_required_data_S.</span>
+<span class="sd">        Calls get_required_data_S and returns its output.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">get_required_data_S</span><span class="p">(</span><span class="n">measuring_list</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_sankey_mapping"><a class="viewcode-back" href="../../../modules/modules.html#pages.modules.E_consumer_module.get_sankey_mapping">[docs]</a>    <span class="k">def</span> <span class="nf">get_sankey_mapping</span><span class="p">(</span><span class="n">measuring_list</span><span class="o">=</span><span class="n">measuring_list</span><span class="p">,</span> <span class="n">Consumption</span><span class="o">=</span><span class="n">Consumption</span><span class="p">,</span> <span class="n">Label</span><span class="o">=</span><span class="n">Label</span><span class="p">,</span> <span class="n">Type</span><span class="o">=</span><span class="n">Type</span><span class="p">,</span> <span class="n">EnergyTypeInput</span><span class="o">=</span><span class="n">EnergyTypeInput</span><span class="p">,</span> <span class="n">EnergyTypeOutput</span><span class="o">=</span><span class="n">EnergyTypeOutput</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wrapper function for get_sankey_mapping_S.</span>
+<span class="sd">        Calls get_sankey_mapping_S and returns its output.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">get_sankey_mapping_S</span><span class="p">(</span><span class="n">measuring_list</span><span class="p">,</span> <span class="n">Consumption</span><span class="p">,</span> <span class="n">Label</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">EnergyTypeInput</span><span class="p">,</span> <span class="n">EnergyTypeOutput</span><span class="p">)</span></div>
+
+    <span class="c1">#Intilazie interface:</span>
+    <span class="n">data_interface</span> <span class="o">=</span> <span class="n">initialize_data_interface</span><span class="p">()</span>
+
+    <span class="c1">#Here you can test the module as a stand-alone script</span>
+
+    <span class="n">st</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Test module:&quot;</span><span class="p">)</span>
+
+
+   
+
+        
+        
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Julian W..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
