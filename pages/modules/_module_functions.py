@@ -11,6 +11,15 @@ import re
 def initialize_data_interface():
     """
     Initialize the data interface based on the saved interface in Configuration.json.
+    
+    Returns
+    -------
+    obj or None
+        Returns an instance of the saved data interface, or None if the saved interface could not be loaded.
+
+    Notes
+    -----
+    The function dynamically imports the 'api' module and creates an instance of the saved data interface.
     """
     # Add the directory containing api.py to the Python path
     sys.path.append(os.path.join(os.path.dirname(__file__), '../../functions'))
@@ -46,33 +55,31 @@ def initialize_data_interface():
 
 
 
-def get_required_data_S(measuring_list, units ):
+def get_required_data_S(measuring_list, units):
     """
     Retrieve the required data names and their possible units for this system component.
-
     This function provides a dictionary where keys represent the names of data 
     variables relevant for this system component. Each key is mapped to a list 
     of possible units in which that data variable might be recorded.
-
-    Returns:
-        dict: A dictionary where:
-            - keys are strings representing the names of data variables required by this component.
-            - values are lists of strings representing the possible units for the respective data variable.
-
-    Example:
-        For a component that requires power yield (P_yield) and battery charge (Battery_charge), 
-        the function might return:
-        {
-            "P_yield" : ["W", "kW",],
-            "Battery_charge" : ["Wh", "kWh"]
-        }
-
-    Notes:
-        The returned structure is used for data mapping in the main application, helping users 
-        match their data columns to the requirements of this system component and specify the 
-        units of their data.
+    
+    Parameters
+    ----------
+    measuring_list : list
+        List of names for the data variables relevant for this system component.
+    units : list
+        List of possible units for the data variables.
+        
+    Returns
+    -------
+    dict
+        A dictionary where keys are the names of data variables and values are 
+        lists of possible units.
+        
+        - keys : strings
+          Representing the names of data variables required by this component.
+        - values : lists of strings
+          Representing the possible units for the respective data variable.
     """
-
     # Return the list of required data for this module
     
     required_data = {}
@@ -87,20 +94,27 @@ def get_required_data_S(measuring_list, units ):
 
 def get_sankey_mapping_S (measuring_list,Consumption, labels, types, energy_type_inputs, energy_type_outputs):
     """
-    Create a data mapping dictionary from lists of labels, types, energy_type_inputs and energy_type_outputs.
-
-    Note:
-    If a value is present in "measuring_list" but does not have a corresponding "Label" (and "Type", "EnergyTypeInput", "EnergyTypeOutput") value, it is not taken into account in "get_sankey_mapping".
+    Create a data mapping dictionary from lists of labels, types, energy_type_inputs, and energy_type_outputs.
     
-    Parameters:
-    - dataframe (pd.DataFrame): The DataFrame containing the data series.
-    - labels (list): List of labels corresponding to each data series in the DataFrame.
-    - types (list): List of types corresponding to each data series in the DataFrame.
-    - energy_type_inputs (list): List of energy type inputs corresponding to each data series in the DataFrame.
-    - energy_type_outputs (list): List of energy type outputs corresponding to each data series in the DataFrame.
-    
-    Returns:
-    - dict: The data mapping dictionary.
+    Parameters
+    ----------
+    measuring_list : list
+        List of data series in the DataFrame.
+    Consumption : list
+        List of consumption values corresponding to each data series in the DataFrame.
+    labels : list
+        List of labels corresponding to each data series in the DataFrame.
+    types : list
+        List of types corresponding to each data series in the DataFrame.
+    energy_type_inputs : list
+        List of energy type inputs corresponding to each data series in the DataFrame.
+    energy_type_outputs : list
+        List of energy type outputs corresponding to each data series in the DataFrame.
+        
+    Returns
+    -------
+    dict
+        The data mapping dictionary.
     """
     
     # Initialize an empty dictionary to hold the mapping
@@ -128,15 +142,21 @@ def load_module_data(data_mapping, module_names, start_time=None, end_time=None)
     """
     Load data for specified modules from the API and interpolate missing values.
 
-    Args:
-        data_mapping (dict): The data mapping dictionary.
-        module_names (list): List of module names for which data should be loaded.
-        start_time (str or datetime, optional): The start time for the data retrieval.
-        end_time (str or datetime, optional): The end time for the data retrieval.
+    Parameters
+    ----------
+    data_mapping : dict
+        The data mapping dictionary.
+    module_names : list
+        List of module names for which data should be loaded.
+    start_time : str or datetime, optional
+        The start time for data retrieval.
+    end_time : str or datetime, optional
+        The end time for data retrieval.
 
-    Returns:
-        pd.DataFrame: A DataFrame with the same structure as data_mapping, but with actual data 
-        from the API instead of column names.
+    Returns
+    -------
+    pd.DataFrame
+        A DataFrame with the actual data from the API.
     """
     
     raw_df = pd.DataFrame()
@@ -188,14 +208,12 @@ def load_module_data(data_mapping, module_names, start_time=None, end_time=None)
 
 def get_module_figs():
     """
-    This is a function to create plant module specific images. This function must be created specifically for each plant module. 
+    Create plant module-specific images.
 
-    Parameters:
-    -None
-
-    Returns:
-    - A list of charts which can be called with "st.plotly_chart()".
-    
+    Returns
+    -------
+    list
+        A list of charts that can be displayed using st.plotly_chart().
     """
 
     figures = []

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pages.analysis_layer &mdash; Energy_Monitor 1.0.0 documentation</title>
+  <title>pages.analysis_layer &mdash; Energysystemmonitor 1.0.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -29,7 +29,7 @@
           
           
           <a href="../../index.html" class="icon icon-home">
-            Energy_Monitor
+            Energysystemmonitor
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -41,7 +41,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Energy_monitor Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Energy_monitor</a></li>
 </ul>
 
         </div>
@@ -50,7 +50,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Energy_Monitor</a>
+          <a href="../../index.html">Energysystemmonitor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -69,16 +69,26 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pages.analysis_layer</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="nn">st</span>
-<span class="kn">from</span> <span class="nn">streamlit_extras.switch_page_button</span> <span class="kn">import</span> <span class="n">switch_page</span>
-<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
-<span class="kn">from</span> <span class="nn">plotly.subplots</span> <span class="kn">import</span> <span class="n">make_subplots</span>
-<span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span></span><span class="c1"># Standard Libraries</span>
+<span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span><span class="o">,</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span> <span class="k">as</span> <span class="n">dt_date</span>
+<span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="nn">st</span>
 <span class="kn">import</span> <span class="nn">importlib</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span> 
+
+<span class="c1"># Third-party Libraries</span>
+<span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">from</span> <span class="nn">streamlit_extras.switch_page_button</span> <span class="kn">import</span> <span class="n">switch_page</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="kn">from</span> <span class="nn">plotly.subplots</span> <span class="kn">import</span> <span class="n">make_subplots</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="c1"># Custom Modules</span>
 <span class="kn">from</span> <span class="nn">functions</span> <span class="kn">import</span> <span class="n">imputation</span>
 <span class="kn">from</span> <span class="nn">functions</span> <span class="kn">import</span> <span class="n">compute_energy</span>
 <span class="kn">from</span> <span class="nn">functions</span> <span class="kn">import</span> <span class="n">conversion</span> 
@@ -87,60 +97,395 @@
 
 
 <span class="c1">#Configer streamlit page</span>
-<span class="n">page_title</span><span class="o">=</span><span class="s2">&quot;Analysis Layer&quot;</span>
-<span class="n">st</span><span class="o">.</span><span class="n">set_page_config</span><span class="p">(</span>
-    <span class="n">page_title</span><span class="o">=</span><span class="n">page_title</span><span class="p">,</span>
-    <span class="n">page_icon</span><span class="o">=</span><span class="s2">&quot;🧊&quot;</span><span class="p">,</span>
-    <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;wide&quot;</span><span class="p">,</span>
-    <span class="n">initial_sidebar_state</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
-    <span class="n">menu_items</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;About&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;# This is the </span><span class="si">{</span><span class="n">page_title</span><span class="si">}</span><span class="s2"> of the E-Monitoring Software&quot;</span>
-    <span class="p">}</span>
-<span class="p">)</span>
+<div class="viewcode-block" id="configure_streamlit_page"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.configure_streamlit_page">[docs]</a><span class="k">def</span> <span class="nf">configure_streamlit_page</span><span class="p">(</span><span class="n">page_title</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configure the main settings of the Streamlit page.</span>
 
-<div class="viewcode-block" id="extract_unit"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.extract_unit">[docs]</a><span class="k">def</span> <span class="nf">extract_unit</span><span class="p">(</span><span class="n">column_name</span><span class="p">):</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    page_title : str</span>
+<span class="sd">        The title of the Streamlit page.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">st</span><span class="o">.</span><span class="n">set_page_config</span><span class="p">(</span>
+        <span class="n">page_title</span><span class="o">=</span><span class="n">page_title</span><span class="p">,</span>
+        <span class="n">page_icon</span><span class="o">=</span><span class="s2">&quot;🧊&quot;</span><span class="p">,</span>
+        <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;wide&quot;</span><span class="p">,</span>
+        <span class="n">initial_sidebar_state</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+        <span class="n">menu_items</span><span class="o">=</span><span class="p">{</span>
+            <span class="s1">&#39;About&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;# This is the </span><span class="si">{</span><span class="n">page_title</span><span class="si">}</span><span class="s2"> of the E-Monitoring Software&quot;</span>
+        <span class="p">}</span>
+    <span class="p">)</span></div>
+
+<div class="viewcode-block" id="extract_unit"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.extract_unit">[docs]</a><span class="k">def</span> <span class="nf">extract_unit</span><span class="p">(</span><span class="n">column_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Extract the unit from a column name enclosed in square brackets.</span>
-<span class="sd">    </span>
-<span class="sd">    Args:</span>
-<span class="sd">        column_name (str): The name of the column, e.g., &quot;Temperature [C]&quot;</span>
-<span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">        str: The unit extracted from the column name, e.g., &quot;C&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    column_name : str</span>
+<span class="sd">        The name of the column, e.g., &quot;Temperature [C]&quot;.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Optional[str]</span>
+<span class="sd">        The unit extracted from the column name, e.g., &quot;C&quot;. </span>
+<span class="sd">        Returns None if no unit is found.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; extract_unit(&quot;Temperature [C]&quot;)</span>
+<span class="sd">    &#39;C&#39;</span>
+<span class="sd">    &gt;&gt;&gt; extract_unit(&quot;Pressure&quot;)</span>
+<span class="sd">    None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\[(.*?)\]&#39;</span><span class="p">,</span> <span class="n">column_name</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">match</span> <span class="k">else</span> <span class="kc">None</span></div>
 
+<div class="viewcode-block" id="load_module_data"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.load_module_data">[docs]</a><span class="k">def</span> <span class="nf">load_module_data</span><span class="p">(</span><span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data_mapping</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">start_time</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">end_time</span><span class="p">:</span> <span class="n">datetime</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Dynamically imports a module and loads its data based on the provided time range.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    module_name : str</span>
+<span class="sd">        The name of the module to be imported.</span>
+<span class="sd">    data_mapping : Dict</span>
+<span class="sd">        A dictionary that maps module names to data names and column names.</span>
+<span class="sd">    start_time : datetime</span>
+<span class="sd">        The start time for data filtering.</span>
+<span class="sd">    end_time : datetime</span>
+<span class="sd">        The end time for data filtering.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Dict</span>
+<span class="sd">        Loaded data as a dictionary.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    Exception</span>
+<span class="sd">        If the data could not be loaded.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;pages.modules.</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s1">_module&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">module</span><span class="o">.</span><span class="n">load_module_data</span><span class="p">(</span><span class="n">data_mapping</span><span class="p">,</span> <span class="p">[</span><span class="n">module_name</span><span class="p">],</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="get_selected_data"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.get_selected_data">[docs]</a><span class="k">def</span> <span class="nf">get_selected_data</span><span class="p">(</span><span class="n">data_mapping</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">start_time</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">end_time</span><span class="p">:</span> <span class="n">datetime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Process selected data based on user input from the Streamlit sidebar.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_mapping : Dict</span>
+<span class="sd">        A dictionary that maps module names to data names and column names.</span>
+<span class="sd">    start_time : datetime</span>
+<span class="sd">        The start time for data filtering.</span>
+<span class="sd">    end_time : datetime</span>
+<span class="sd">        The end time for data filtering.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Dict</span>
+<span class="sd">        A dictionary containing the selected data.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; get_selected_data({&#39;Module1&#39;: {&#39;Data1&#39;: &#39;Column1&#39;}}, start_time, end_time)</span>
+<span class="sd">    {&#39;Module1&#39;: {&#39;Data1&#39;: loaded_data}}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Initialize a counter to change the checkbox-key in every iteration</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Initialize an empty dictionary to store selected data</span>
+    <span class="n">selected_data</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># Iterate through each module and its corresponding data</span>
+    <span class="k">for</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">module_data</span> <span class="ow">in</span> <span class="n">data_mapping</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">selected_data</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">expander</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">sidebar</span><span class="o">.</span><span class="n">expander</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Analyse Data for </span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">for</span> <span class="n">data_name</span><span class="p">,</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">module_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">data_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">counter</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">selected</span> <span class="o">=</span> <span class="n">expander</span><span class="o">.</span><span class="n">checkbox</span><span class="p">(</span><span class="n">data_name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">if</span> <span class="n">selected</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="c1"># Load the data from the API</span>
+                    <span class="n">loaded_data</span> <span class="o">=</span> <span class="n">load_module_data</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">data_mapping</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+
+                    <span class="c1"># Organize data in dict</span>
+                    <span class="n">selected_data</span><span class="p">[</span><span class="n">module_name</span><span class="p">][</span><span class="n">data_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">loaded_data</span><span class="p">[</span><span class="n">column_name</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ein Fehler ist aufgetreten: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">selected_data</span></div>
+
+<div class="viewcode-block" id="unit_conversion_settings"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.unit_conversion_settings">[docs]</a><span class="k">def</span> <span class="nf">unit_conversion_settings</span><span class="p">(</span><span class="n">display_option</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">col</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handle unit conversion settings based on the selected display option.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    display_option : str</span>
+<span class="sd">        The selected display option: &quot;Individual&quot;, &quot;Display as energy&quot;, &quot;Display as power&quot;.</span>
+<span class="sd">    col : object</span>
+<span class="sd">        Streamlit column object for placing widgets.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Optional[str]</span>
+<span class="sd">        The selected unit for energy or power conversion. None if &quot;Individual&quot; is selected.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">selected_unit</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">display_option</span> <span class="o">==</span> <span class="s2">&quot;Display as energy&quot;</span><span class="p">:</span>
+        <span class="n">unit_options</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;kWh&quot;</span><span class="p">,</span> <span class="s2">&quot;Wh&quot;</span><span class="p">,</span> <span class="s2">&quot;J&quot;</span><span class="p">,</span> <span class="s2">&quot;MJ&quot;</span><span class="p">,</span> <span class="s2">&quot;GJ&quot;</span><span class="p">]</span>
+        <span class="n">selected_unit</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="s2">&quot;Select energy unit:&quot;</span><span class="p">,</span> <span class="n">unit_options</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">display_option</span> <span class="o">==</span> <span class="s2">&quot;Display as power&quot;</span><span class="p">:</span>
+        <span class="n">unit_options</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;kW&quot;</span><span class="p">,</span> <span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="s2">&quot;J/s&quot;</span><span class="p">,</span> <span class="s2">&quot;MW&quot;</span><span class="p">,</span> <span class="s2">&quot;GW&quot;</span><span class="p">]</span>
+        <span class="n">selected_unit</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="s2">&quot;Select power unit:&quot;</span><span class="p">,</span> <span class="n">unit_options</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">selected_unit</span></div>
+
+<div class="viewcode-block" id="handle_interpolation_settings"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.handle_interpolation_settings">[docs]</a><span class="k">def</span> <span class="nf">handle_interpolation_settings</span><span class="p">(</span><span class="n">col1</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">col2</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handle interpolation settings and return the selected frequency.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    col1 : object</span>
+<span class="sd">        Streamlit column object for placing widgets.</span>
+<span class="sd">    col2 : object</span>
+<span class="sd">        Streamlit column object for placing widgets.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The selected frequency for interpolation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">freq_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;None&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;15 minutes&quot;</span> <span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+        <span class="s2">&quot;30 minutes&quot;</span> <span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+        <span class="s2">&quot;hour&quot;</span> <span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
+        <span class="s2">&quot;day&quot;</span> <span class="p">:</span> <span class="mi">1440</span><span class="p">,</span>
+        <span class="s2">&quot;week (fixed frequency)&quot;</span><span class="p">:</span> <span class="mi">10080</span><span class="p">,</span>
+        <span class="s2">&quot;month (fixed frequency)&quot;</span><span class="p">:</span> <span class="mi">43800</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">selected_key</span> <span class="o">=</span> <span class="n">col1</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="s2">&quot;Choose a time frequency:&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">freq_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+    <span class="n">freq_range</span> <span class="o">=</span> <span class="n">freq_dict</span><span class="p">[</span><span class="n">selected_key</span><span class="p">]</span>
+    <span class="n">freq</span> <span class="o">=</span> <span class="n">col2</span><span class="o">.</span><span class="n">number_input</span><span class="p">(</span><span class="s2">&quot;Input a frequency in Minutes:&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">freq_range</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">freq</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">freq</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">elif</span> <span class="n">freq</span> <span class="o">==</span> <span class="mi">60</span><span class="p">:</span>
+        <span class="n">freq</span> <span class="o">=</span> <span class="s2">&quot;1H&quot;</span>
+    <span class="k">elif</span> <span class="n">freq</span> <span class="o">==</span> <span class="mi">1440</span><span class="p">:</span>
+        <span class="n">freq</span> <span class="o">=</span> <span class="s2">&quot;1D&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">freq</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">freq</span><span class="si">}</span><span class="s2">T&quot;</span>
+    <span class="k">return</span> <span class="n">freq</span></div>
+
+<div class="viewcode-block" id="convert_processed_data"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.convert_processed_data">[docs]</a><span class="k">def</span> <span class="nf">convert_processed_data</span><span class="p">(</span><span class="n">selected_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Processes and converts the selected data entered by the user via the Streamlit user interface.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    selected_data : dict</span>
+<span class="sd">        A dictionary containing the selected data from different modules.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        A dictionary containing the processed and possibly converted data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">processed_data</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">general_expander</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">expander</span><span class="p">(</span><span class="s2">&quot;General Settings for Selected Data&quot;</span><span class="p">)</span>
+    <span class="n">col1</span><span class="p">,</span> <span class="n">col2</span> <span class="o">=</span> <span class="n">general_expander</span><span class="o">.</span><span class="n">columns</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+    <span class="n">col_imputation_1</span><span class="p">,</span> <span class="n">col_imputation_2</span> <span class="o">=</span> <span class="n">general_expander</span><span class="o">.</span><span class="n">columns</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+    <span class="n">display_option</span> <span class="o">=</span> <span class="n">col1</span><span class="o">.</span><span class="n">radio</span><span class="p">(</span>
+        <span class="s2">&quot;Display Option:&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s2">&quot;Individual&quot;</span><span class="p">,</span> <span class="s2">&quot;Display as energy&quot;</span><span class="p">,</span> <span class="s2">&quot;Display as power&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">selected_unit</span> <span class="o">=</span> <span class="n">unit_conversion_settings</span><span class="p">(</span><span class="n">display_option</span><span class="p">,</span> <span class="n">col2</span><span class="p">)</span>
+    <span class="n">freq</span> <span class="o">=</span> <span class="n">handle_interpolation_settings</span><span class="p">(</span><span class="n">col_imputation_1</span><span class="p">,</span> <span class="n">col_imputation_2</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">module_data</span> <span class="ow">in</span> <span class="n">selected_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">processed_data</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="k">for</span> <span class="n">data_name</span><span class="p">,</span> <span class="n">data_series</span> <span class="ow">in</span> <span class="n">module_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Extract the original unit from data_name</span>
+            <span class="n">original_unit</span> <span class="o">=</span> <span class="n">extract_unit</span><span class="p">(</span><span class="n">data_name</span><span class="p">)</span>
+            
+            <span class="c1"># Handle individual unit conversion</span>
+            <span class="k">if</span> <span class="n">display_option</span> <span class="o">==</span> <span class="s2">&quot;Individual&quot;</span><span class="p">:</span>
+                <span class="n">compatible_units</span> <span class="o">=</span> <span class="n">conversion</span><span class="o">.</span><span class="n">find_compatible_units</span><span class="p">(</span><span class="n">original_unit</span><span class="p">)</span>
+                <span class="n">compatible_units</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;None&quot;</span><span class="p">)</span>
+                <span class="n">default_index</span> <span class="o">=</span> <span class="n">compatible_units</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">original_unit</span><span class="p">)</span> <span class="k">if</span> <span class="n">original_unit</span> <span class="ow">in</span> <span class="n">compatible_units</span> <span class="k">else</span> <span class="n">compatible_units</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;None&quot;</span><span class="p">)</span>
+                <span class="n">selected_individual_unit</span> <span class="o">=</span> <span class="n">col2</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Select unit for </span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">data_name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="n">compatible_units</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">default_index</span><span class="p">)</span>
+                
+                <span class="k">if</span> <span class="n">selected_individual_unit</span> <span class="o">!=</span> <span class="s2">&quot;None&quot;</span> <span class="ow">and</span> <span class="n">selected_individual_unit</span> <span class="o">!=</span> <span class="n">original_unit</span><span class="p">:</span>
+                    <span class="n">data_series</span> <span class="o">=</span> <span class="n">conversion</span><span class="o">.</span><span class="n">convert_unit_of_dataframe</span><span class="p">(</span><span class="n">data_series</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(),</span> <span class="n">original_unit</span><span class="p">,</span> <span class="n">selected_individual_unit</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+                    <span class="n">data_name</span> <span class="o">=</span> <span class="n">data_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">original_unit</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">selected_individual_unit</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+            
+            <span class="c1"># Check or get frequency</span>
+            <span class="k">if</span> <span class="n">freq</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">freq</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">infer_freq</span><span class="p">(</span><span class="n">data_series</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">freq</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="n">freq</span> <span class="o">=</span> <span class="s2">&quot;1T&quot;</span>
+                    <span class="n">general_expander</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The time series data contains fewer than 3 timestamps, so the frequency of the data cannot be determined. Defaulting to 1 minute.&quot;</span><span class="p">)</span>
+            
+            <span class="c1"># Interpolate data</span>
+            <span class="n">interpolated_data</span> <span class="o">=</span> <span class="n">imputation</span><span class="o">.</span><span class="n">interpolate_impute</span><span class="p">(</span><span class="n">data_series</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(),</span> <span class="n">freq</span><span class="o">=</span><span class="n">freq</span><span class="p">)</span>
+
+            <span class="c1"># Perform unit conversion if necessary and if selected_unit is not None</span>
+            <span class="k">if</span> <span class="n">selected_unit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">converted_data</span> <span class="o">=</span> <span class="n">compute_energy</span><span class="o">.</span><span class="n">power_energy</span><span class="p">(</span><span class="n">interpolated_data</span><span class="p">,</span> <span class="n">original_unit</span><span class="p">,</span> <span class="n">selected_unit</span><span class="p">,</span> <span class="n">freq</span><span class="p">)</span>
+                <span class="n">new_data_name</span> <span class="o">=</span> <span class="n">data_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">original_unit</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">selected_unit</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">converted_data</span> <span class="o">=</span> <span class="n">interpolated_data</span>
+                <span class="n">new_data_name</span> <span class="o">=</span> <span class="n">data_name</span>
+            
+            <span class="c1"># Check if conversion was successful</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">converted_data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Conversion failed for </span><span class="si">{</span><span class="n">data_name</span><span class="si">}</span><span class="s2"> in module </span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">. Keeping original data.&quot;</span><span class="p">)</span>
+                <span class="n">processed_data</span><span class="p">[</span><span class="n">module_name</span><span class="p">][</span><span class="n">data_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_series</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">processed_data</span><span class="p">[</span><span class="n">module_name</span><span class="p">][</span><span class="n">new_data_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">converted_data</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">processed_data</span></div>
+
+<div class="viewcode-block" id="convert_to_dataframe"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.convert_to_dataframe">[docs]</a><span class="k">def</span> <span class="nf">convert_to_dataframe</span><span class="p">(</span><span class="n">nested_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts a nested dictionary to a single-level Pandas DataFrame.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    nested_dict : dict</span>
+<span class="sd">        The nested dictionary containing the data.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pd.DataFrame</span>
+<span class="sd">        A DataFrame containing the flattened data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Initialize an empty DataFrame to hold the final data</span>
+    <span class="n">final_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    
+    <span class="c1"># Loop through each module and its series</span>
+    <span class="k">for</span> <span class="n">module</span><span class="p">,</span> <span class="n">series_dict</span> <span class="ow">in</span> <span class="n">nested_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">series_name</span><span class="p">,</span> <span class="n">series_data</span> <span class="ow">in</span> <span class="n">series_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Create a new column name based on the module and series name</span>
+            <span class="n">new_col_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">module</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">series_name</span><span class="si">}</span><span class="s2">&quot;</span>
+            
+            <span class="c1"># Add the series to the final DataFrame</span>
+            <span class="n">final_df</span><span class="p">[</span><span class="n">new_col_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">series_data</span>
+            
+    <span class="k">return</span> <span class="n">final_df</span></div>
+
+<div class="viewcode-block" id="manage_units_and_subplots"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.manage_units_and_subplots">[docs]</a><span class="k">def</span> <span class="nf">manage_units_and_subplots</span><span class="p">(</span><span class="n">figures</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">unit_list</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Manages the list of units and creates new subplots as needed.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    figures : list</span>
+<span class="sd">        List of existing figures and their associated unit lists.</span>
+<span class="sd">    unit : str</span>
+<span class="sd">        The unit to be added.</span>
+<span class="sd">    fig : plotly.graph_objs.Figure, optional</span>
+<span class="sd">        Current working figure.</span>
+<span class="sd">    unit_list : list, optional</span>
+<span class="sd">        List of units already added to the current figure.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    figures : list</span>
+<span class="sd">        List of figures, potentially with a new figure added.</span>
+<span class="sd">    fig : plotly.graph_objs.Figure</span>
+<span class="sd">        The updated or new figure.</span>
+<span class="sd">    unit_list : list</span>
+<span class="sd">        The updated list of units.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">fig</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">make_subplots</span><span class="p">(</span><span class="n">specs</span><span class="o">=</span><span class="p">[[{</span><span class="s2">&quot;secondary_y&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}]])</span>
+    <span class="k">if</span> <span class="n">unit_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">unit_list</span> <span class="o">=</span> <span class="p">[]</span>
+        
+    <span class="k">if</span> <span class="n">unit</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">unit_list</span><span class="p">:</span>
+        <span class="n">unit_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unit_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">figures</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">fig</span><span class="p">,</span> <span class="n">unit_list</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">make_subplots</span><span class="p">(</span><span class="n">specs</span><span class="o">=</span><span class="p">[[{</span><span class="s2">&quot;secondary_y&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}]])</span>
+        <span class="n">unit_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">unit</span><span class="p">]</span>
+        
+    <span class="k">return</span> <span class="n">figures</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">unit_list</span></div>
+
+<div class="viewcode-block" id="update_figure_layout"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.update_figure_layout">[docs]</a><span class="k">def</span> <span class="nf">update_figure_layout</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">unit_list</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Updates the layout and axis titles for a given figure.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fig : plotly.graph_objs.Figure</span>
+<span class="sd">        The figure to update.</span>
+<span class="sd">    unit_list : list</span>
+<span class="sd">        List of units associated with this figure.</span>
+<span class="sd">    start_date : str or datetime object</span>
+<span class="sd">        Start date for the x-axis range.</span>
+<span class="sd">    end_date : str or datetime object</span>
+<span class="sd">        End date for the x-axis range.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+        <span class="n">showlegend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">legend</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;h&quot;</span><span class="p">,</span>
+            <span class="n">yanchor</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span>
+            <span class="n">y</span><span class="o">=</span><span class="mf">1.02</span><span class="p">,</span>
+            <span class="n">xanchor</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span>
+            <span class="n">x</span><span class="o">=</span><span class="mi">1</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">unit_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="n">secondary_y</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unit_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">unit_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="n">secondary_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_xaxes</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">],</span> <span class="n">autorange</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="create_line_figure"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.create_line_figure">[docs]</a><span class="k">def</span> <span class="nf">create_line_figure</span><span class="p">(</span><span class="n">selected_data</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates a list of combined plotly figures based on the selected data.</span>
-<span class="sd">    </span>
-<span class="sd">    Args:</span>
-<span class="sd">        selected_data: A dictionary containing the selected data.</span>
-<span class="sd">        start_date: A string or datetime object indicating the start date.</span>
-<span class="sd">        end_date: A string or datetime object indicating the end date.</span>
-<span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">        A list of plotly figures.</span>
+<span class="sd">    Creates a list of combined Plotly figures based on the selected data.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    selected_data : dict</span>
+<span class="sd">        A dictionary containing the selected data.</span>
+<span class="sd">    start_date : str or datetime object</span>
+<span class="sd">        A string or datetime object indicating the start date.</span>
+<span class="sd">    end_date : str or datetime object</span>
+<span class="sd">        A string or datetime object indicating the end date.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        A list of Plotly figures.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">figures</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">make_subplots</span><span class="p">(</span><span class="n">specs</span><span class="o">=</span><span class="p">[[{</span><span class="s2">&quot;secondary_y&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}]])</span>
-    <span class="n">unit_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Initialize to None</span>
+    <span class="n">unit_list</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Initialize to None</span>
     
     <span class="k">for</span> <span class="n">module</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">selected_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">for</span> <span class="n">column_name</span><span class="p">,</span> <span class="n">column_data</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">unit</span> <span class="o">=</span> <span class="n">extract_unit</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span>
             
-            <span class="c1"># Add the unit to the list if it&#39;s not already there</span>
-            <span class="k">if</span> <span class="n">unit</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">unit_list</span><span class="p">:</span>
-                <span class="n">unit_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span>
-            
-            <span class="c1"># If we&#39;ve added 2 units to the current figure, add it to the list and start a new one</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unit_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="n">figures</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">fig</span><span class="p">,</span> <span class="n">unit_list</span><span class="p">[:]))</span>
-                <span class="n">fig</span> <span class="o">=</span> <span class="n">make_subplots</span><span class="p">(</span><span class="n">specs</span><span class="o">=</span><span class="p">[[{</span><span class="s2">&quot;secondary_y&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}]])</span>
-                <span class="n">unit_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">unit</span><span class="p">]</span>
+            <span class="c1"># Update figures, fig, and unit_list based on the new unit</span>
+            <span class="n">figures</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">unit_list</span> <span class="o">=</span> <span class="n">manage_units_and_subplots</span><span class="p">(</span><span class="n">figures</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">unit_list</span><span class="p">)</span>
             
             <span class="n">secondary_y</span> <span class="o">=</span> <span class="n">unit_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
             
@@ -149,75 +494,52 @@
                 <span class="n">x</span><span class="o">=</span><span class="n">column_data</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> 
                 <span class="n">y</span><span class="o">=</span><span class="n">column_data</span><span class="p">,</span> 
                 <span class="n">name</span><span class="o">=</span><span class="n">column_name</span><span class="p">,</span>
-                <span class="c1">#fill=&#39;tozeroy&#39;,</span>
                 <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines&#39;</span><span class="p">,</span>
                 <span class="n">hovertemplate</span><span class="o">=</span>
                 <span class="s1">&#39;&lt;br&gt;Date: %</span><span class="si">{x}</span><span class="s1">&lt;br&gt;&#39;</span> <span class="o">+</span>
-                <span class="s1">&#39;Year: %{x|%Y}&lt;br&gt;&#39;</span> <span class="o">+</span>
                 <span class="s1">&#39;Value: %</span><span class="si">{y}</span><span class="s1"> [&#39;</span> <span class="o">+</span> <span class="n">unit</span> <span class="o">+</span> <span class="s1">&#39;]&lt;br&gt;&#39;</span><span class="p">,</span>
                 <span class="n">hoverlabel</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">namelength</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
             <span class="p">),</span> <span class="n">secondary_y</span><span class="o">=</span><span class="n">secondary_y</span><span class="p">)</span>
-    
+            
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-
-        <span class="c1"># If there&#39;s a figure with more than 2 units, add it to the list</span>
-        <span class="n">figures</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">fig</span><span class="p">,</span> <span class="n">unit_list</span><span class="p">[:]))</span>
-
-
-
+        <span class="n">figures</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">fig</span><span class="p">,</span> <span class="n">unit_list</span><span class="p">[:]))</span>  <span class="c1"># If there&#39;s a figure with more than 2 units, add it to the list</span>
+    
+    <span class="c1"># Update the layout for all figures</span>
     <span class="k">for</span> <span class="n">fig</span><span class="p">,</span> <span class="n">unit_list</span> <span class="ow">in</span> <span class="n">figures</span><span class="p">:</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
-            <span class="n">showlegend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">legend</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
-                <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;h&quot;</span><span class="p">,</span>
-                <span class="n">yanchor</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span>
-                <span class="n">y</span><span class="o">=</span><span class="mf">1.02</span><span class="p">,</span>
-                <span class="n">xanchor</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span>
-                <span class="n">x</span><span class="o">=</span><span class="mi">1</span>
-            <span class="p">)</span>
-        <span class="p">)</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">unit_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="n">secondary_y</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unit_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">unit_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="n">secondary_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-        <span class="c1"># Update the x-axis range</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">update_xaxes</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">],</span> <span class="n">autorange</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
+        <span class="n">update_figure_layout</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">unit_list</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">)</span>
+            
     <span class="k">return</span> <span class="p">[</span><span class="n">fig</span> <span class="k">for</span> <span class="n">fig</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">figures</span><span class="p">]</span></div>
-
 
 <div class="viewcode-block" id="create_bar_figure"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.create_bar_figure">[docs]</a><span class="k">def</span> <span class="nf">create_bar_figure</span><span class="p">(</span><span class="n">selected_data</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates a list of combined plotly bar charts based on the selected data.</span>
-<span class="sd">    </span>
-<span class="sd">    Args:</span>
-<span class="sd">        selected_data (dict): A dictionary containing the selected data.</span>
-<span class="sd">        start_date (str or datetime): A string or datetime object indicating the start date.</span>
-<span class="sd">        end_date (str or datetime): A string or datetime object indicating the end date.</span>
-<span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">        list: A list of plotly figures.</span>
+<span class="sd">    Creates a list of combined Plotly bar charts based on the selected data.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    selected_data : dict</span>
+<span class="sd">        A dictionary containing the selected data.</span>
+<span class="sd">    start_date : str or datetime object</span>
+<span class="sd">        A string or datetime object indicating the start date.</span>
+<span class="sd">    end_date : str or datetime object</span>
+<span class="sd">        A string or datetime object indicating the end date.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        A list of Plotly figures.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">figures</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">make_subplots</span><span class="p">(</span><span class="n">specs</span><span class="o">=</span><span class="p">[[{</span><span class="s2">&quot;secondary_y&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}]])</span>  <span class="c1"># Create a subplot with secondary y-axis</span>
-    <span class="n">unit_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Initialize to None</span>
+    <span class="n">unit_list</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Initialize to None</span>
     
-    <span class="c1"># Iterate over each module and its data</span>
     <span class="k">for</span> <span class="n">module</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">selected_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">for</span> <span class="n">column_name</span><span class="p">,</span> <span class="n">column_data</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">unit</span> <span class="o">=</span> <span class="n">extract_unit</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span>  <span class="c1"># Extract the unit from the column name</span>
+            <span class="n">unit</span> <span class="o">=</span> <span class="n">extract_unit</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span>
             
-            <span class="c1"># Add the unit to the list if it&#39;s not already there</span>
-            <span class="k">if</span> <span class="n">unit</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">unit_list</span><span class="p">:</span>
-                <span class="n">unit_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span>
+            <span class="c1"># Update figures, fig, and unit_list based on the new unit</span>
+            <span class="n">figures</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">unit_list</span> <span class="o">=</span> <span class="n">manage_units_and_subplots</span><span class="p">(</span><span class="n">figures</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">unit_list</span><span class="p">)</span>
             
-            <span class="c1"># If we&#39;ve added 2 units to the current figure, add it to the list and start a new one</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unit_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="n">figures</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">fig</span><span class="p">,</span> <span class="n">unit_list</span><span class="p">[:]))</span>
-                <span class="n">fig</span> <span class="o">=</span> <span class="n">make_subplots</span><span class="p">(</span><span class="n">specs</span><span class="o">=</span><span class="p">[[{</span><span class="s2">&quot;secondary_y&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}]])</span>  <span class="c1"># Create a new subplot</span>
-                <span class="n">unit_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">unit</span><span class="p">]</span>
-            
-            <span class="n">secondary_y</span> <span class="o">=</span> <span class="n">unit_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>  <span class="c1"># Check if this is a secondary y-axis</span>
+            <span class="n">secondary_y</span> <span class="o">=</span> <span class="n">unit_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
             
             <span class="c1"># Add the data as a bar chart</span>
             <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Bar</span><span class="p">(</span>
@@ -230,46 +552,36 @@
                 <span class="s1">&#39;Value: %</span><span class="si">{y}</span><span class="s1"> [&#39;</span> <span class="o">+</span> <span class="n">unit</span> <span class="o">+</span> <span class="s1">&#39;]&lt;br&gt;&#39;</span><span class="p">,</span>
                 <span class="n">hoverlabel</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">namelength</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
             <span class="p">),</span> <span class="n">secondary_y</span><span class="o">=</span><span class="n">secondary_y</span><span class="p">)</span>
-    
-    <span class="c1"># Check if there is any data in the figure</span>
+            
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">figures</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">fig</span><span class="p">,</span> <span class="n">unit_list</span><span class="p">[:]))</span>
-        
-    <span class="c1"># Update the layout and axis titles</span>
+        <span class="n">figures</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">fig</span><span class="p">,</span> <span class="n">unit_list</span><span class="p">[:]))</span>  <span class="c1"># If there&#39;s a figure with more than 2 units, add it to the list</span>
+    
+    <span class="c1"># Update the layout for all figures</span>
     <span class="k">for</span> <span class="n">fig</span><span class="p">,</span> <span class="n">unit_list</span> <span class="ow">in</span> <span class="n">figures</span><span class="p">:</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
-            <span class="n">showlegend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">legend</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
-                <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;h&quot;</span><span class="p">,</span>
-                <span class="n">yanchor</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span>
-                <span class="n">y</span><span class="o">=</span><span class="mf">1.02</span><span class="p">,</span>
-                <span class="n">xanchor</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span>
-                <span class="n">x</span><span class="o">=</span><span class="mi">1</span>
-            <span class="p">)</span>
-        <span class="p">)</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">unit_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="n">secondary_y</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unit_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">unit_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="n">secondary_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-        <span class="c1"># Update the x-axis range</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">update_xaxes</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">],</span> <span class="n">autorange</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
+        <span class="n">update_figure_layout</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">unit_list</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">)</span>
+            
     <span class="k">return</span> <span class="p">[</span><span class="n">fig</span> <span class="k">for</span> <span class="n">fig</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">figures</span><span class="p">]</span></div>
-
 
 <div class="viewcode-block" id="create_duration_curve_figure"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.create_duration_curve_figure">[docs]</a><span class="k">def</span> <span class="nf">create_duration_curve_figure</span><span class="p">(</span><span class="n">selected_data</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates a list of combined plotly duration curve charts with the x-axis in hours based on the selected data.</span>
+<span class="sd">    Creates a list of combined Plotly duration curve charts with the x-axis in hours based on the selected data.</span>
 <span class="sd">    The function automatically infers the time frequency from the data index using pd.infer_freq and converts it to minutes.</span>
-<span class="sd">    </span>
-<span class="sd">    Args:</span>
-<span class="sd">        selected_data (dict): A dictionary containing the selected data.</span>
-<span class="sd">        start_date (str or datetime): A string or datetime object indicating the start date.</span>
-<span class="sd">        end_date (str or datetime): A string or datetime object indicating the end date.</span>
-<span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">        list: A list of plotly figures.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    selected_data : dict</span>
+<span class="sd">        A dictionary containing the selected data.</span>
+<span class="sd">    start_date : str or datetime object</span>
+<span class="sd">        A string or datetime object indicating the start date.</span>
+<span class="sd">    end_date : str or datetime object</span>
+<span class="sd">        A string or datetime object indicating the end date.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        A list of Plotly figures.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">figures</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">make_subplots</span><span class="p">(</span><span class="n">specs</span><span class="o">=</span><span class="p">[[{</span><span class="s2">&quot;secondary_y&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}]])</span>  <span class="c1"># Create a subplot with secondary y-axis</span>
     <span class="n">unit_list</span> <span class="o">=</span> <span class="p">[]</span>
@@ -359,20 +671,26 @@
 
     <span class="k">return</span> <span class="p">[</span><span class="n">fig</span> <span class="k">for</span> <span class="n">fig</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">figures</span><span class="p">]</span></div>
 
-
 <div class="viewcode-block" id="create_heatmap_figure"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.create_heatmap_figure">[docs]</a><span class="k">def</span> <span class="nf">create_heatmap_figure</span><span class="p">(</span><span class="n">selected_data</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates a list of plotly heatmap figures based on the selected data. Each data series will have its own figure.</span>
+<span class="sd">    Creates a list of Plotly heatmap figures based on the selected data. Each data series will have its own figure.</span>
 <span class="sd">    The x-axis represents the date, the y-axis represents the hours of the day, and the color represents the value.</span>
-<span class="sd">    </span>
-<span class="sd">    Args:</span>
-<span class="sd">        selected_data (dict): A dictionary containing the selected data.</span>
-<span class="sd">        start_date (str or datetime): A string or datetime object indicating the start date.</span>
-<span class="sd">        end_date (str or datetime): A string or datetime object indicating the end date.</span>
-<span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">        list: A list of plotly figures.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    selected_data : dict</span>
+<span class="sd">        A dictionary containing the selected data.</span>
+<span class="sd">    start_date : str or datetime object</span>
+<span class="sd">        A string or datetime object indicating the start date.</span>
+<span class="sd">    end_date : str or datetime object</span>
+<span class="sd">        A string or datetime object indicating the end date.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        A list of Plotly figures.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">figures</span> <span class="o">=</span> <span class="p">[]</span>
     
     <span class="c1"># Iterate over each module and its data</span>
@@ -416,23 +734,29 @@
     
     <span class="k">return</span> <span class="n">figures</span></div>
 
-
 <div class="viewcode-block" id="create_themeriver_figure"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.create_themeriver_figure">[docs]</a><span class="k">def</span> <span class="nf">create_themeriver_figure</span><span class="p">(</span><span class="n">selected_data</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates a list of plotly ThemeRiver figures based on the selected data.</span>
+<span class="sd">    Creates a list of Plotly ThemeRiver figures based on the selected data.</span>
 <span class="sd">    Each figure represents a group of data series with the same unit.</span>
 <span class="sd">    The y-values of the series are summed up to create the &#39;river&#39; shape.</span>
 <span class="sd">    The hover mode is customized to only show the sum of the river.</span>
 <span class="sd">    The fill between lines is also implemented to represent the stacked nature of the series.</span>
-<span class="sd">    </span>
-<span class="sd">    Args:</span>
-<span class="sd">        selected_data (dict): A dictionary containing the selected data.</span>
-<span class="sd">        start_date (str or datetime): A string or datetime object indicating the start date.</span>
-<span class="sd">        end_date (str or datetime): A string or datetime object indicating the end date.</span>
-<span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">        list: A list of plotly figures.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    selected_data : dict</span>
+<span class="sd">        A dictionary containing the selected data.</span>
+<span class="sd">    start_date : str or datetime object</span>
+<span class="sd">        A string or datetime object indicating the start date.</span>
+<span class="sd">    end_date : str or datetime object</span>
+<span class="sd">        A string or datetime object indicating the end date.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        A list of Plotly figures.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">figures</span> <span class="o">=</span> <span class="p">[]</span>
     
     <span class="c1"># Group data by unit</span>
@@ -491,29 +815,57 @@
     
     <span class="k">return</span> <span class="n">figures</span></div>
 
-
-
-<div class="viewcode-block" id="date_range_selector"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.date_range_selector">[docs]</a><span class="k">def</span> <span class="nf">date_range_selector</span><span class="p">(</span><span class="n">start_date</span><span class="p">:</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">:</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Display a date range selector UI using Streamlit and return the selected date range.</span>
+<div class="viewcode-block" id="initialize_session_state"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.initialize_session_state">[docs]</a><span class="k">def</span> <span class="nf">initialize_session_state</span><span class="p">(</span><span class="n">start_date</span><span class="p">:</span> <span class="n">dt_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">:</span> <span class="n">dt_date</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize Streamlit session state variables for start and end dates.</span>
 <span class="sd">    </span>
-<span class="sd">    Parameters:</span>
-<span class="sd">    - start_date (dt.date): The earliest selectable date.</span>
-<span class="sd">    - end_date (dt.date): The latest selectable date.</span>
-<span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">    - tuple: A tuple containing the selected start and end dates (dt.date, dt.date).</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    start_date : datetime.date</span>
+<span class="sd">        The earliest selectable date.</span>
+<span class="sd">    end_date : datetime.date</span>
+<span class="sd">        The latest selectable date.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="c1"># Initialize session state if it doesn&#39;t exist yet</span>
     <span class="k">if</span> <span class="s1">&#39;start_date&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="p">:</span>
         <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">start_date</span> <span class="o">=</span> <span class="n">start_date</span>
     <span class="k">if</span> <span class="s1">&#39;end_date&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="p">:</span>
-        <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">end_date</span> <span class="o">=</span> <span class="n">end_date</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">end_date</span> <span class="o">=</span> <span class="n">end_date</span></div>
 
-    <span class="c1"># Ensure end_date is at least one day after start_date</span>
+<div class="viewcode-block" id="ensure_date_order"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.ensure_date_order">[docs]</a><span class="k">def</span> <span class="nf">ensure_date_order</span><span class="p">(</span><span class="n">start_date</span><span class="p">:</span> <span class="n">dt_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">:</span> <span class="n">dt_date</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">dt_date</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Ensure that the end date is at least one day after the start date.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    start_date : datetime.date</span>
+<span class="sd">        The start date.</span>
+<span class="sd">    end_date : datetime.date</span>
+<span class="sd">        The end date.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    datetime.date</span>
+<span class="sd">        Adjusted end date.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">start_date</span> <span class="o">==</span> <span class="n">end_date</span><span class="p">:</span>
-        <span class="n">end_date</span> <span class="o">=</span> <span class="n">start_date</span> <span class="o">+</span> <span class="n">dt</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">start_date</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">end_date</span></div>
+
+<div class="viewcode-block" id="date_range_selector"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.date_range_selector">[docs]</a><span class="k">def</span> <span class="nf">date_range_selector</span><span class="p">(</span><span class="n">start_date</span><span class="p">:</span> <span class="n">dt_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">:</span> <span class="n">dt_date</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Display a date range selector UI using Streamlit and return the selected date range.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    start_date : datetime.date</span>
+<span class="sd">        The earliest selectable date.</span>
+<span class="sd">    end_date : datetime.date</span>
+<span class="sd">        The latest selectable date.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        A tuple containing the selected start and end dates (datetime.date, datetime.date).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">initialize_session_state</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">)</span>
+    <span class="n">end_date</span> <span class="o">=</span> <span class="n">ensure_date_order</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">)</span>
     
     <span class="c1"># Create columns for layout</span>
     <span class="n">cols1</span><span class="p">,</span> <span class="n">cols2</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">columns</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
@@ -524,7 +876,7 @@
 
     <span class="c1"># Check if the time span is greater than one year</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">max_date</span> <span class="o">-</span> <span class="n">min_date</span><span class="p">)</span><span class="o">.</span><span class="n">days</span> <span class="o">&gt;</span> <span class="mi">365</span><span class="p">:</span>
-        <span class="n">initial_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">max_date</span> <span class="o">-</span> <span class="n">dt</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">365</span><span class="p">),</span> <span class="n">max_date</span><span class="p">)</span>
+        <span class="n">initial_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">max_date</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">365</span><span class="p">),</span> <span class="n">max_date</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">initial_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">min_date</span><span class="p">,</span> <span class="n">max_date</span><span class="p">)</span>
     
@@ -542,310 +894,116 @@
     
     <span class="k">return</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">start_date</span><span class="p">,</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">end_date</span></div>
 
-
-<div class="viewcode-block" id="get_selected_data"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.get_selected_data">[docs]</a><span class="k">def</span> <span class="nf">get_selected_data</span><span class="p">(</span><span class="n">data_mapping</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Process selected data based on user input from the Streamlit sidebar.</span>
+<div class="viewcode-block" id="get_timestamps"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.get_timestamps">[docs]</a><span class="k">def</span> <span class="nf">get_timestamps</span><span class="p">(</span><span class="n">data_interface</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the first and last timestamps from the data interface.</span>
 <span class="sd">    </span>
-<span class="sd">    Parameters:</span>
-<span class="sd">    - data_mapping (dict): A mapping of module names to data names and column names.</span>
-<span class="sd">    - start_time (datetime): The start time for data filtering.</span>
-<span class="sd">    - end_time (datetime): The end time for data filtering.</span>
-<span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">    - selected_data (dict): A dictionary containing the selected data.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="c1"># Initialize a counter to change the checkbox-key in every iteration</span>
-    <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
-    
-    <span class="c1"># Initialize an empty dictionary to store selected data</span>
-    <span class="n">selected_data</span> <span class="o">=</span> <span class="p">{}</span>
-    
-    <span class="c1"># Iterate through each module and its corresponding data</span>
-    <span class="k">for</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">module_data</span> <span class="ow">in</span> <span class="n">data_mapping</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">selected_data</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">expander</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">sidebar</span><span class="o">.</span><span class="n">expander</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Analyse Data for </span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
-        
-        <span class="k">for</span> <span class="n">data_name</span><span class="p">,</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">module_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">data_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">counter</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="n">selected</span> <span class="o">=</span> <span class="n">expander</span><span class="o">.</span><span class="n">checkbox</span><span class="p">(</span><span class="n">data_name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
-            <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
-            
-            <span class="k">if</span> <span class="n">selected</span><span class="p">:</span>
-                
-                <span class="c1"># Dynamically import the module</span>
-                <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;pages.modules.</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s1">_module&#39;</span><span class="p">)</span>
-                
-                <span class="c1"># Load the data from the API</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">loaded_data</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">load_module_data</span><span class="p">(</span><span class="n">data_mapping</span><span class="p">,</span> <span class="p">[</span><span class="n">module_name</span><span class="p">],</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
-                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                    <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ein Fehler ist aufgetreten: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-
-                <span class="c1">#loaded_data = module.load_module_data(data_mapping, [module_name], start_time, end_time)</span>
-                
-                <span class="c1"># Organize data in dict</span>
-                <span class="n">selected_data</span><span class="p">[</span><span class="n">module_name</span><span class="p">][</span><span class="n">data_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">loaded_data</span><span class="p">[</span><span class="n">column_name</span><span class="p">]</span>
-
-    <span class="k">return</span> <span class="n">selected_data</span></div>
-
-
-<div class="viewcode-block" id="convert_processed_data"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.convert_processed_data">[docs]</a><span class="k">def</span> <span class="nf">convert_processed_data</span><span class="p">(</span><span class="n">selected_data</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Processes and converts the selected data entered by the user via the Streamlit user interface.</span>
-<span class="sd">    </span>
-<span class="sd">    This function performs several tasks:</span>
-<span class="sd">    1. it provides unit conversion for the selected data.</span>
-<span class="sd">    2. it interpolates the data based on a user-specified frequency.</span>
-<span class="sd">    3. it converts energy and power data to a uniform unit, if so specified by the user.</span>
-<span class="sd">    </span>
-<span class="sd">    Parameters:</span>
-<span class="sd">        selected_data (dict): A dictionary containing the selected data from different modules.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_interface : object</span>
+<span class="sd">        The data interface object.</span>
 <span class="sd">        </span>
-<span class="sd">    Returns:</span>
-<span class="sd">        processed_data (dict): A dictionary containing the processed and possibly converted data.</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        A tuple containing the first and last timestamps.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="c1"># Initialize an empty dictionary to store processed data</span>
-    <span class="n">processed_data</span> <span class="o">=</span> <span class="p">{}</span>
-    
-    <span class="c1"># Create a general expander for unit settings and interpolation</span>
-    <span class="n">general_expander</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">expander</span><span class="p">(</span><span class="s2">&quot;General Settings for Selected Data&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">data_interface</span><span class="o">.</span><span class="n">get_first_timestamp</span><span class="p">(),</span> <span class="n">data_interface</span><span class="o">.</span><span class="n">get_last_timestamp</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span></div>
 
-    <span class="n">col1</span><span class="p">,</span> <span class="n">col2</span> <span class="o">=</span> <span class="n">general_expander</span><span class="o">.</span><span class="n">columns</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<div class="viewcode-block" id="select_time_range"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.select_time_range">[docs]</a><span class="k">def</span> <span class="nf">select_time_range</span><span class="p">(</span><span class="n">first_timestamp</span><span class="p">,</span> <span class="n">last_timestamp</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Select the time range using a date range selector.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    first_timestamp : datetime</span>
+<span class="sd">        The first available timestamp.</span>
+<span class="sd">    last_timestamp : datetime</span>
+<span class="sd">        The last available timestamp.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        A tuple containing the selected start and end times.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">selected_times</span> <span class="o">=</span> <span class="n">date_range_selector</span><span class="p">(</span><span class="n">first_timestamp</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span> <span class="n">last_timestamp</span><span class="o">.</span><span class="n">date</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">selected_times</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">selected_times</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
+<div class="viewcode-block" id="select_and_process_data"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.select_and_process_data">[docs]</a><span class="k">def</span> <span class="nf">select_and_process_data</span><span class="p">(</span><span class="n">data_mapping</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Select and process the data based on the time range and data mapping.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_mapping : dict</span>
+<span class="sd">        The mapping of available data.</span>
+<span class="sd">    start_time : datetime</span>
+<span class="sd">        The start time.</span>
+<span class="sd">    end_time : datetime</span>
+<span class="sd">        The end time.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        The processed data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">selected_data</span> <span class="o">=</span> <span class="n">get_selected_data</span><span class="p">(</span><span class="n">data_mapping</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">convert_processed_data</span><span class="p">(</span><span class="n">selected_data</span><span class="p">)</span></div>
 
-    <span class="n">col_imputation_1</span><span class="p">,</span> <span class="n">col_imputation_2</span> <span class="o">=</span> <span class="n">general_expander</span><span class="o">.</span><span class="n">columns</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<div class="viewcode-block" id="display_figures"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.display_figures">[docs]</a><span class="k">def</span> <span class="nf">display_figures</span><span class="p">(</span><span class="n">figure_type</span><span class="p">,</span> <span class="n">processed_data</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Display the selected type of figure based on the processed data.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    figure_type : str</span>
+<span class="sd">        The type of figure to display.</span>
+<span class="sd">    processed_data : dict</span>
+<span class="sd">        The processed data.</span>
+<span class="sd">    start_time : datetime</span>
+<span class="sd">        The start time.</span>
+<span class="sd">    end_time : datetime</span>
+<span class="sd">        The end time.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">figures</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">figure_type</span> <span class="o">==</span> <span class="s1">&#39;Line Chart&#39;</span><span class="p">:</span>
+        <span class="n">figures</span> <span class="o">=</span> <span class="n">create_line_figure</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">figure_type</span> <span class="o">==</span> <span class="s1">&#39;Bar Chart&#39;</span><span class="p">:</span>
+        <span class="n">figures</span> <span class="o">=</span> <span class="n">create_bar_figure</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">figure_type</span> <span class="o">==</span> <span class="s1">&#39;Duration Curve&#39;</span><span class="p">:</span>
+        <span class="n">figures</span> <span class="o">=</span> <span class="n">create_duration_curve_figure</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">figure_type</span> <span class="o">==</span> <span class="s1">&#39;Heatmap&#39;</span><span class="p">:</span>
+        <span class="n">figures</span> <span class="o">=</span> <span class="n">create_heatmap_figure</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">figure_type</span> <span class="o">==</span> <span class="s1">&#39;ThemeRiver&#39;</span><span class="p">:</span>
+        <span class="n">figures</span> <span class="o">=</span> <span class="n">create_themeriver_figure</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">fig</span> <span class="ow">in</span> <span class="n">figures</span><span class="p">:</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">plotly_chart</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">use_container_width</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
-    <span class="c1"># Unit conversion settings</span>
-    <span class="n">display_option</span> <span class="o">=</span> <span class="n">col1</span><span class="o">.</span><span class="n">radio</span><span class="p">(</span>
-        <span class="s2">&quot;Display Option:&quot;</span><span class="p">,</span>
-        <span class="p">(</span><span class="s2">&quot;Individual&quot;</span><span class="p">,</span> <span class="s2">&quot;Display as energy&quot;</span><span class="p">,</span> <span class="s2">&quot;Display as power&quot;</span><span class="p">),</span>
-        <span class="n">help</span><span class="o">=</span> <span class="s2">&quot;With Individual, the unit can be converted for each selected module. With dispaly as energy, all energy and power values are displayed in energy with display as power vice versa. &quot;</span>
-    <span class="p">)</span>
-
-    <span class="c1"># Initialize selected_unit as None</span>
-    <span class="n">selected_unit</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="k">if</span> <span class="n">display_option</span> <span class="o">==</span> <span class="s2">&quot;Display as energy&quot;</span><span class="p">:</span>
-        <span class="n">unit_options</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;kWh&quot;</span><span class="p">,</span> <span class="s2">&quot;Wh&quot;</span><span class="p">,</span> <span class="s2">&quot;J&quot;</span><span class="p">,</span> <span class="s2">&quot;MJ&quot;</span><span class="p">,</span> <span class="s2">&quot;GJ&quot;</span><span class="p">]</span>
-        <span class="n">selected_unit</span> <span class="o">=</span> <span class="n">col2</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="s2">&quot;Select energy unit:&quot;</span><span class="p">,</span> <span class="n">unit_options</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        
-    <span class="k">elif</span> <span class="n">display_option</span> <span class="o">==</span> <span class="s2">&quot;Display as power&quot;</span><span class="p">:</span>
-        <span class="n">unit_options</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;kW&quot;</span><span class="p">,</span> <span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="s2">&quot;J/s&quot;</span><span class="p">,</span> <span class="s2">&quot;MW&quot;</span><span class="p">,</span> <span class="s2">&quot;GW&quot;</span><span class="p">]</span>
-        <span class="n">selected_unit</span> <span class="o">=</span> <span class="n">col2</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="s2">&quot;Select power unit:&quot;</span><span class="p">,</span> <span class="n">unit_options</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    
-    <span class="c1"># Interpolation settings</span>
-    <span class="n">freq_dict</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">&quot;None&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="s2">&quot;15 minutes&quot;</span> <span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
-                <span class="s2">&quot;30 minutes&quot;</span> <span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
-                <span class="s2">&quot;hour&quot;</span> <span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
-                <span class="s2">&quot;day&quot;</span> <span class="p">:</span> <span class="mi">1440</span><span class="p">,</span>
-                <span class="s2">&quot;week (fixed frequency)&quot;</span><span class="p">:</span> <span class="mi">10080</span><span class="p">,</span>
-                <span class="s2">&quot;month (fixed frequency)&quot;</span><span class="p">:</span> <span class="mi">43800</span><span class="p">,</span>
-                <span class="p">}</span>
-    
-    <span class="c1">#selected_key = st.selectbox(&quot;Choose a time frequency:&quot;, list(freq_dict.keys()))</span>
-    <span class="n">selected_key</span> <span class="o">=</span> <span class="n">col_imputation_1</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="s2">&quot;Choose a time frequency:&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">freq_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
-    <span class="n">freq_range</span> <span class="o">=</span> <span class="n">freq_dict</span><span class="p">[</span><span class="n">selected_key</span><span class="p">]</span>
-
-
-
-    <span class="n">freq</span> <span class="o">=</span> <span class="n">col_imputation_2</span><span class="o">.</span><span class="n">number_input</span><span class="p">(</span><span class="s2">&quot;Input a frequency in Minutes:&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">freq_range</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;If value is 0 the original frequency of the data is used&quot;</span><span class="p">)</span>
-    
-    <span class="k">if</span> <span class="n">freq</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">freq</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="k">elif</span> <span class="n">freq</span> <span class="o">==</span> <span class="mi">60</span><span class="p">:</span>
-        <span class="n">freq</span> <span class="o">=</span> <span class="s2">&quot;1H&quot;</span>
-
-    <span class="k">elif</span> <span class="n">freq</span> <span class="o">==</span> <span class="mi">1440</span><span class="p">:</span>
-        <span class="n">freq</span> <span class="o">=</span> <span class="s2">&quot;1D&quot;</span>
-
-    <span class="k">elif</span> <span class="n">freq</span> <span class="o">==</span> <span class="mi">10080</span><span class="p">:</span>
-        <span class="n">st</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The selected time frequency is calculated as a fixed frequency in minutes, which means that the real time interval is not considered. This function still has to be implemented.&quot;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;⚠️&quot;</span><span class="p">)</span>
-        <span class="n">freq</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">freq</span><span class="si">}</span><span class="s2">T&quot;</span>
-        
-    <span class="k">elif</span> <span class="n">freq</span> <span class="o">==</span> <span class="mi">43800</span><span class="p">:</span>
-        <span class="n">st</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The selected time frequency is calculated as a fixed frequency in minutes, which means that the real time interval is not considered. This function still has to be implemented.&quot;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;⚠️&quot;</span><span class="p">)</span>
-        <span class="n">freq</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">freq</span><span class="si">}</span><span class="s2">T&quot;</span>
-
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">freq</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">freq</span><span class="si">}</span><span class="s2">T&quot;</span>
-    
-    <span class="c1"># Iterate through each module and its corresponding data</span>
-    <span class="k">for</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">module_data</span> <span class="ow">in</span> <span class="n">selected_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">processed_data</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        
-        <span class="k">for</span> <span class="n">data_name</span><span class="p">,</span> <span class="n">data_series</span> <span class="ow">in</span> <span class="n">module_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-
-            <span class="c1"># Extract the original unit from data_name</span>
-            <span class="n">original_unit</span> <span class="o">=</span> <span class="n">extract_unit</span><span class="p">(</span><span class="n">data_name</span><span class="p">)</span>
-            
-            <span class="c1"># Handle individual unit conversion</span>
-            <span class="k">if</span> <span class="n">display_option</span> <span class="o">==</span> <span class="s2">&quot;Individual&quot;</span><span class="p">:</span>
-                <span class="c1"># Use your conversion.find_compatible_units function here</span>
-                <span class="n">compatible_units</span> <span class="o">=</span> <span class="n">conversion</span><span class="o">.</span><span class="n">find_compatible_units</span><span class="p">(</span><span class="n">original_unit</span><span class="p">)</span>
-                
-                <span class="c1"># Add &quot;None&quot; as an option for no conversion</span>
-                <span class="n">compatible_units</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;None&quot;</span><span class="p">)</span>
-
-                <span class="c1"># Determine the default index for the original unit, or set to the index for &quot;None&quot;</span>
-                <span class="n">default_index</span> <span class="o">=</span> <span class="n">compatible_units</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">original_unit</span><span class="p">)</span> <span class="k">if</span> <span class="n">original_unit</span> <span class="ow">in</span> <span class="n">compatible_units</span> <span class="k">else</span> <span class="n">compatible_units</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;None&quot;</span><span class="p">)</span>
-                
-                <span class="c1"># Add a selectbox for each data series</span>
-                <span class="n">selected_individual_unit</span> <span class="o">=</span> <span class="n">col2</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Select unit for </span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">data_name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="n">compatible_units</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">default_index</span><span class="p">)</span>
-                
-                <span class="c1"># Use your conversion.convert_unit_of_dataframe function here if selected_individual_unit is not &quot;None&quot;</span>
-                <span class="k">if</span> <span class="n">selected_individual_unit</span> <span class="o">!=</span> <span class="s2">&quot;None&quot;</span> <span class="ow">and</span> <span class="n">selected_individual_unit</span> <span class="o">!=</span> <span class="n">original_unit</span><span class="p">:</span>
-                    <span class="n">data_series</span> <span class="o">=</span> <span class="n">conversion</span><span class="o">.</span><span class="n">convert_unit_of_dataframe</span><span class="p">(</span><span class="n">data_series</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(),</span> <span class="n">original_unit</span><span class="p">,</span> <span class="n">selected_individual_unit</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
-                    <span class="n">data_name</span> <span class="o">=</span> <span class="n">data_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">original_unit</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">selected_individual_unit</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
-            
-
-            <span class="c1"># Check or get frequency</span>
-            <span class="k">if</span> <span class="n">freq</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">freq</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">infer_freq</span><span class="p">(</span><span class="n">data_series</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">freq</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="k">raise</span> <span class="ne">ValueError</span>
-                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                    <span class="n">freq</span> <span class="o">=</span> <span class="s2">&quot;1T&quot;</span>
-                    <span class="n">general_expander</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The time series data contains fewer than 3 timestamps, so the frequency of the data cannot be determined. Defaulting to 1 minute. Please make sure you have at least 3 records with timestamps in your dataset.&quot;</span><span class="p">)</span>
-
-            <span class="c1"># Interpolate data</span>
-            <span class="n">interpolated_data</span> <span class="o">=</span> <span class="n">imputation</span><span class="o">.</span><span class="n">interpolate_impute</span><span class="p">(</span><span class="n">data_series</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(),</span> <span class="n">freq</span><span class="o">=</span><span class="n">freq</span><span class="p">)</span>
-
-            <span class="c1"># Perform unit conversion if necessary and if selected_unit is not None</span>
-            <span class="k">if</span> <span class="n">selected_unit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">converted_data</span> <span class="o">=</span> <span class="n">compute_energy</span><span class="o">.</span><span class="n">power_energy</span><span class="p">(</span><span class="n">interpolated_data</span><span class="p">,</span> <span class="n">original_unit</span><span class="p">,</span> <span class="n">selected_unit</span><span class="p">,</span> <span class="n">freq</span><span class="p">)</span>
-                
-                <span class="c1"># Update data_name to reflect the new unit</span>
-                <span class="n">new_data_name</span> <span class="o">=</span> <span class="n">data_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">original_unit</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">selected_unit</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">converted_data</span> <span class="o">=</span> <span class="n">interpolated_data</span>
-                <span class="n">new_data_name</span> <span class="o">=</span> <span class="n">data_name</span>
-
-            
-            <span class="c1"># Check if conversion was successful</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">converted_data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Conversion failed for </span><span class="si">{</span><span class="n">data_name</span><span class="si">}</span><span class="s2"> in module </span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">. Keeping original data.&quot;</span><span class="p">)</span>
-                <span class="n">processed_data</span><span class="p">[</span><span class="n">module_name</span><span class="p">][</span><span class="n">data_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_series</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># Organize data in dict</span>
-                <span class="n">processed_data</span><span class="p">[</span><span class="n">module_name</span><span class="p">][</span><span class="n">new_data_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">converted_data</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
-
-    <span class="k">return</span> <span class="n">processed_data</span></div>
-
-
-<div class="viewcode-block" id="convert_to_dataframe"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.convert_to_dataframe">[docs]</a><span class="k">def</span> <span class="nf">convert_to_dataframe</span><span class="p">(</span><span class="n">nested_dict</span><span class="p">):</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../pages.html#pages.analysis_layer.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Converts a nested dictionary to a single-level Pandas DataFrame.</span>
-<span class="sd">    </span>
-<span class="sd">    Args:</span>
-<span class="sd">        nested_dict (dict): The nested dictionary containing the data.</span>
-<span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">        pd.DataFrame: A DataFrame containing the flattened data.</span>
+<span class="sd">    Main function to run the Streamlit app for Analysis Layer.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Initialize an empty DataFrame to hold the final data</span>
-    <span class="n">final_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
     
-    <span class="c1"># Loop through each module and its series</span>
-    <span class="k">for</span> <span class="n">module</span><span class="p">,</span> <span class="n">series_dict</span> <span class="ow">in</span> <span class="n">nested_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">for</span> <span class="n">series_name</span><span class="p">,</span> <span class="n">series_data</span> <span class="ow">in</span> <span class="n">series_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="c1"># Create a new column name based on the module and series name</span>
-            <span class="n">new_col_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">module</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">series_name</span><span class="si">}</span><span class="s2">&quot;</span>
-            
-            <span class="c1"># Add the series to the final DataFrame</span>
-            <span class="n">final_df</span><span class="p">[</span><span class="n">new_col_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">series_data</span>
-            
-    <span class="k">return</span> <span class="n">final_df</span></div>
-
-
-
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    
+    <span class="c1"># Setup</span>
     <span class="n">columns</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">columns</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">page_title</span><span class="p">)</span>
-
-    <span class="c1">#Set datainterface</span>
-    <span class="n">data_interface</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">data_interface</span> 
-
-
-    <span class="c1"># Sidebar</span>
+    <span class="n">data_interface</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">data_interface</span>
     <span class="n">st</span><span class="o">.</span><span class="n">sidebar</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Module Data Selection&quot;</span><span class="p">)</span>
-
-
     <span class="n">data_mapping</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">data_mapping</span>
-
-
-    <span class="c1">#Get timestamps from api</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">first_timstamp</span> <span class="o">=</span> <span class="n">data_interface</span><span class="o">.</span><span class="n">get_first_timestamp</span><span class="p">()</span>
-        <span class="n">last_timestamp</span> <span class="o">=</span> <span class="n">data_interface</span><span class="o">.</span><span class="n">get_last_timestamp</span><span class="p">()</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ein Fehler ist aufgetreten: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
     
-
-    <span class="c1"># set start- and end- time</span>
-    <span class="n">start_time</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">end_time</span> <span class="o">=</span>  <span class="kc">None</span>
+    <span class="c1"># Fetch and select time range</span>
+    <span class="n">first_timestamp</span><span class="p">,</span> <span class="n">last_timestamp</span> <span class="o">=</span> <span class="n">get_timestamps</span><span class="p">(</span><span class="n">data_interface</span><span class="p">)</span>
+    <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span> <span class="o">=</span> <span class="n">select_time_range</span><span class="p">(</span><span class="n">first_timestamp</span><span class="p">,</span> <span class="n">last_timestamp</span><span class="p">)</span>
     
-
-    <span class="c1">#select time series </span>
-    <span class="k">if</span> <span class="n">start_time</span> <span class="ow">and</span> <span class="n">end_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-
-        <span class="n">newest_time</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">selected_data</span>
-        <span class="n">latest_time</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">selected_data</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">newest_time</span> <span class="o">=</span> <span class="n">first_timstamp</span>
-        <span class="n">latest_time</span> <span class="o">=</span> <span class="n">last_timestamp</span>
-
-
-    <span class="n">selected_times</span> <span class="o">=</span> <span class="n">date_range_selector</span><span class="p">(</span><span class="n">newest_time</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span> <span class="n">latest_time</span><span class="o">.</span><span class="n">date</span><span class="p">())</span>
-    <span class="n">start_time</span> <span class="o">=</span> <span class="n">selected_times</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">end_time</span> <span class="o">=</span>  <span class="n">selected_times</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-
-
-    <span class="c1">#Load and change Data:</span>
-    <span class="n">selected_data</span> <span class="o">=</span> <span class="n">get_selected_data</span><span class="p">(</span><span class="n">data_mapping</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
-    
-    <span class="n">processed_data</span> <span class="o">=</span> <span class="n">convert_processed_data</span><span class="p">(</span><span class="n">selected_data</span><span class="p">)</span>
-
-    <span class="c1"># Store the selected data in the Streamlit session state</span>
+    <span class="c1"># Process Data</span>
+    <span class="n">processed_data</span> <span class="o">=</span> <span class="n">select_and_process_data</span><span class="p">(</span><span class="n">data_mapping</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
     <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">processed_data</span> <span class="o">=</span> <span class="n">processed_data</span>
-
-
-    <span class="c1"># Check if any data has been selected</span>
+    
+    <span class="c1"># Display Figures</span>
     <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">processed_data</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
-
-
-        <span class="c1"># Allow the user to select the figure type</span>
         <span class="n">figure_type</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="s2">&quot;Choose your figure type:&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Line Chart&#39;</span><span class="p">,</span> <span class="s1">&#39;Bar Chart&#39;</span><span class="p">,</span> <span class="s1">&#39;Duration Curve&#39;</span><span class="p">,</span> <span class="s1">&#39;Heatmap&#39;</span><span class="p">,</span> <span class="s1">&#39;ThemeRiver&#39;</span><span class="p">])</span>
-
-        <span class="c1"># Initialize an empty list to hold the figures</span>
-        <span class="n">figures</span> <span class="o">=</span> <span class="p">[]</span>
-
-        <span class="c1"># Create and display the selected figure type</span>
-        <span class="k">if</span> <span class="n">figure_type</span> <span class="o">==</span> <span class="s1">&#39;Line Chart&#39;</span><span class="p">:</span>
-            <span class="n">figures</span> <span class="o">=</span> <span class="n">create_line_figure</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">figure_type</span> <span class="o">==</span> <span class="s1">&#39;Bar Chart&#39;</span><span class="p">:</span>
-            <span class="n">figures</span> <span class="o">=</span> <span class="n">create_bar_figure</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">figure_type</span> <span class="o">==</span> <span class="s1">&#39;Duration Curve&#39;</span><span class="p">:</span>
-            <span class="n">figures</span> <span class="o">=</span> <span class="n">create_duration_curve_figure</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">figure_type</span> <span class="o">==</span> <span class="s1">&#39;Heatmap&#39;</span><span class="p">:</span>
-            <span class="n">figures</span> <span class="o">=</span> <span class="n">create_heatmap_figure</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">figure_type</span> <span class="o">==</span> <span class="s1">&#39;ThemeRiver&#39;</span><span class="p">:</span>
-            <span class="n">figures</span> <span class="o">=</span> <span class="n">create_themeriver_figure</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
-
-        <span class="c1"># Display the figures</span>
-        <span class="k">for</span> <span class="n">fig</span> <span class="ow">in</span> <span class="n">figures</span><span class="p">:</span>
-            <span class="n">st</span><span class="o">.</span><span class="n">plotly_chart</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">use_container_width</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">display_figures</span><span class="p">(</span><span class="n">figure_type</span><span class="p">,</span> <span class="n">processed_data</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+        
 
 
         <span class="n">export_df</span> <span class="o">=</span> <span class="n">convert_to_dataframe</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">processed_data</span><span class="p">)</span>
@@ -865,11 +1023,11 @@
         <span class="p">)</span>
 
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Please select data to display.&quot;</span><span class="p">)</span>
-
-    
+        <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Please select data to display.&quot;</span><span class="p">)</span></div>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">page_title</span><span class="o">=</span><span class="s2">&quot;Analysis Layer&quot;</span>
+    <span class="n">configure_streamlit_page</span><span class="p">(</span><span class="n">page_title</span><span class="p">)</span>
     <span class="n">main</span><span class="p">()</span>
 
 </pre></div>
@@ -881,7 +1039,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Julian W..</p>
+    <p>&#169; Copyright 2023, Julian W.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

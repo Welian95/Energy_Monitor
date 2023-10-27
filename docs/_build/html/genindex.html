@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; Energy_Monitor 1.0.0 documentation</title>
+  <title>Index &mdash; Energysystemmonitor 1.0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -29,7 +29,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            Energy_Monitor
+            Energysystemmonitor
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -41,7 +41,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">Energy_monitor Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Main.html">Main.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/index.html">Pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
 </ul>
 
         </div>
@@ -50,7 +53,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Energy_Monitor</a>
+          <a href="index.html">Energysystemmonitor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -76,10 +79,12 @@
  | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
@@ -88,39 +93,51 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modules.html#Main.choose_interface">choose_interface() (in module Main)</a>
+      <li><a href="Main.html#Main.choose_interface">choose_interface() (in module Main)</a>
 </li>
       <li><a href="functions.html#functions.compute_energy.classify_unit">classify_unit() (in module functions.compute_energy)</a>
 </li>
-      <li><a href="pages.html#pages.analysis_layer.convert_processed_data">convert_processed_data() (in module pages.analysis_layer)</a>
+      <li><a href="Main.html#Main.configure_streamlit_page">configure_streamlit_page() (in module Main)</a>
+
+      <ul>
+        <li><a href="pages/analysis_layer.html#pages.analysis_layer.configure_streamlit_page">(in module pages.analysis_layer)</a>
 </li>
-      <li><a href="pages.html#pages.analysis_layer.convert_to_dataframe">convert_to_dataframe() (in module pages.analysis_layer)</a>
+        <li><a href="pages/presentation_display.html#pages.presentation_display.configure_streamlit_page">(in module pages.presentation_display)</a>
+</li>
+      </ul></li>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.convert_processed_data">convert_processed_data() (in module pages.analysis_layer)</a>
+</li>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.convert_to_dataframe">convert_to_dataframe() (in module pages.analysis_layer)</a>
 </li>
       <li><a href="functions.html#functions.conversion.convert_unit_of_dataframe">convert_unit_of_dataframe() (in module functions.conversion)</a>
 </li>
       <li><a href="functions.html#functions.conversion.convert_unit_of_value">convert_unit_of_value() (in module functions.conversion)</a>
 </li>
-      <li><a href="pages.html#pages.analysis_layer.create_bar_figure">create_bar_figure() (in module pages.analysis_layer)</a>
-</li>
-      <li><a href="modules.html#Main.create_data_interface">create_data_interface() (in module Main)</a>
+      <li><a href="pages/presentation_display.html#pages.presentation_display.convert_units">convert_units() (in module pages.presentation_display)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pages.html#pages.analysis_layer.create_duration_curve_figure">create_duration_curve_figure() (in module pages.analysis_layer)</a>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.create_bar_figure">create_bar_figure() (in module pages.analysis_layer)</a>
+</li>
+      <li><a href="Main.html#Main.create_data_interface">create_data_interface() (in module Main)</a>
+</li>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.create_duration_curve_figure">create_duration_curve_figure() (in module pages.analysis_layer)</a>
 </li>
       <li><a href="functions.html#functions.sankey.create_dynamic_plotly_sankey">create_dynamic_plotly_sankey() (in module functions.sankey)</a>
 </li>
-      <li><a href="modules/modules.html#pages.modules.Battery_module.create_gauge_chart">create_gauge_chart() (in module pages.modules.Battery_module)</a>
+      <li><a href="pages/modules/modules.html#pages.modules.Battery_module.create_gauge_chart">create_gauge_chart() (in module pages.modules.Battery_module)</a>
 
       <ul>
-        <li><a href="modules/modules.html#pages.modules.Heat_pump_module.create_gauge_chart">(in module pages.modules.Heat_pump_module)</a>
+        <li><a href="pages/modules/modules.html#pages.modules.Heat_pump_module.create_gauge_chart">(in module pages.modules.Heat_pump_module)</a>
+</li>
+        <li><a href="pages/modules/modules.html#pages.modules.Photovoltaik_module.create_gauge_chart">(in module pages.modules.Photovoltaik_module)</a>
 </li>
       </ul></li>
-      <li><a href="pages.html#pages.analysis_layer.create_heatmap_figure">create_heatmap_figure() (in module pages.analysis_layer)</a>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.create_heatmap_figure">create_heatmap_figure() (in module pages.analysis_layer)</a>
 </li>
-      <li><a href="pages.html#pages.analysis_layer.create_line_figure">create_line_figure() (in module pages.analysis_layer)</a>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.create_line_figure">create_line_figure() (in module pages.analysis_layer)</a>
 </li>
-      <li><a href="pages.html#pages.analysis_layer.create_themeriver_figure">create_themeriver_figure() (in module pages.analysis_layer)</a>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.create_themeriver_figure">create_themeriver_figure() (in module pages.analysis_layer)</a>
 </li>
       <li><a href="functions.html#functions.api.CSVDataInterface">CSVDataInterface (class in functions.api)</a>
 </li>
@@ -132,11 +149,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="functions.html#functions.api.DataInterface">DataInterface (class in functions.api)</a>
 </li>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.date_range_selector">date_range_selector() (in module pages.analysis_layer)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pages.html#pages.analysis_layer.date_range_selector">date_range_selector() (in module pages.analysis_layer)</a>
+      <li><a href="Main.html#Main.display_data_mapping">display_data_mapping() (in module Main)</a>
 </li>
-      <li><a href="modules.html#Main.display_data_mapping">display_data_mapping() (in module Main)</a>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.display_figures">display_figures() (in module pages.analysis_layer)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -144,7 +163,15 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pages.html#pages.analysis_layer.extract_unit">extract_unit() (in module pages.analysis_layer)</a>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.ensure_date_order">ensure_date_order() (in module pages.analysis_layer)</a>
+</li>
+      <li><a href="pages/presentation_display.html#pages.presentation_display.evaluate_expression">evaluate_expression() (in module pages.presentation_display)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="functions.html#functions.sankey.extract_rgba_components">extract_rgba_components() (in module functions.sankey)</a>
+</li>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.extract_unit">extract_unit() (in module pages.analysis_layer)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -152,7 +179,11 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pages/presentation_display.html#pages.presentation_display.fetch_data">fetch_data() (in module pages.presentation_display)</a>
+</li>
       <li><a href="functions.html#functions.conversion.find_compatible_units">find_compatible_units() (in module functions.conversion)</a>
+</li>
+      <li><a href="Main.html#Main.flatten_data_mapping">flatten_data_mapping() (in module Main)</a>
 </li>
       <li><a href="functions.html#functions.compute_energy.freq_to_pint">freq_to_pint() (in module functions.compute_energy)</a>
 </li>
@@ -201,7 +232,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="functions.html#functions.sankey.generate_sankey_data_from_table">generate_sankey_data_from_table() (in module functions.sankey)</a>
 </li>
-      <li><a href="modules.html#Main.get_available_system_modules">get_available_system_modules() (in module Main)</a>
+      <li><a href="Main.html#Main.get_available_system_modules">get_available_system_modules() (in module Main)</a>
 </li>
       <li><a href="functions.html#functions.api.CSVDataInterface.get_column_names">get_column_names() (functions.api.CSVDataInterface method)</a>
 
@@ -219,6 +250,8 @@
         <li><a href="functions.html#functions.api.InfluxDB_DataInterface.get_data">(functions.api.InfluxDB_DataInterface method)</a>
 </li>
       </ul></li>
+      <li><a href="Main.html#Main.get_default_values">get_default_values() (in module Main)</a>
+</li>
       <li><a href="functions.html#functions.api.CSVDataInterface.get_first_timestamp">get_first_timestamp() (functions.api.CSVDataInterface method)</a>
 
       <ul>
@@ -235,49 +268,55 @@
         <li><a href="functions.html#functions.api.InfluxDB_DataInterface.get_last_timestamp">(functions.api.InfluxDB_DataInterface method)</a>
 </li>
       </ul></li>
-      <li><a href="modules/modules.html#pages.modules._module_functions.get_module_figs">get_module_figs() (in module pages.modules._module_functions)</a>
+      <li><a href="pages/modules/modules.html#pages.modules._module_functions.get_module_figs">get_module_figs() (in module pages.modules._module_functions)</a>
 
       <ul>
-        <li><a href="modules/modules.html#pages.modules.Battery_module.get_module_figs">(in module pages.modules.Battery_module)</a>
+        <li><a href="pages/modules/modules.html#pages.modules.Battery_module.get_module_figs">(in module pages.modules.Battery_module)</a>
 </li>
-        <li><a href="modules/modules.html#pages.modules.Heat_pump_module.get_module_figs">(in module pages.modules.Heat_pump_module)</a>
+        <li><a href="pages/modules/modules.html#pages.modules.Heat_pump_module.get_module_figs">(in module pages.modules.Heat_pump_module)</a>
+</li>
+        <li><a href="pages/modules/modules.html#pages.modules.Photovoltaik_module.get_module_figs">(in module pages.modules.Photovoltaik_module)</a>
+</li>
+      </ul></li>
+      <li><a href="pages/modules/modules.html#pages.modules._module_template.get_required_data">get_required_data() (in module pages.modules._module_template)</a>
+
+      <ul>
+        <li><a href="pages/modules/modules.html#pages.modules.Battery_module.get_required_data">(in module pages.modules.Battery_module)</a>
+</li>
+        <li><a href="pages/modules/modules.html#pages.modules.E_consumer_module.get_required_data">(in module pages.modules.E_consumer_module)</a>
+</li>
+        <li><a href="pages/modules/modules.html#pages.modules.Floors_module.get_required_data">(in module pages.modules.Floors_module)</a>
+</li>
+        <li><a href="pages/modules/modules.html#pages.modules.Heat_pump_module.get_required_data">(in module pages.modules.Heat_pump_module)</a>
+</li>
+        <li><a href="pages/modules/modules.html#pages.modules.Photovoltaik_module.get_required_data">(in module pages.modules.Photovoltaik_module)</a>
+</li>
+        <li><a href="pages/modules/modules.html#pages.modules.Ventilation_system_and_heating_pumps_module.get_required_data">(in module pages.modules.Ventilation_system_and_heating_pumps_module)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modules/modules.html#pages.modules._module_template.get_required_data">get_required_data() (in module pages.modules._module_template)</a>
+      <li><a href="pages/modules/modules.html#pages.modules._module_functions.get_required_data_S">get_required_data_S() (in module pages.modules._module_functions)</a>
+</li>
+      <li><a href="pages/modules/modules.html#pages.modules._module_template.get_sankey_mapping">get_sankey_mapping() (in module pages.modules._module_template)</a>
 
       <ul>
-        <li><a href="modules/modules.html#pages.modules.Battery_module.get_required_data">(in module pages.modules.Battery_module)</a>
+        <li><a href="pages/modules/modules.html#pages.modules.Battery_module.get_sankey_mapping">(in module pages.modules.Battery_module)</a>
 </li>
-        <li><a href="modules/modules.html#pages.modules.E_consumer_module.get_required_data">(in module pages.modules.E_consumer_module)</a>
+        <li><a href="pages/modules/modules.html#pages.modules.E_consumer_module.get_sankey_mapping">(in module pages.modules.E_consumer_module)</a>
 </li>
-        <li><a href="modules/modules.html#pages.modules.Floors_module.get_required_data">(in module pages.modules.Floors_module)</a>
+        <li><a href="pages/modules/modules.html#pages.modules.Floors_module.get_sankey_mapping">(in module pages.modules.Floors_module)</a>
 </li>
-        <li><a href="modules/modules.html#pages.modules.Heat_pump_module.get_required_data">(in module pages.modules.Heat_pump_module)</a>
+        <li><a href="pages/modules/modules.html#pages.modules.Heat_pump_module.get_sankey_mapping">(in module pages.modules.Heat_pump_module)</a>
 </li>
-        <li><a href="modules/modules.html#pages.modules.Ventilation_system_and_heating_pumps_module.get_required_data">(in module pages.modules.Ventilation_system_and_heating_pumps_module)</a>
+        <li><a href="pages/modules/modules.html#pages.modules.Photovoltaik_module.get_sankey_mapping">(in module pages.modules.Photovoltaik_module)</a>
 </li>
-      </ul></li>
-      <li><a href="modules/modules.html#pages.modules._module_functions.get_required_data_S">get_required_data_S() (in module pages.modules._module_functions)</a>
-</li>
-      <li><a href="modules/modules.html#pages.modules._module_template.get_sankey_mapping">get_sankey_mapping() (in module pages.modules._module_template)</a>
-
-      <ul>
-        <li><a href="modules/modules.html#pages.modules.Battery_module.get_sankey_mapping">(in module pages.modules.Battery_module)</a>
-</li>
-        <li><a href="modules/modules.html#pages.modules.E_consumer_module.get_sankey_mapping">(in module pages.modules.E_consumer_module)</a>
-</li>
-        <li><a href="modules/modules.html#pages.modules.Floors_module.get_sankey_mapping">(in module pages.modules.Floors_module)</a>
-</li>
-        <li><a href="modules/modules.html#pages.modules.Heat_pump_module.get_sankey_mapping">(in module pages.modules.Heat_pump_module)</a>
-</li>
-        <li><a href="modules/modules.html#pages.modules.Ventilation_system_and_heating_pumps_module.get_sankey_mapping">(in module pages.modules.Ventilation_system_and_heating_pumps_module)</a>
+        <li><a href="pages/modules/modules.html#pages.modules.Ventilation_system_and_heating_pumps_module.get_sankey_mapping">(in module pages.modules.Ventilation_system_and_heating_pumps_module)</a>
 </li>
       </ul></li>
-      <li><a href="modules/modules.html#pages.modules._module_functions.get_sankey_mapping_S">get_sankey_mapping_S() (in module pages.modules._module_functions)</a>
+      <li><a href="pages/modules/modules.html#pages.modules._module_functions.get_sankey_mapping_S">get_sankey_mapping_S() (in module pages.modules._module_functions)</a>
 </li>
-      <li><a href="pages.html#pages.analysis_layer.get_selected_data">get_selected_data() (in module pages.analysis_layer)</a>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.get_selected_data">get_selected_data() (in module pages.analysis_layer)</a>
 </li>
       <li><a href="functions.html#functions.api.CSVDataInterface.get_time_frequency">get_time_frequency() (functions.api.CSVDataInterface method)</a>
 
@@ -287,19 +326,43 @@
         <li><a href="functions.html#functions.api.InfluxDB_DataInterface.get_time_frequency">(functions.api.InfluxDB_DataInterface method)</a>
 </li>
       </ul></li>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.get_timestamps">get_timestamps() (in module pages.analysis_layer)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.handle_interpolation_settings">handle_interpolation_settings() (in module pages.analysis_layer)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="Main.html#Main.import_api_module">import_api_module() (in module Main)</a>
+</li>
       <li><a href="functions.html#functions.api.InfluxDB_DataInterface">InfluxDB_DataInterface (class in functions.api)</a>
 </li>
+      <li><a href="pages/modules/modules.html#pages.modules._module_functions.initialize_data_interface">initialize_data_interface() (in module pages.modules._module_functions)</a>
+
+      <ul>
+        <li><a href="pages/presentation_display.html#pages.presentation_display.initialize_data_interface">(in module pages.presentation_display)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modules/modules.html#pages.modules._module_functions.initialize_data_interface">initialize_data_interface() (in module pages.modules._module_functions)</a>
+      <li><a href="functions.html#functions.sankey.initialize_label_dicts">initialize_label_dicts() (in module functions.sankey)</a>
+</li>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.initialize_session_state">initialize_session_state() (in module pages.analysis_layer)</a>
+</li>
+      <li><a href="functions.html#functions.imputation.interpolate_columns">interpolate_columns() (in module functions.imputation)</a>
 </li>
       <li><a href="functions.html#functions.imputation.interpolate_impute">interpolate_impute() (in module functions.imputation)</a>
+</li>
+      <li><a href="functions.html#functions.imputation.issue_warnings">issue_warnings() (in module functions.imputation)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -307,13 +370,21 @@
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modules.html#Main.list_available_interfaces">list_available_interfaces() (in module Main)</a>
+      <li><a href="Main.html#Main.list_available_interfaces">list_available_interfaces() (in module Main)</a>
 </li>
+      <li><a href="Main.html#Main.load_configuration">load_configuration() (in module Main)</a>
+</li>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.load_module_data">load_module_data() (in module pages.analysis_layer)</a>
+
+      <ul>
+        <li><a href="pages/modules/modules.html#pages.modules._module_functions.load_module_data">(in module pages.modules._module_functions)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modules/modules.html#pages.modules._module_functions.load_module_data">load_module_data() (in module pages.modules._module_functions)</a>
+      <li><a href="pages/presentation_display.html#pages.presentation_display.load_module_figs">load_module_figs() (in module pages.presentation_display)</a>
 </li>
-      <li><a href="modules.html#Main.load_saved_mapping">load_saved_mapping() (in module Main)</a>
+      <li><a href="Main.html#Main.load_saved_mapping">load_saved_mapping() (in module Main)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -325,12 +396,20 @@
     Main
 
       <ul>
-        <li><a href="modules.html#module-Main">module</a>
+        <li><a href="Main.html#module-Main">module</a>
 </li>
       </ul></li>
-      <li><a href="modules.html#Main.main">main() (in module Main)</a>
+      <li><a href="Main.html#Main.main">main() (in module Main)</a>
+
+      <ul>
+        <li><a href="pages/analysis_layer.html#pages.analysis_layer.main">(in module pages.analysis_layer)</a>
 </li>
-      <li><a href="modules.html#Main.map_consumption_values">map_consumption_values() (in module Main)</a>
+        <li><a href="pages/presentation_display.html#pages.presentation_display.main">(in module pages.presentation_display)</a>
+</li>
+      </ul></li>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.manage_units_and_subplots">manage_units_and_subplots() (in module pages.analysis_layer)</a>
+</li>
+      <li><a href="Main.html#Main.map_consumption_values">map_consumption_values() (in module Main)</a>
 </li>
       <li><a href="functions.html#functions.sankey.mix_colors">mix_colors() (in module functions.sankey)</a>
 </li>
@@ -348,25 +427,27 @@
 </li>
         <li><a href="functions.html#module-functions.sankey">functions.sankey</a>
 </li>
-        <li><a href="modules.html#module-Main">Main</a>
+        <li><a href="Main.html#module-Main">Main</a>
 </li>
-        <li><a href="pages.html#module-pages.analysis_layer">pages.analysis_layer</a>
+        <li><a href="pages/analysis_layer.html#module-pages.analysis_layer">pages.analysis_layer</a>
 </li>
-        <li><a href="modules/modules.html#module-pages.modules._module_functions">pages.modules._module_functions</a>
+        <li><a href="pages/modules/modules.html#module-pages.modules._module_functions">pages.modules._module_functions</a>
 </li>
-        <li><a href="modules/modules.html#module-pages.modules._module_template">pages.modules._module_template</a>
+        <li><a href="pages/modules/modules.html#module-pages.modules._module_template">pages.modules._module_template</a>
 </li>
-        <li><a href="modules/modules.html#module-pages.modules.Battery_module">pages.modules.Battery_module</a>
+        <li><a href="pages/modules/modules.html#module-pages.modules.Battery_module">pages.modules.Battery_module</a>
 </li>
-        <li><a href="modules/modules.html#module-pages.modules.E_consumer_module">pages.modules.E_consumer_module</a>
+        <li><a href="pages/modules/modules.html#module-pages.modules.E_consumer_module">pages.modules.E_consumer_module</a>
 </li>
-        <li><a href="modules/modules.html#module-pages.modules.Floors_module">pages.modules.Floors_module</a>
+        <li><a href="pages/modules/modules.html#module-pages.modules.Floors_module">pages.modules.Floors_module</a>
 </li>
-        <li><a href="modules/modules.html#module-pages.modules.Heat_pump_module">pages.modules.Heat_pump_module</a>
+        <li><a href="pages/modules/modules.html#module-pages.modules.Heat_pump_module">pages.modules.Heat_pump_module</a>
 </li>
-        <li><a href="modules/modules.html#module-pages.modules.Ventilation_system_and_heating_pumps_module">pages.modules.Ventilation_system_and_heating_pumps_module</a>
+        <li><a href="pages/modules/modules.html#module-pages.modules.Photovoltaik_module">pages.modules.Photovoltaik_module</a>
 </li>
-        <li><a href="pages.html#module-pages.presentation_display">pages.presentation_display</a>
+        <li><a href="pages/modules/modules.html#module-pages.modules.Ventilation_system_and_heating_pumps_module">pages.modules.Ventilation_system_and_heating_pumps_module</a>
+</li>
+        <li><a href="pages/presentation_display.html#module-pages.presentation_display">pages.presentation_display</a>
 </li>
       </ul></li>
   </ul></td>
@@ -379,65 +460,72 @@
     pages.analysis_layer
 
       <ul>
-        <li><a href="pages.html#module-pages.analysis_layer">module</a>
+        <li><a href="pages/analysis_layer.html#module-pages.analysis_layer">module</a>
 </li>
       </ul></li>
       <li>
     pages.modules._module_functions
 
       <ul>
-        <li><a href="modules/modules.html#module-pages.modules._module_functions">module</a>
+        <li><a href="pages/modules/modules.html#module-pages.modules._module_functions">module</a>
 </li>
       </ul></li>
       <li>
     pages.modules._module_template
 
       <ul>
-        <li><a href="modules/modules.html#module-pages.modules._module_template">module</a>
+        <li><a href="pages/modules/modules.html#module-pages.modules._module_template">module</a>
 </li>
       </ul></li>
       <li>
     pages.modules.Battery_module
 
       <ul>
-        <li><a href="modules/modules.html#module-pages.modules.Battery_module">module</a>
+        <li><a href="pages/modules/modules.html#module-pages.modules.Battery_module">module</a>
 </li>
       </ul></li>
       <li>
     pages.modules.E_consumer_module
 
       <ul>
-        <li><a href="modules/modules.html#module-pages.modules.E_consumer_module">module</a>
+        <li><a href="pages/modules/modules.html#module-pages.modules.E_consumer_module">module</a>
+</li>
+      </ul></li>
+      <li>
+    pages.modules.Floors_module
+
+      <ul>
+        <li><a href="pages/modules/modules.html#module-pages.modules.Floors_module">module</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li>
-    pages.modules.Floors_module
-
-      <ul>
-        <li><a href="modules/modules.html#module-pages.modules.Floors_module">module</a>
-</li>
-      </ul></li>
-      <li>
     pages.modules.Heat_pump_module
 
       <ul>
-        <li><a href="modules/modules.html#module-pages.modules.Heat_pump_module">module</a>
+        <li><a href="pages/modules/modules.html#module-pages.modules.Heat_pump_module">module</a>
+</li>
+      </ul></li>
+      <li>
+    pages.modules.Photovoltaik_module
+
+      <ul>
+        <li><a href="pages/modules/modules.html#module-pages.modules.Photovoltaik_module">module</a>
 </li>
       </ul></li>
       <li>
     pages.modules.Ventilation_system_and_heating_pumps_module
 
       <ul>
-        <li><a href="modules/modules.html#module-pages.modules.Ventilation_system_and_heating_pumps_module">module</a>
+        <li><a href="pages/modules/modules.html#module-pages.modules.Ventilation_system_and_heating_pumps_module">module</a>
 </li>
       </ul></li>
       <li>
     pages.presentation_display
 
       <ul>
-        <li><a href="pages.html#module-pages.presentation_display">module</a>
+        <li><a href="pages/presentation_display.html#module-pages.presentation_display">module</a>
 </li>
       </ul></li>
       <li><a href="functions.html#functions.imputation.plot_series_with_matplotlib">plot_series_with_matplotlib() (in module functions.imputation)</a>
@@ -447,14 +535,26 @@
   </ul></td>
 </tr></table>
 
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="functions.html#functions.imputation.round_up_timestamp">round_up_timestamp() (in module functions.imputation)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modules.html#Main.save_current_mapping">save_current_mapping() (in module Main)</a>
+      <li><a href="Main.html#Main.save_current_mapping">save_current_mapping() (in module Main)</a>
+</li>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.select_and_process_data">select_and_process_data() (in module pages.analysis_layer)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modules.html#Main.set_sankey_mapping">set_sankey_mapping() (in module Main)</a>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.select_time_range">select_time_range() (in module pages.analysis_layer)</a>
+</li>
+      <li><a href="Main.html#Main.set_sankey_mapping">set_sankey_mapping() (in module Main)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -462,7 +562,7 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pages.html#pages.presentation_display.transform_data_for_sankey">transform_data_for_sankey() (in module pages.presentation_display)</a>
+      <li><a href="pages/presentation_display.html#pages.presentation_display.transform_data_for_sankey">transform_data_for_sankey() (in module pages.presentation_display)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -470,7 +570,13 @@
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pages.html#pages.presentation_display.update_sankey_consumption">update_sankey_consumption() (in module pages.presentation_display)</a>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.unit_conversion_settings">unit_conversion_settings() (in module pages.analysis_layer)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pages/analysis_layer.html#pages.analysis_layer.update_figure_layout">update_figure_layout() (in module pages.analysis_layer)</a>
+</li>
+      <li><a href="pages/presentation_display.html#pages.presentation_display.update_sankey_consumption">update_sankey_consumption() (in module pages.presentation_display)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -484,7 +590,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Julian W..</p>
+    <p>&#169; Copyright 2023, Julian W.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>functions.conversion &mdash; Energy_Monitor 1.0.0 documentation</title>
+  <title>functions.conversion &mdash; Energysystemmonitor 1.0.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -29,7 +29,7 @@
           
           
           <a href="../../index.html" class="icon icon-home">
-            Energy_Monitor
+            Energysystemmonitor
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -41,7 +41,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Energy_monitor Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Energy_monitor</a></li>
 </ul>
 
         </div>
@@ -50,7 +50,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Energy_Monitor</a>
+          <a href="../../index.html">Energysystemmonitor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -76,9 +76,6 @@
 
 <span class="n">ureg</span> <span class="o">=</span> <span class="n">pint</span><span class="o">.</span><span class="n">UnitRegistry</span><span class="p">()</span>
 
-
-
-
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">!=</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     
     <span class="kn">from</span> <span class="nn">functions</span> <span class="kn">import</span> <span class="n">imputation</span>
@@ -88,13 +85,19 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Converts a single value from one unit to another using pint.</span>
 <span class="sd">    </span>
-<span class="sd">    Parameters:</span>
-<span class="sd">    - value (float): The value to be converted.</span>
-<span class="sd">    - input_unit (str): The original unit of the value. Must be a valid pint unit, e.g., &#39;W&#39; for Watt.</span>
-<span class="sd">    - output_unit (str): The desired unit for the value. Must be a valid pint unit and compatible with the input_unit, e.g., &#39;kW&#39; for kiloWatt.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    value : float</span>
+<span class="sd">        The value to be converted.</span>
+<span class="sd">    input_unit : str</span>
+<span class="sd">        The original unit of the value. Must be a valid pint unit, e.g., &#39;W&#39; for Watt.</span>
+<span class="sd">    output_unit : str</span>
+<span class="sd">        The desired unit for the value. Must be a valid pint unit and compatible with the input_unit, e.g., &#39;kW&#39; for kiloWatt.</span>
 <span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">    - float: The converted value.</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        The converted value.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Create a pint Quantity for the value and input unit</span>
     <span class="n">value_with_unit</span> <span class="o">=</span> <span class="n">ureg</span><span class="o">.</span><span class="n">Quantity</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">input_unit</span><span class="p">)</span>
@@ -109,14 +112,21 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Converts the values of a specific column in a DataFrame from one unit to another.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">    - df (pandas.DataFrame): The DataFrame whose values need to be converted.</span>
-<span class="sd">    - input_unit (str): The original unit of the values in the DataFrame. Must be a valid pint unit, e.g., &#39;meter&#39;, &#39;kilogram&#39;, &#39;second&#39;.</span>
-<span class="sd">    - output_unit (str): The desired unit for the values in the DataFrame. Must be a valid pint unit and compatible with the input_unit, e.g., &#39;kilometer&#39;, &#39;gram&#39;.</span>
-<span class="sd">    - column_name (str): The name of the column to convert.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        The DataFrame containing the values to be converted.</span>
+<span class="sd">    input_unit : str</span>
+<span class="sd">        The original unit of the values in the DataFrame.</span>
+<span class="sd">    output_unit : str</span>
+<span class="sd">        The desired unit for the values in the DataFrame.</span>
+<span class="sd">    column_name : str, optional</span>
+<span class="sd">        The name of the column to convert. Defaults to the first column if not provided.</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">    - pandas.DataFrame: A DataFrame with the converted values in the specified column.</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pandas.DataFrame</span>
+<span class="sd">        A DataFrame with the converted values in the specified column.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
      <span class="c1"># If no column name is specified, use the first column</span>
     <span class="k">if</span> <span class="n">column_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -191,6 +201,10 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Streamlit UI to test the function in development</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
     <span class="kn">import</span> <span class="nn">imputation</span>
 
     <span class="n">st</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Conversion.py&quot;</span><span class="p">)</span>
@@ -201,9 +215,6 @@
     
 
     <span class="c1">#Choose Unit</span>
-
-
-    
     <span class="n">input_unit</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">text_input</span><span class="p">(</span><span class="s2">&quot;Choose input unit:&quot;</span><span class="p">)</span>
 
     <span class="n">compatible_energy_units</span> <span class="o">=</span> <span class="n">find_compatible_units</span><span class="p">(</span><span class="n">input_unit</span><span class="p">)</span>
@@ -212,7 +223,7 @@
 
     <span class="n">col1</span><span class="p">,</span> <span class="n">col2</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">columns</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
-    <span class="c1"># Erstellen eines Beispiel-DataFrames zur Überprüfung der Funktion</span>
+
     <span class="n">example_data</span> <span class="o">=</span> <span class="p">{</span>
         <span class="sa">f</span><span class="s1">&#39;Data [</span><span class="si">{</span><span class="n">input_unit</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">5</span><span class="p">],}</span>
     
@@ -222,8 +233,7 @@
     <span class="n">col1</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Input Dataframe:&quot;</span><span class="p">)</span>
     <span class="n">col1</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">example_df</span><span class="p">)</span>
 
-
-    <span class="c1">#Umrechnung </span>
+ 
     <span class="n">converted_df</span> <span class="o">=</span> <span class="n">convert_unit_of_dataframe</span><span class="p">(</span><span class="n">example_df</span><span class="p">,</span> <span class="n">input_unit</span><span class="p">,</span> <span class="n">output_unit</span><span class="p">,</span> <span class="p">)</span>
 
     <span class="n">converted_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">converted_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\[.*\]&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;[</span><span class="si">{</span><span class="n">output_unit</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">)</span>
@@ -239,7 +249,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Julian W..</p>
+    <p>&#169; Copyright 2023, Julian W.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

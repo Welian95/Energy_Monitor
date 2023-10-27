@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>functions.compute_energy &mdash; Energy_Monitor 1.0.0 documentation</title>
+  <title>functions.compute_energy &mdash; Energysystemmonitor 1.0.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -29,7 +29,7 @@
           
           
           <a href="../../index.html" class="icon icon-home">
-            Energy_Monitor
+            Energysystemmonitor
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -41,7 +41,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Energy_monitor Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Energy_monitor</a></li>
 </ul>
 
         </div>
@@ -50,7 +50,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Energy_Monitor</a>
+          <a href="../../index.html">Energysystemmonitor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -73,34 +73,44 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">pint</span>
 
-<span class="c1">#Help Funktions of this skript </span>
-
 <span class="c1"># Use pint </span>
 <span class="n">ureg</span> <span class="o">=</span> <span class="n">pint</span><span class="o">.</span><span class="n">UnitRegistry</span><span class="p">()</span>
+
 
 <div class="viewcode-block" id="freq_to_pint"><a class="viewcode-back" href="../../functions.html#functions.compute_energy.freq_to_pint">[docs]</a><span class="k">def</span> <span class="nf">freq_to_pint</span><span class="p">(</span><span class="n">freq</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a pandas frequency string to a pint quantity.</span>
 <span class="sd">    </span>
-<span class="sd">    Parameters:</span>
-<span class="sd">    - freq (str): A string representing the desired frequency in pandas format. </span>
-<span class="sd">                  Possible values include:</span>
-<span class="sd">                  &#39;1S&#39; : 1 second</span>
-<span class="sd">                  &#39;30S&#39; : 30 seconds</span>
-<span class="sd">                  &#39;1T&#39; or &#39;1Min&#39; : 1 minute</span>
-<span class="sd">                  &#39;5T&#39; or &#39;5Min&#39; : 5 minutes</span>
-<span class="sd">                  &#39;15T&#39; or &#39;15Min&#39; : 15 minutes</span>
-<span class="sd">                  &#39;30T&#39; or &#39;30Min&#39; : 30 minutes</span>
-<span class="sd">                  &#39;1H&#39; : 1 hour</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    freq : str</span>
+<span class="sd">        A string representing the desired frequency in pandas format. </span>
+<span class="sd">        Possible values include:</span>
+<span class="sd">        - &#39;1S&#39; : 1 second</span>
+<span class="sd">        - &#39;30S&#39; : 30 seconds</span>
+<span class="sd">        - &#39;1T&#39; or &#39;1Min&#39; : 1 minute</span>
+<span class="sd">        - &#39;5T&#39; or &#39;5Min&#39; : 5 minutes</span>
+<span class="sd">        - &#39;15T&#39; or &#39;15Min&#39; : 15 minutes</span>
+<span class="sd">        - &#39;30T&#39; or &#39;30Min&#39; : 30 minutes</span>
+<span class="sd">        - &#39;1H&#39; : 1 hour</span>
 <span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">    - pint.Quantity: The equivalent frequency as a pint quantity.</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pint.Quantity</span>
+<span class="sd">        The equivalent frequency as a pint quantity.</span>
 <span class="sd">    </span>
-<span class="sd">    Example:</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; freq_to_pint(&#39;1S&#39;)</span>
 <span class="sd">    &lt;Quantity(1, &#39;second&#39;)&gt;</span>
 <span class="sd">    </span>
-<span class="sd">    Note:</span>
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If the frequency format is not supported.</span>
+<span class="sd">    </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
 <span class="sd">    This function currently supports a subset of pandas frequency strings. </span>
 <span class="sd">    For a comprehensive list of pandas frequency strings, consult the pandas documentation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -129,13 +139,26 @@
 <div class="viewcode-block" id="classify_unit"><a class="viewcode-back" href="../../functions.html#functions.compute_energy.classify_unit">[docs]</a><span class="k">def</span> <span class="nf">classify_unit</span><span class="p">(</span><span class="n">unit_str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Classifies the given unit as &quot;power&quot;, &quot;energy&quot;, or &quot;unknown&quot; based on its dimensionality.</span>
-
-<span class="sd">    Parameters:</span>
-<span class="sd">    - unit_str (str): The unit to be classified, e.g., &quot;W&quot;, &quot;J&quot;, &quot;mW&quot;, etc.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">    - str: &quot;power&quot; if the unit is a power unit, &quot;energy&quot; if it&#39;s an energy unit, </span>
-<span class="sd">           or &quot;unknown&quot; if the unit is neither power nor energy.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    unit_str : str</span>
+<span class="sd">        The unit to be classified, e.g., &quot;W&quot;, &quot;J&quot;, &quot;mW&quot;, etc.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        Returns &quot;power&quot; if the unit is a power unit, &quot;energy&quot; if it&#39;s an energy unit, </span>
+<span class="sd">        or &quot;unknown&quot; if the unit is neither power nor energy.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; classify_unit(&quot;W&quot;)</span>
+<span class="sd">    &quot;power&quot;</span>
+<span class="sd">    &gt;&gt;&gt; classify_unit(&quot;J&quot;)</span>
+<span class="sd">    &quot;energy&quot;</span>
+<span class="sd">    &gt;&gt;&gt; classify_unit(&quot;m/s&quot;)</span>
+<span class="sd">    &quot;unknown&quot;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Convert the unit string to a pint Quantity</span>
     <span class="n">unit</span> <span class="o">=</span> <span class="n">ureg</span><span class="p">(</span><span class="n">unit_str</span><span class="p">)</span>
@@ -154,9 +177,6 @@
 
 
 
-<span class="c1"># Main funktion of this skript </span>
-
-
 <div class="viewcode-block" id="power_energy"><a class="viewcode-back" href="../../functions.html#functions.compute_energy.power_energy">[docs]</a><span class="k">def</span> <span class="nf">power_energy</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">input_unit</span><span class="p">,</span> <span class="n">output_unit</span><span class="p">,</span> <span class="n">frequency</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert power values in a DataFrame to energy values or vice versa.</span>
@@ -165,7 +185,7 @@
 <span class="sd">    can convert the power values to energy values, or vice versa based on the </span>
 <span class="sd">    provided input and output units.</span>
 
-<span class="sd">    Parameters:</span>
+<span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    df : pd.DataFrame</span>
 <span class="sd">        A DataFrame containing power or energy data with a consistent timestamp </span>
@@ -177,12 +197,25 @@
 <span class="sd">    output_unit : str</span>
 <span class="sd">        The desired unit for the output values. This must be dimensionally </span>
 <span class="sd">        consistent with the input_unit.</span>
+<span class="sd">    frequency : str</span>
+<span class="sd">        The frequency of the DataFrame&#39;s time index, e.g., &#39;1S&#39; for 1 second.</span>
 
-<span class="sd">    Returns:</span>
+<span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    pd.DataFrame</span>
+<span class="sd">    pd.DataFrame or str</span>
 <span class="sd">        A DataFrame with values converted to the specified output unit and </span>
-<span class="sd">        retaining the original timestamp index.</span>
+<span class="sd">        retaining the original timestamp index. Returns a string message if </span>
+<span class="sd">        the input or output units are incorrect.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If the `input_unit` and `output_unit` are not dimensionally consistent.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; df = pd.DataFrame({&#39;Power&#39;: [100, 200, 150]}, index=pd.date_range(&#39;2021-01-01&#39;, periods=3, freq=&#39;1H&#39;))</span>
+<span class="sd">    &gt;&gt;&gt; power_energy(df, &#39;W&#39;, &#39;J&#39;, &#39;1H&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">time_Unit</span> <span class="o">=</span> <span class="n">freq_to_pint</span><span class="p">(</span><span class="n">frequency</span><span class="p">)</span>
 
@@ -225,6 +258,9 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Streamlit UI to test the function in development</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="kn">import</span> <span class="nn">imputation</span>
 
@@ -372,7 +408,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Julian W..</p>
+    <p>&#169; Copyright 2023, Julian W.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Functions &mdash; Energy_Monitor 1.0.0 documentation</title>
+  <title>Functions &mdash; Energysystemmonitor 1.0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -18,7 +18,8 @@
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="System Modules" href="pages/modules/modules.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -30,7 +31,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            Energy_Monitor
+            Energysystemmonitor
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -41,8 +42,18 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">Energy_monitor Documentation</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Main.html">Main.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/index.html">Pages</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-functions.api">api.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-functions.compute_energy">compute_energy.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-functions.imputation">imputation.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-functions.sankey">sankey.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-functions.conversion">conversion.py</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -51,7 +62,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Energy_Monitor</a>
+          <a href="index.html">Energysystemmonitor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -69,8 +80,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-functions.api">
-<span id="functions"></span><h1>Functions<a class="headerlink" href="#module-functions.api" title="Permalink to this heading"></a></h1>
+  <section id="functions">
+<h1>Functions<a class="headerlink" href="#functions" title="Permalink to this heading"></a></h1>
+<section id="module-functions.api">
+<span id="api-py"></span><h2>api.py<a class="headerlink" href="#module-functions.api" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="functions.api.CSVDataInterface">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functions.api.</span></span><span class="sig-name descname"><span class="pre">CSVDataInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'example/example_data1.csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">';'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/api.html#CSVDataInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.api.CSVDataInterface" title="Permalink to this definition"></a></dt>
@@ -78,8 +91,18 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="functions.api.CSVDataInterface.get_column_names">
 <span class="sig-name descname"><span class="pre">get_column_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/api.html#CSVDataInterface.get_column_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.api.CSVDataInterface.get_column_names" title="Permalink to this definition"></a></dt>
-<dd><p>Get the names of the columns from the CSV file.</p>
-<p>Optimized: Read only the first line to get column names.</p>
+<dd><p>Get the names of the columns from the CSV file, excluding the timestamp column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of column names, excluding the timestamp column.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of str</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>FileNotFoundError</strong> – If the specified file does not exist.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -110,7 +133,7 @@ This function reads the CSV file in chunks to optimize memory usage and can filt
 <span class="sig-name descname"><span class="pre">get_first_timestamp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/api.html#CSVDataInterface.get_first_timestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.api.CSVDataInterface.get_first_timestamp" title="Permalink to this definition"></a></dt>
 <dd><p>Get the first timestamp from the CSV file.</p>
 <dl class="simple">
-<dt>Returns:</dt><dd><p>pd.Timestamp: The first timestamp.</p>
+<dt>pd.Timestamp:</dt><dd><p>The first timestamp.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -120,7 +143,7 @@ This function reads the CSV file in chunks to optimize memory usage and can filt
 <span class="sig-name descname"><span class="pre">get_last_timestamp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/api.html#CSVDataInterface.get_last_timestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.api.CSVDataInterface.get_last_timestamp" title="Permalink to this definition"></a></dt>
 <dd><p>Get the last timestamp from the CSV file.</p>
 <dl class="simple">
-<dt>Returns:</dt><dd><p>pd.Timestamp: The last timestamp.</p>
+<dt>pd.Timestamp:</dt><dd><p>The last timestamp.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -128,8 +151,19 @@ This function reads the CSV file in chunks to optimize memory usage and can filt
 <dl class="py method">
 <dt class="sig sig-object py" id="functions.api.CSVDataInterface.get_time_frequency">
 <span class="sig-name descname"><span class="pre">get_time_frequency</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/api.html#CSVDataInterface.get_time_frequency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.api.CSVDataInterface.get_time_frequency" title="Permalink to this definition"></a></dt>
-<dd><p>Get the time frequency (step size between the individual measurement points) from the CSV file.</p>
-<p>Optimized: Start with a smaller number of rows and increase gradually.</p>
+<dd><p>Get the time frequency (step size between the individual measurement points) from the CSV file.
+This method starts by reading a small number of rows and incrementally increases the number of rows until it can infer the frequency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The inferred frequency of the time series data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the time frequency of the data could not be inferred after a predefined number of attempts.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -142,8 +176,12 @@ This function reads the CSV file in chunks to optimize memory usage and can filt
 <dt class="sig sig-object py" id="functions.api.DataInterface.get_column_names">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_column_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="_modules/functions/api.html#DataInterface.get_column_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.api.DataInterface.get_column_names" title="Permalink to this definition"></a></dt>
 <dd><p>Get the names of the columns (measurement series labels).</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>list: A list containing the names of the columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list containing the names of the columns.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -156,23 +194,23 @@ This function reads the CSV file in chunks to optimize memory usage and can filt
 - Rows: By limiting the number of rows to fetch. This can be done in ascending or descending order.
 - Time: By providing a time range to filter the timestamps.</p>
 <dl class="simple">
-<dt>column_names<span class="classifier">list of str, optional</span></dt><dd><p>List of column names to include in the output DataFrame. If this parameter is None, 
+<dt>column_names<span class="classifier">list of str, optional</span></dt><dd><p>List of column names to include in the output DataFrame. If this parameter is None,
 all columns will be included. The timestamp column is always included.</p>
 </dd>
-<dt>start_time<span class="classifier">str or pd.Timestamp, optional</span></dt><dd><p>The starting timestamp to filter the data. Only data occurring after this timestamp 
-will be included in the output DataFrame. The timestamp should be in a format 
+<dt>start_time<span class="classifier">str or pd.Timestamp, optional</span></dt><dd><p>The starting timestamp to filter the data. Only data occurring after this timestamp
+will be included in the output DataFrame. The timestamp should be in a format
 that can be converted to a pandas Timestamp object. If None, no start time filter is applied.</p>
 </dd>
-<dt>end_time<span class="classifier">str or pd.Timestamp, optional</span></dt><dd><p>The ending timestamp to filter the data. Only data occurring before this timestamp 
-will be included in the output DataFrame. The timestamp should be in a format 
+<dt>end_time<span class="classifier">str or pd.Timestamp, optional</span></dt><dd><p>The ending timestamp to filter the data. Only data occurring before this timestamp
+will be included in the output DataFrame. The timestamp should be in a format
 that can be converted to a pandas Timestamp object. If None, no end time filter is applied.</p>
 </dd>
-<dt>num_rows<span class="classifier">int, optional</span></dt><dd><p>Number of rows to include in the output DataFrame. If ascending is False, the last ‘num_rows’ 
-from the CSV file will be read. Otherwise, the first ‘num_rows’ will be read. 
+<dt>num_rows<span class="classifier">int, optional</span></dt><dd><p>Number of rows to include in the output DataFrame. If ascending is False, the last ‘num_rows’
+from the CSV file will be read. Otherwise, the first ‘num_rows’ will be read.
 If None, all rows will be included.</p>
 </dd>
-<dt>ascending<span class="classifier">bool, optional</span></dt><dd><p>Determines the order in which rows are read from the data source. If True, rows are read in ascending 
-order of their timestamps. If False and ‘num_rows’ is provided, the last ‘num_rows’ are read. 
+<dt>ascending<span class="classifier">bool, optional</span></dt><dd><p>Determines the order in which rows are read from the data source. If True, rows are read in ascending
+order of their timestamps. If False and ‘num_rows’ is provided, the last ‘num_rows’ are read.
 Default is True.</p>
 </dd>
 </dl>
@@ -186,8 +224,12 @@ Default is True.</p>
 <dt class="sig sig-object py" id="functions.api.DataInterface.get_first_timestamp">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_first_timestamp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Timestamp</span></span></span><a class="reference internal" href="_modules/functions/api.html#DataInterface.get_first_timestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.api.DataInterface.get_first_timestamp" title="Permalink to this definition"></a></dt>
 <dd><p>Get the first timestamp from the data source.</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>pd.Timestamp: The first timestamp.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The first timestamp.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.Timestamp</p>
 </dd>
 </dl>
 </dd></dl>
@@ -196,8 +238,12 @@ Default is True.</p>
 <dt class="sig sig-object py" id="functions.api.DataInterface.get_last_timestamp">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_last_timestamp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Timestamp</span></span></span><a class="reference internal" href="_modules/functions/api.html#DataInterface.get_last_timestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.api.DataInterface.get_last_timestamp" title="Permalink to this definition"></a></dt>
 <dd><p>Get the last timestamp from the data source.</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>pd.Timestamp: The last timestamp.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The last timestamp.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.Timestamp</p>
 </dd>
 </dl>
 </dd></dl>
@@ -206,8 +252,12 @@ Default is True.</p>
 <dt class="sig sig-object py" id="functions.api.DataInterface.get_time_frequency">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_time_frequency</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/functions/api.html#DataInterface.get_time_frequency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.api.DataInterface.get_time_frequency" title="Permalink to this definition"></a></dt>
 <dd><p>Get the time frequency (step size between the individual measurement points).</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>str: Time frequency as a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Time frequency as a string.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -216,13 +266,12 @@ Default is True.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="functions.api.InfluxDB_DataInterface">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functions.api.</span></span><span class="sig-name descname"><span class="pre">InfluxDB_DataInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'example/example_data1.csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">';'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/api.html#InfluxDB_DataInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.api.InfluxDB_DataInterface" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functions.api.</span></span><span class="sig-name descname"><span class="pre">InfluxDB_DataInterface</span></span><a class="reference internal" href="_modules/functions/api.html#InfluxDB_DataInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.api.InfluxDB_DataInterface" title="Permalink to this definition"></a></dt>
 <dd><p>Concrete class implementing the DataInterface for InfluxDB .</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="functions.api.InfluxDB_DataInterface.get_column_names">
 <span class="sig-name descname"><span class="pre">get_column_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/api.html#InfluxDB_DataInterface.get_column_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.api.InfluxDB_DataInterface.get_column_names" title="Permalink to this definition"></a></dt>
 <dd><p>Get the names of the columns from the CSV file.</p>
-<p>Optimized: Read only the first line to get column names.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -252,8 +301,12 @@ This function reads the CSV file in chunks to optimize memory usage and can filt
 <dt class="sig sig-object py" id="functions.api.InfluxDB_DataInterface.get_first_timestamp">
 <span class="sig-name descname"><span class="pre">get_first_timestamp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/api.html#InfluxDB_DataInterface.get_first_timestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.api.InfluxDB_DataInterface.get_first_timestamp" title="Permalink to this definition"></a></dt>
 <dd><p>Get the first timestamp from the CSV file.</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>pd.Timestamp: The first timestamp.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The first timestamp.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.Timestamp</p>
 </dd>
 </dl>
 </dd></dl>
@@ -262,8 +315,12 @@ This function reads the CSV file in chunks to optimize memory usage and can filt
 <dt class="sig sig-object py" id="functions.api.InfluxDB_DataInterface.get_last_timestamp">
 <span class="sig-name descname"><span class="pre">get_last_timestamp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/api.html#InfluxDB_DataInterface.get_last_timestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.api.InfluxDB_DataInterface.get_last_timestamp" title="Permalink to this definition"></a></dt>
 <dd><p>Get the last timestamp from the CSV file.</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>pd.Timestamp: The last timestamp.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The last timestamp.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.Timestamp</p>
 </dd>
 </dl>
 </dd></dl>
@@ -272,47 +329,75 @@ This function reads the CSV file in chunks to optimize memory usage and can filt
 <dt class="sig sig-object py" id="functions.api.InfluxDB_DataInterface.get_time_frequency">
 <span class="sig-name descname"><span class="pre">get_time_frequency</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/api.html#InfluxDB_DataInterface.get_time_frequency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.api.InfluxDB_DataInterface.get_time_frequency" title="Permalink to this definition"></a></dt>
 <dd><p>Get the time frequency (step size between the individual measurement points) from the CSV file.</p>
-<p>Optimized: Start with a smaller number of rows and increase gradually.</p>
 </dd></dl>
 
 </dd></dl>
 
-<span class="target" id="module-functions.compute_energy"></span><dl class="py function">
+</section>
+<section id="module-functions.compute_energy">
+<span id="compute-energy-py"></span><h2>compute_energy.py<a class="headerlink" href="#module-functions.compute_energy" title="Permalink to this heading"></a></h2>
+<dl class="py function">
 <dt class="sig sig-object py" id="functions.compute_energy.classify_unit">
 <span class="sig-prename descclassname"><span class="pre">functions.compute_energy.</span></span><span class="sig-name descname"><span class="pre">classify_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit_str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/compute_energy.html#classify_unit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.compute_energy.classify_unit" title="Permalink to this definition"></a></dt>
 <dd><p>Classifies the given unit as “power”, “energy”, or “unknown” based on its dimensionality.</p>
-<p>Parameters:
-- unit_str (str): The unit to be classified, e.g., “W”, “J”, “mW”, etc.</p>
-<p>Returns:
-- str: “power” if the unit is a power unit, “energy” if it’s an energy unit,</p>
-<blockquote>
-<div><p>or “unknown” if the unit is neither power nor energy.</p>
-</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>unit_str</strong> (<em>str</em>) – The unit to be classified, e.g., “W”, “J”, “mW”, etc.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns “power” if the unit is a power unit, “energy” if it’s an energy unit,
+or “unknown” if the unit is neither power nor energy.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">classify_unit</span><span class="p">(</span><span class="s2">&quot;W&quot;</span><span class="p">)</span>
+<span class="go">&quot;power&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">classify_unit</span><span class="p">(</span><span class="s2">&quot;J&quot;</span><span class="p">)</span>
+<span class="go">&quot;energy&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">classify_unit</span><span class="p">(</span><span class="s2">&quot;m/s&quot;</span><span class="p">)</span>
+<span class="go">&quot;unknown&quot;</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="functions.compute_energy.freq_to_pint">
 <span class="sig-prename descclassname"><span class="pre">functions.compute_energy.</span></span><span class="sig-name descname"><span class="pre">freq_to_pint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">freq</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/compute_energy.html#freq_to_pint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.compute_energy.freq_to_pint" title="Permalink to this definition"></a></dt>
 <dd><p>Convert a pandas frequency string to a pint quantity.</p>
-<p>Parameters:
-- freq (str): A string representing the desired frequency in pandas format.</p>
-<blockquote>
-<div><p>Possible values include:
-‘1S’ : 1 second
-‘30S’ : 30 seconds
-‘1T’ or ‘1Min’ : 1 minute
-‘5T’ or ‘5Min’ : 5 minutes
-‘15T’ or ‘15Min’ : 15 minutes
-‘30T’ or ‘30Min’ : 30 minutes
-‘1H’ : 1 hour</p>
-</div></blockquote>
-<p>Returns:
-- pint.Quantity: The equivalent frequency as a pint quantity.</p>
-<p>Example:
-&gt;&gt;&gt; freq_to_pint(‘1S’)
-&lt;Quantity(1, ‘second’)&gt;</p>
-<p>Note:
-This function currently supports a subset of pandas frequency strings. 
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>freq</strong> (<em>str</em>) – A string representing the desired frequency in pandas format.
+Possible values include:
+- ‘1S’ : 1 second
+- ‘30S’ : 30 seconds
+- ‘1T’ or ‘1Min’ : 1 minute
+- ‘5T’ or ‘5Min’ : 5 minutes
+- ‘15T’ or ‘15Min’ : 15 minutes
+- ‘30T’ or ‘30Min’ : 30 minutes
+- ‘1H’ : 1 hour</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The equivalent frequency as a pint quantity.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pint.Quantity</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">freq_to_pint</span><span class="p">(</span><span class="s1">&#39;1S&#39;</span><span class="p">)</span>
+<span class="go">&lt;Quantity(1, &#39;second&#39;)&gt;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the frequency format is not supported.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This function currently supports a subset of pandas frequency strings.
 For a comprehensive list of pandas frequency strings, consult the pandas documentation.</p>
 </dd></dl>
 
@@ -321,60 +406,168 @@ For a comprehensive list of pandas frequency strings, consult the pandas documen
 <span class="sig-prename descclassname"><span class="pre">functions.compute_energy.</span></span><span class="sig-name descname"><span class="pre">power_energy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequency</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/compute_energy.html#power_energy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.compute_energy.power_energy" title="Permalink to this definition"></a></dt>
 <dd><p>Convert power values in a DataFrame to energy values or vice versa.</p>
 <p>Given a DataFrame with power values and a specified time interval, this function
-can convert the power values to energy values, or vice versa based on the 
+can convert the power values to energy values, or vice versa based on the
 provided input and output units.</p>
-<dl class="simple">
-<dt>df<span class="classifier">pd.DataFrame</span></dt><dd><p>A DataFrame containing power or energy data with a consistent timestamp 
-as its index. The timestamp index must have a fixed time interval frequency.</p>
-</dd>
-<dt>input_unit<span class="classifier">str</span></dt><dd><p>The unit of the values in the input DataFrame. 
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – A DataFrame containing power or energy data with a consistent timestamp
+as its index. The timestamp index must have a fixed time interval frequency.</p></li>
+<li><p><strong>input_unit</strong> (<em>str</em>) – The unit of the values in the input DataFrame.
 Supported power units include: W, mW, kW, MW, GW, J/s, cal/s, BTU/h, etc.
-Supported energy units include: J, mJ, kJ, MJ, GJ, cal, kcal, Wh, kWh, MWh, BTU, etc.</p>
+Supported energy units include: J, mJ, kJ, MJ, GJ, cal, kcal, Wh, kWh, MWh, BTU, etc.</p></li>
+<li><p><strong>output_unit</strong> (<em>str</em>) – The desired unit for the output values. This must be dimensionally
+consistent with the input_unit.</p></li>
+<li><p><strong>frequency</strong> (<em>str</em>) – The frequency of the DataFrame’s time index, e.g., ‘1S’ for 1 second.</p></li>
+</ul>
 </dd>
-<dt>output_unit<span class="classifier">str</span></dt><dd><p>The desired unit for the output values. This must be dimensionally 
-consistent with the input_unit.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame with values converted to the specified output unit and
+retaining the original timestamp index. Returns a string message if
+the input or output units are incorrect.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame or str</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the <cite>input_unit</cite> and <cite>output_unit</cite> are not dimensionally consistent.</p>
 </dd>
 </dl>
-<dl class="simple">
-<dt>pd.DataFrame</dt><dd><p>A DataFrame with values converted to the specified output unit and 
-retaining the original timestamp index.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Power&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">150</span><span class="p">]},</span> <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s1">&#39;2021-01-01&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;1H&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">power_energy</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;W&#39;</span><span class="p">,</span> <span class="s1">&#39;J&#39;</span><span class="p">,</span> <span class="s1">&#39;1H&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-functions.imputation">
+<span id="imputation-py"></span><h2>imputation.py<a class="headerlink" href="#module-functions.imputation" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.imputation.interpolate_columns">
+<span class="sig-prename descclassname"><span class="pre">functions.imputation.</span></span><span class="sig-name descname"><span class="pre">interpolate_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/imputation.html#interpolate_columns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.imputation.interpolate_columns" title="Permalink to this definition"></a></dt>
+<dd><p>Interpolate the DataFrame columns based on time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>pd.DataFrame</em>) – DataFrame with time index and columns to interpolate.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame with interpolated values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
 
-<span class="target" id="module-functions.imputation"></span><dl class="py function">
+<dl class="py function">
 <dt class="sig sig-object py" id="functions.imputation.interpolate_impute">
 <span class="sig-prename descclassname"><span class="pre">functions.imputation.</span></span><span class="sig-name descname"><span class="pre">interpolate_impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/imputation.html#interpolate_impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.imputation.interpolate_impute" title="Permalink to this definition"></a></dt>
-<dd><p>This function interpolates missing values in a DataFrame based on time gaps, 
-only for existing data points. It then filters the result to keep only timestamps 
-that match the specified frequency. Any cell containing “None” will not be interpolated.</p>
-<p>If freq is None, the original DataFrame index will be preserved.</p>
-<p>Parameters:
-- df (pd.DataFrame): The input DataFrame with timestamps as the index.
-- freq (str, optional): The desired frequency. The options are same as in the original function.</p>
-<p>Returns:
-- pd.DataFrame: The interpolated and filtered DataFrame.</p>
+<dd><p>Interpolates missing values in a DataFrame based on time gaps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – The input DataFrame with timestamps as the index.</p></li>
+<li><p><strong>freq</strong> (<em>str</em><em>, </em><em>optional</em>) – The desired frequency.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The interpolated and filtered DataFrame.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.imputation.issue_warnings">
+<span class="sig-prename descclassname"><span class="pre">functions.imputation.</span></span><span class="sig-name descname"><span class="pre">issue_warnings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interpolated</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/imputation.html#issue_warnings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.imputation.issue_warnings" title="Permalink to this definition"></a></dt>
+<dd><p>Issue warnings related to data interpolation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – The original DataFrame.</p></li>
+<li><p><strong>interpolated</strong> (<em>pd.DataFrame</em>) – The interpolated DataFrame.</p></li>
+<li><p><strong>freq</strong> (<em>str</em><em>, </em><em>optional</em>) – The desired frequency.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="functions.imputation.plot_series_with_matplotlib">
 <span class="sig-prename descclassname"><span class="pre">functions.imputation.</span></span><span class="sig-name descname"><span class="pre">plot_series_with_matplotlib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Pandas</span> <span class="pre">Series</span> <span class="pre">Visualization'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/imputation.html#plot_series_with_matplotlib"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.imputation.plot_series_with_matplotlib" title="Permalink to this definition"></a></dt>
-<dd><p>Visualisiert eine Pandas Series mit einem datetime-Index als Liniendiagramm mit Matplotlib.</p>
-<p>Parameters:
-- series (pd.Series): Die zu visualisierende Serie.
-- title (str): Titel des Diagramms.</p>
-<p>Returns:
-- matplotlib.figure.Figure: Ein Matplotlib-Figure-Objekt.</p>
+<dd><p>Visualize a Pandas Series with a datetime index as a line chart with Matplotlib.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>series</strong> (<em>pd.Series</em>) – The Series to be visualized.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – The title of the chart.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Matplotlib Figure object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>matplotlib.figure.Figure</p>
+</dd>
+</dl>
 </dd></dl>
 
-<span class="target" id="module-functions.sankey"></span><dl class="py function">
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.imputation.round_up_timestamp">
+<span class="sig-prename descclassname"><span class="pre">functions.imputation.</span></span><span class="sig-name descname"><span class="pre">round_up_timestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freq</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/imputation.html#round_up_timestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.imputation.round_up_timestamp" title="Permalink to this definition"></a></dt>
+<dd><p>Round up a timestamp according to the given frequency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ts</strong> (<em>pd.Timestamp</em>) – The timestamp to round up.</p></li>
+<li><p><strong>freq</strong> (<em>str</em>) – The frequency string compatible with pandas.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The rounded-up timestamp.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.Timestamp</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-functions.sankey">
+<span id="sankey-py"></span><h2>sankey.py<a class="headerlink" href="#module-functions.sankey" title="Permalink to this heading"></a></h2>
+<dl class="py function">
 <dt class="sig sig-object py" id="functions.sankey.create_dynamic_plotly_sankey">
 <span class="sig-prename descclassname"><span class="pre">functions.sankey.</span></span><span class="sig-name descname"><span class="pre">create_dynamic_plotly_sankey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/sankey.html#create_dynamic_plotly_sankey"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.sankey.create_dynamic_plotly_sankey" title="Permalink to this definition"></a></dt>
-<dd><p>Create a dynamic Plotly Sankey diagram based on given table.</p>
-<dl class="simple">
-<dt>Parameters:</dt><dd><p>table (DataFrame): The DataFrame containing input data for Sankey diagram.</p>
+<dd><p>Create a dynamic Plotly Sankey diagram based on the given table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>table</strong> (<em>pd.DataFrame</em>) – The DataFrame containing input data for the Sankey diagram. It should have a ‘Consumption’ column
+and other columns that <cite>generate_sankey_data_from_table</cite> expects.</p>
 </dd>
-<dt>Returns:</dt><dd><p>fig: Plotly figure object containing the Sankey diagram.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>fig</strong> – Plotly figure object containing the Sankey diagram.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>plotly.graph_objects.Figure</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The function modifies the ‘Consumption’ column in the input DataFrame to its absolute value.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.sankey.extract_rgba_components">
+<span class="sig-prename descclassname"><span class="pre">functions.sankey.</span></span><span class="sig-name descname"><span class="pre">extract_rgba_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/sankey.html#extract_rgba_components"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.sankey.extract_rgba_components" title="Permalink to this definition"></a></dt>
+<dd><p>Extract RGBA components from a given color string.</p>
+<dl class="simple">
+<dt>color<span class="classifier">str</span></dt><dd><p>The color string in the format ‘rgba(r, g, b, a)’.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>tuple</dt><dd><p>A tuple containing the RGBA components as integers and float.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -396,17 +589,27 @@ that match the specified frequency. Any cell containing “None” will not be i
 - value: A list of energy values (consumption or transformation) for each source-target pair.
 - color: A list of colors for each flow link between source and target nodes.</p>
 <dl class="simple">
-<dt>Args:</dt><dd><dl class="simple">
-<dt>table (pd.DataFrame): The input table containing columns for ‘Label’, ‘Type’, ‘EnergyTypeInput’, </dt><dd><p>‘EnergyTypeOutput’, and ‘Consumption’.</p>
+<dt>table<span class="classifier">pd.DataFrame</span></dt><dd><p>The input table containing columns for ‘Label’, ‘Type’, ‘EnergyTypeInput’,
+‘EnergyTypeOutput’, and ‘Consumption’.</p>
 </dd>
 </dl>
+<dl class="simple">
+<dt>tuple</dt><dd><p>A tuple containing five lists - (labels_with_values, source, target, value, color).</p>
 </dd>
-<dt>Returns:</dt><dd><p>tuple: A tuple containing five lists - (labels_with_values, source, target, value, color).</p>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.sankey.initialize_label_dicts">
+<span class="sig-prename descclassname"><span class="pre">functions.sankey.</span></span><span class="sig-name descname"><span class="pre">initialize_label_dicts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/sankey.html#initialize_label_dicts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.sankey.initialize_label_dicts" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize dictionaries for label indices and energy type colors.</p>
+<dl class="simple">
+<dt>table<span class="classifier">pd.DataFrame</span></dt><dd><p>The input table containing relevant columns for ‘Label’, ‘Type’, ‘EnergyTypeInput’,
+and ‘EnergyTypeOutput’.</p>
 </dd>
-<dt>Note:</dt><dd><ul class="simple">
-<li><p>The function assumes that the ‘table’ DataFrame does not contain NaN or missing values in the relevant columns.</p></li>
-<li><p>It also assumes that the ‘Consumption’ column contains numerical values.</p></li>
-</ul>
+</dl>
+<dl class="simple">
+<dt>tuple</dt><dd><p>Two dictionaries - one for label indices and another for energy type colors.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -416,70 +619,102 @@ that match the specified frequency. Any cell containing “None” will not be i
 <span class="sig-prename descclassname"><span class="pre">functions.sankey.</span></span><span class="sig-name descname"><span class="pre">mix_colors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/sankey.html#mix_colors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.sankey.mix_colors" title="Permalink to this definition"></a></dt>
 <dd><p>Mix two RGBA colors.</p>
 <dl class="simple">
-<dt>Parameters:</dt><dd><p>color1, color2 (str): The input colors in the format ‘rgba(r, g, b, a)’.</p>
+<dt>color1<span class="classifier">str</span></dt><dd><p>The first input color in the format ‘rgba(r, g, b, a)’.</p>
 </dd>
-<dt>Returns:</dt><dd><p>str: The mixed color in the same format.</p>
+<dt>color2<span class="classifier">str</span></dt><dd><p>The second input color in the format ‘rgba(r, g, b, a)’.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>str</dt><dd><p>The mixed color in the same format.</p>
 </dd>
 </dl>
 </dd></dl>
 
-<span class="target" id="module-functions.conversion"></span><dl class="py function">
+</section>
+<section id="module-functions.conversion">
+<span id="conversion-py"></span><h2>conversion.py<a class="headerlink" href="#module-functions.conversion" title="Permalink to this heading"></a></h2>
+<dl class="py function">
 <dt class="sig sig-object py" id="functions.conversion.convert_unit_of_dataframe">
 <span class="sig-prename descclassname"><span class="pre">functions.conversion.</span></span><span class="sig-name descname"><span class="pre">convert_unit_of_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/conversion.html#convert_unit_of_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.conversion.convert_unit_of_dataframe" title="Permalink to this definition"></a></dt>
 <dd><p>Converts the values of a specific column in a DataFrame from one unit to another.</p>
-<p>Args:
-- df (pandas.DataFrame): The DataFrame whose values need to be converted.
-- input_unit (str): The original unit of the values in the DataFrame. Must be a valid pint unit, e.g., ‘meter’, ‘kilogram’, ‘second’.
-- output_unit (str): The desired unit for the values in the DataFrame. Must be a valid pint unit and compatible with the input_unit, e.g., ‘kilometer’, ‘gram’.
-- column_name (str): The name of the column to convert.</p>
-<p>Returns:
-- pandas.DataFrame: A DataFrame with the converted values in the specified column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The DataFrame containing the values to be converted.</p></li>
+<li><p><strong>input_unit</strong> (<em>str</em>) – The original unit of the values in the DataFrame.</p></li>
+<li><p><strong>output_unit</strong> (<em>str</em>) – The desired unit for the values in the DataFrame.</p></li>
+<li><p><strong>column_name</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the column to convert. Defaults to the first column if not provided.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame with the converted values in the specified column.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="functions.conversion.convert_unit_of_value">
 <span class="sig-prename descclassname"><span class="pre">functions.conversion.</span></span><span class="sig-name descname"><span class="pre">convert_unit_of_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_unit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/conversion.html#convert_unit_of_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.conversion.convert_unit_of_value" title="Permalink to this definition"></a></dt>
 <dd><p>Converts a single value from one unit to another using pint.</p>
-<p>Parameters:
-- value (float): The value to be converted.
-- input_unit (str): The original unit of the value. Must be a valid pint unit, e.g., ‘W’ for Watt.
-- output_unit (str): The desired unit for the value. Must be a valid pint unit and compatible with the input_unit, e.g., ‘kW’ for kiloWatt.</p>
-<p>Returns:
-- float: The converted value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<em>float</em>) – The value to be converted.</p></li>
+<li><p><strong>input_unit</strong> (<em>str</em>) – The original unit of the value. Must be a valid pint unit, e.g., ‘W’ for Watt.</p></li>
+<li><p><strong>output_unit</strong> (<em>str</em>) – The desired unit for the value. Must be a valid pint unit and compatible with the input_unit, e.g., ‘kW’ for kiloWatt.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The converted value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="functions.conversion.find_compatible_units">
 <span class="sig-prename descclassname"><span class="pre">functions.conversion.</span></span><span class="sig-name descname"><span class="pre">find_compatible_units</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_unit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/conversion.html#find_compatible_units"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.conversion.find_compatible_units" title="Permalink to this definition"></a></dt>
 <dd><p>Finds all units in the Pint unit registry that have the same dimensionality as the specified base unit.</p>
-<dl class="simple">
-<dt>Parameters:</dt><dd><dl class="simple">
-<dt>base_unit (str): The name of the base unit against which compatibility is to be checked.</dt><dd><p>This should be the name of a unit defined in the Pint unit registry, such as ‘joule’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>base_unit</strong> (<em>str</em>) – The name of the base unit against which compatibility is to be checked.
+This should be the name of a unit defined in the Pint unit registry, such as ‘joule’.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A list of strings containing the names of all units that have the same dimensionality as the base unit.</dt><dd><p>For example, for the base unit ‘joule’, the results might include ‘calorie’, ‘kilowatt_hour’, etc.</p>
 </dd>
 </dl>
+</p>
 </dd>
-<dt>Returns:</dt><dd><dl class="simple">
-<dt>list: A list of strings containing the names of all units that have the same dimensionality as the base unit.</dt><dd><p>For example, for the base unit ‘joule’, the results might include ‘calorie’, ‘kilowatt_hour’, etc.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
-</dd>
-<dt>Example:</dt><dd><p>compatible_energy_units = find_compatible_units(‘joule’)
+<p class="rubric">Example</p>
+<p>compatible_energy_units = find_compatible_units(‘joule’)
 print(compatible_energy_units)  # Outputs all units compatible with joule</p>
-</dd>
-</dl>
 </dd></dl>
 
+</section>
 </section>
 
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pages/modules/modules.html" class="btn btn-neutral float-left" title="System Modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Julian W..</p>
+    <p>&#169; Copyright 2023, Julian W.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>functions.imputation &mdash; Energy_Monitor 1.0.0 documentation</title>
+  <title>functions.imputation &mdash; Energysystemmonitor 1.0.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -29,7 +29,7 @@
           
           
           <a href="../../index.html" class="icon icon-home">
-            Energy_Monitor
+            Energysystemmonitor
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -41,7 +41,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Energy_monitor Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Energy_monitor</a></li>
 </ul>
 
         </div>
@@ -50,7 +50,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Energy_Monitor</a>
+          <a href="../../index.html">Energysystemmonitor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -74,85 +74,120 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 
-<div class="viewcode-block" id="interpolate_impute"><a class="viewcode-back" href="../../functions.html#functions.imputation.interpolate_impute">[docs]</a><span class="k">def</span> <span class="nf">interpolate_impute</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    This function interpolates missing values in a DataFrame based on time gaps, </span>
-<span class="sd">    only for existing data points. It then filters the result to keep only timestamps </span>
-<span class="sd">    that match the specified frequency. Any cell containing &quot;None&quot; will not be interpolated.</span>
-<span class="sd">    </span>
-<span class="sd">    If freq is None, the original DataFrame index will be preserved.</span>
-<span class="sd">    </span>
-<span class="sd">    Parameters:</span>
-<span class="sd">    - df (pd.DataFrame): The input DataFrame with timestamps as the index.</span>
-<span class="sd">    - freq (str, optional): The desired frequency. The options are same as in the original function.</span>
-<span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">    - pd.DataFrame: The interpolated and filtered DataFrame.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    
-    <span class="k">def</span> <span class="nf">round_up_timestamp</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">freq</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Round up a timestamp according to the given frequency.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">ts</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span> <span class="o">-</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span>
-    
-    <span class="c1"># Initialize DataFrame to hold the interpolated values</span>
+<div class="viewcode-block" id="round_up_timestamp"><a class="viewcode-back" href="../../functions.html#functions.imputation.round_up_timestamp">[docs]</a><span class="k">def</span> <span class="nf">round_up_timestamp</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">freq</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Round up a timestamp according to the given frequency.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ts : pd.Timestamp</span>
+<span class="sd">        The timestamp to round up.</span>
+<span class="sd">    freq : str</span>
+<span class="sd">        The frequency string compatible with pandas.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pd.Timestamp</span>
+<span class="sd">        The rounded-up timestamp.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">ts</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span> <span class="o">-</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="interpolate_columns"><a class="viewcode-back" href="../../functions.html#functions.imputation.interpolate_columns">[docs]</a><span class="k">def</span> <span class="nf">interpolate_columns</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Interpolate the DataFrame columns based on time.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pd.DataFrame</span>
+<span class="sd">        DataFrame with time index and columns to interpolate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pd.DataFrame</span>
+<span class="sd">        DataFrame with interpolated values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">interpolated</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-    
-    <span class="c1"># Loop through each column and interpolate only existing data points</span>
     <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-        <span class="c1"># Drop NaN values to form valid segments for interpolation</span>
         <span class="n">valid_segments</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">valid_segments</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
-            <span class="c1"># Interpolate considering the time difference for each valid segment</span>
             <span class="n">interpolated_segment</span> <span class="o">=</span> <span class="n">valid_segments</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
-            <span class="c1"># Fill the corresponding column in the interpolated DataFrame</span>
             <span class="n">interpolated</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">interpolated_segment</span>
+    <span class="k">return</span> <span class="n">interpolated</span></div>
 
-    <span class="k">if</span> <span class="n">freq</span><span class="p">:</span>
-        <span class="c1"># Adjust the start time to the next full time unit according to the given frequency</span>
-        <span class="n">adjusted_start</span> <span class="o">=</span> <span class="n">round_up_timestamp</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">freq</span><span class="p">)</span>
-        
-        <span class="c1"># Create a new index with the desired frequency, starting from the adjusted start time</span>
-        <span class="n">new_index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">adjusted_start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">freq</span><span class="o">=</span><span class="n">freq</span><span class="p">)</span>
-        
-        <span class="c1"># Merge the original index with the new index</span>
-        <span class="n">combined_index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">new_index</span><span class="p">)</span>
-        
-        <span class="c1"># Reindex the DataFrame with the combined index</span>
-        <span class="n">interpolated</span> <span class="o">=</span> <span class="n">interpolated</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">combined_index</span><span class="p">)</span>
+<div class="viewcode-block" id="issue_warnings"><a class="viewcode-back" href="../../functions.html#functions.imputation.issue_warnings">[docs]</a><span class="k">def</span> <span class="nf">issue_warnings</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">interpolated</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Issue warnings related to data interpolation.</span>
 
-        <span class="c1"># Filter the DataFrame to keep only timestamps that match the frequency</span>
-        <span class="n">interpolated</span> <span class="o">=</span> <span class="n">interpolated</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">new_index</span><span class="p">]</span>
-    
-    <span class="c1"># Calculate the gap threshold as twice the specified frequency</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pd.DataFrame</span>
+<span class="sd">        The original DataFrame.</span>
+<span class="sd">    interpolated : pd.DataFrame</span>
+<span class="sd">        The interpolated DataFrame.</span>
+<span class="sd">    freq : str, optional</span>
+<span class="sd">        The desired frequency.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">freq</span><span class="p">:</span>
         <span class="n">gap_threshold</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span>
         <span class="n">time_diffs</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_series</span><span class="p">()</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">time_diffs</span> <span class="o">&gt;</span> <span class="n">gap_threshold</span><span class="p">):</span>
-            <span class="n">st</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Your Data: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="si">}</span><span class="s2"> has been interpolated. Data gaps larger than </span><span class="si">{</span><span class="n">gap_threshold</span><span class="si">}</span><span class="s2"> detected.&quot;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;⚠️&quot;</span><span class="p">)</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Your Data: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="si">}</span><span class="s2"> has been interpolated. Data gaps larger than </span><span class="si">{</span><span class="n">gap_threshold</span><span class="si">}</span><span class="s2"> detected.&quot;</span><span class="p">)</span>
     
-    <span class="c1"># Calculate Mean Squared Error between interpolated and original values for shared timestamps</span>
     <span class="n">common_indices</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">interpolated</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
     <span class="n">mse</span> <span class="o">=</span> <span class="p">((</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_indices</span><span class="p">]</span> <span class="o">-</span> <span class="n">interpolated</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_indices</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
     
     <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">mse</span><span class="o">.</span><span class="n">tolist</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">st</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Your Data has been interpolated. The Mean Squared Error between interpolated and original values is: </span><span class="si">{</span><span class="n">mse</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;⚠️&quot;</span><span class="p">)</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Your Data has been interpolated. The Mean Squared Error between interpolated and original values is: </span><span class="si">{</span><span class="n">mse</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="interpolate_impute"><a class="viewcode-back" href="../../functions.html#functions.imputation.interpolate_impute">[docs]</a><span class="k">def</span> <span class="nf">interpolate_impute</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Interpolates missing values in a DataFrame based on time gaps.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pd.DataFrame</span>
+<span class="sd">        The input DataFrame with timestamps as the index.</span>
+<span class="sd">    freq : str, optional</span>
+<span class="sd">        The desired frequency. </span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pd.DataFrame</span>
+<span class="sd">        The interpolated and filtered DataFrame.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Interpolate the DataFrame</span>
+    <span class="n">interpolated</span> <span class="o">=</span> <span class="n">interpolate_columns</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    
+    <span class="c1"># Frequency adjustment</span>
+    <span class="k">if</span> <span class="n">freq</span><span class="p">:</span>
+        <span class="n">adjusted_start</span> <span class="o">=</span> <span class="n">round_up_timestamp</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">freq</span><span class="p">)</span>
+        <span class="n">new_index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">adjusted_start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">freq</span><span class="o">=</span><span class="n">freq</span><span class="p">)</span>
+        <span class="n">combined_index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">new_index</span><span class="p">)</span>
+        <span class="n">interpolated</span> <span class="o">=</span> <span class="n">interpolated</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">combined_index</span><span class="p">)</span>
+        <span class="n">interpolated</span> <span class="o">=</span> <span class="n">interpolated</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">new_index</span><span class="p">]</span>
+
+    <span class="c1"># Issue warnings related to interpolation</span>
+    <span class="n">issue_warnings</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">interpolated</span><span class="p">,</span> <span class="n">freq</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">interpolated</span></div>
 
-
-
-
 <div class="viewcode-block" id="plot_series_with_matplotlib"><a class="viewcode-back" href="../../functions.html#functions.imputation.plot_series_with_matplotlib">[docs]</a><span class="k">def</span> <span class="nf">plot_series_with_matplotlib</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Pandas Series Visualization&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Visualisiert eine Pandas Series mit einem datetime-Index als Liniendiagramm mit Matplotlib.</span>
-<span class="sd">    </span>
-<span class="sd">    Parameters:</span>
-<span class="sd">    - series (pd.Series): Die zu visualisierende Serie.</span>
-<span class="sd">    - title (str): Titel des Diagramms.</span>
-<span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">    - matplotlib.figure.Figure: Ein Matplotlib-Figure-Objekt.</span>
+<span class="sd">    Visualize a Pandas Series with a datetime index as a line chart with Matplotlib.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    series : pd.Series</span>
+<span class="sd">        The Series to be visualized.</span>
+<span class="sd">    title : str</span>
+<span class="sd">        The title of the chart.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    matplotlib.figure.Figure</span>
+<span class="sd">        A Matplotlib Figure object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="c1"># Erstellen eines Liniendiagramms mit Matplotlib</span>
@@ -167,15 +202,10 @@
 
 
 
-
-
-
-
-
-
-<span class="c1"># Test Funktion if only this skript is running</span>
-
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Streamlit UI to test the function in development</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">st</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Test of Imputation.py&quot;</span><span class="p">)</span>
 
@@ -243,7 +273,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Julian W..</p>
+    <p>&#169; Copyright 2023, Julian W.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

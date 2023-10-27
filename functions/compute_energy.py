@@ -2,34 +2,44 @@ import streamlit as st
 import pandas as pd
 import pint
 
-#Help Funktions of this skript 
-
 # Use pint 
 ureg = pint.UnitRegistry()
+
 
 def freq_to_pint(freq):
     """
     Convert a pandas frequency string to a pint quantity.
     
-    Parameters:
-    - freq (str): A string representing the desired frequency in pandas format. 
-                  Possible values include:
-                  '1S' : 1 second
-                  '30S' : 30 seconds
-                  '1T' or '1Min' : 1 minute
-                  '5T' or '5Min' : 5 minutes
-                  '15T' or '15Min' : 15 minutes
-                  '30T' or '30Min' : 30 minutes
-                  '1H' : 1 hour
+    Parameters
+    ----------
+    freq : str
+        A string representing the desired frequency in pandas format. 
+        Possible values include:
+        - '1S' : 1 second
+        - '30S' : 30 seconds
+        - '1T' or '1Min' : 1 minute
+        - '5T' or '5Min' : 5 minutes
+        - '15T' or '15Min' : 15 minutes
+        - '30T' or '30Min' : 30 minutes
+        - '1H' : 1 hour
     
-    Returns:
-    - pint.Quantity: The equivalent frequency as a pint quantity.
+    Returns
+    -------
+    pint.Quantity
+        The equivalent frequency as a pint quantity.
     
-    Example:
+    Examples
+    --------
     >>> freq_to_pint('1S')
     <Quantity(1, 'second')>
     
-    Note:
+    Raises
+    ------
+    ValueError
+        If the frequency format is not supported.
+    
+    Notes
+    -----
     This function currently supports a subset of pandas frequency strings. 
     For a comprehensive list of pandas frequency strings, consult the pandas documentation.
     """
@@ -58,13 +68,26 @@ def freq_to_pint(freq):
 def classify_unit(unit_str):
     """
     Classifies the given unit as "power", "energy", or "unknown" based on its dimensionality.
-
-    Parameters:
-    - unit_str (str): The unit to be classified, e.g., "W", "J", "mW", etc.
-
-    Returns:
-    - str: "power" if the unit is a power unit, "energy" if it's an energy unit, 
-           or "unknown" if the unit is neither power nor energy.
+    
+    Parameters
+    ----------
+    unit_str : str
+        The unit to be classified, e.g., "W", "J", "mW", etc.
+    
+    Returns
+    -------
+    str
+        Returns "power" if the unit is a power unit, "energy" if it's an energy unit, 
+        or "unknown" if the unit is neither power nor energy.
+    
+    Examples
+    --------
+    >>> classify_unit("W")
+    "power"
+    >>> classify_unit("J")
+    "energy"
+    >>> classify_unit("m/s")
+    "unknown"
     """
     # Convert the unit string to a pint Quantity
     unit = ureg(unit_str)
@@ -83,9 +106,6 @@ def classify_unit(unit_str):
 
 
 
-# Main funktion of this skript 
-
-
 def power_energy(df, input_unit, output_unit, frequency):
     """
     Convert power values in a DataFrame to energy values or vice versa.
@@ -94,7 +114,7 @@ def power_energy(df, input_unit, output_unit, frequency):
     can convert the power values to energy values, or vice versa based on the 
     provided input and output units.
 
-    Parameters:
+    Parameters
     ----------
     df : pd.DataFrame
         A DataFrame containing power or energy data with a consistent timestamp 
@@ -106,12 +126,25 @@ def power_energy(df, input_unit, output_unit, frequency):
     output_unit : str
         The desired unit for the output values. This must be dimensionally 
         consistent with the input_unit.
+    frequency : str
+        The frequency of the DataFrame's time index, e.g., '1S' for 1 second.
 
-    Returns:
+    Returns
     -------
-    pd.DataFrame
+    pd.DataFrame or str
         A DataFrame with values converted to the specified output unit and 
-        retaining the original timestamp index.
+        retaining the original timestamp index. Returns a string message if 
+        the input or output units are incorrect.
+
+    Raises
+    ------
+    ValueError
+        If the `input_unit` and `output_unit` are not dimensionally consistent.
+
+    Examples
+    --------
+    >>> df = pd.DataFrame({'Power': [100, 200, 150]}, index=pd.date_range('2021-01-01', periods=3, freq='1H'))
+    >>> power_energy(df, 'W', 'J', '1H')
     """
     time_Unit = freq_to_pint(frequency)
 
@@ -154,6 +187,9 @@ def power_energy(df, input_unit, output_unit, frequency):
 
 
 if __name__ == "__main__":
+    '''
+    Streamlit UI to test the function in development
+    '''
 
     import imputation
 

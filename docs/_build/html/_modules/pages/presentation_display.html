@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pages.presentation_display &mdash; Energy_Monitor 1.0.0 documentation</title>
+  <title>pages.presentation_display &mdash; Energysystemmonitor 1.0.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -29,7 +29,7 @@
           
           
           <a href="../../index.html" class="icon icon-home">
-            Energy_Monitor
+            Energysystemmonitor
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -41,7 +41,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Energy_monitor Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Energy_monitor</a></li>
 </ul>
 
         </div>
@@ -50,7 +50,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Energy_Monitor</a>
+          <a href="../../index.html">Energysystemmonitor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -70,7 +70,7 @@
              
   <h1>Source code for pages.presentation_display</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Standard Libraries</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span>
 <span class="kn">import</span> <span class="nn">copy</span> 
 <span class="kn">import</span> <span class="nn">importlib</span>
 <span class="kn">import</span> <span class="nn">time</span>
@@ -87,108 +87,170 @@
 <span class="kn">from</span> <span class="nn">functions.compute_energy</span> <span class="kn">import</span> <span class="n">power_energy</span>
 
 
-<span class="n">page_title</span><span class="o">=</span><span class="s2">&quot;Presentation Display&quot;</span>
-<span class="n">st</span><span class="o">.</span><span class="n">set_page_config</span><span class="p">(</span>
-    <span class="n">page_title</span><span class="o">=</span><span class="n">page_title</span><span class="p">,</span>
-    <span class="n">page_icon</span><span class="o">=</span><span class="s2">&quot;🧊&quot;</span><span class="p">,</span>
-    <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;wide&quot;</span><span class="p">,</span>
-    <span class="n">initial_sidebar_state</span><span class="o">=</span><span class="s2">&quot;collapsed&quot;</span><span class="p">,</span>
-    <span class="n">menu_items</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;About&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;# This is the </span><span class="si">{</span><span class="n">page_title</span><span class="si">}</span><span class="s2"> of the E-Monitoring Software&quot;</span>
-    <span class="p">}</span>
-    <span class="p">)</span>
+<div class="viewcode-block" id="configure_streamlit_page"><a class="viewcode-back" href="../../pages.html#pages.presentation_display.configure_streamlit_page">[docs]</a><span class="k">def</span> <span class="nf">configure_streamlit_page</span><span class="p">(</span><span class="n">page_title</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configure the main settings of the Streamlit page.</span>
 
-
-
-
-<div class="viewcode-block" id="update_sankey_consumption"><a class="viewcode-back" href="../../pages.html#pages.presentation_display.update_sankey_consumption">[docs]</a><span class="k">def</span> <span class="nf">update_sankey_consumption</span><span class="p">(</span><span class="n">sankey_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">frequency</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;kWh&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Updates the &#39;Consumption&#39; fields in sankey_mapping using data from an external data interface.</span>
-<span class="sd">    Allows for mathematical expressions and conditions within the &#39;Consumption&#39; fields.</span>
-<span class="sd">    Converts the unit of the consumption value to a specified unit (default is &quot;kWh&quot;).</span>
-<span class="sd">    </span>
-<span class="sd">    Parameters:</span>
-<span class="sd">    - sankey_mapping (dict): A dictionary defining Sankey diagram attributes.</span>
-<span class="sd">    - frequency (str): The frequency of the time index in the DataFrame.</span>
-<span class="sd">    - unit (str, optional): The desired output unit for the consumption values. Default is &quot;kWh&quot;.</span>
-<span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">    - dict: Updated sankey_mapping with &#39;Consumption&#39; values filled and converted to the specified unit.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    page_title : str</span>
+<span class="sd">        The title of the Streamlit page.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">data_cache</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">st</span><span class="o">.</span><span class="n">set_page_config</span><span class="p">(</span>
+        <span class="n">page_title</span><span class="o">=</span><span class="n">page_title</span><span class="p">,</span>
+        <span class="n">page_icon</span><span class="o">=</span><span class="s2">&quot;🧊&quot;</span><span class="p">,</span>
+        <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;wide&quot;</span><span class="p">,</span>
+        <span class="n">initial_sidebar_state</span><span class="o">=</span><span class="s2">&quot;collapsed&quot;</span><span class="p">,</span>
+        <span class="n">menu_items</span><span class="o">=</span><span class="p">{</span>
+            <span class="s1">&#39;About&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;# This is the </span><span class="si">{</span><span class="n">page_title</span><span class="si">}</span><span class="s2"> of the E-Monitoring Software&quot;</span>
+        <span class="p">}</span>
+        <span class="p">)</span></div>
+
+
+
+
+<div class="viewcode-block" id="evaluate_expression"><a class="viewcode-back" href="../../pages.html#pages.presentation_display.evaluate_expression">[docs]</a><span class="k">def</span> <span class="nf">evaluate_expression</span><span class="p">(</span><span class="n">expression</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data_cache</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Evaluate a mathematical expression and return its value.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    expression : str</span>
+<span class="sd">        The mathematical expression to evaluate.</span>
+<span class="sd">    data_cache : dict</span>
+<span class="sd">        A dictionary containing previously fetched data for optimization.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        The evaluated value of the expression.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">operators</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="s2">&quot;(&quot;</span><span class="p">,</span> <span class="s2">&quot;)&quot;</span><span class="p">,</span> <span class="s2">&quot;if&quot;</span><span class="p">,</span> <span class="s2">&quot;else&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;=&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">,</span> <span class="s2">&quot;==&quot;</span><span class="p">])</span>
 
+    <span class="c1"># Replace IF(condition, true_value, false_value) with Python&#39;s ternary operator</span>
+    <span class="k">while</span> <span class="s2">&quot;IF(&quot;</span> <span class="ow">in</span> <span class="n">expression</span><span class="p">:</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;IF\(([^,]+),([^,]+),([^)]+)\)&#39;</span><span class="p">,</span> <span class="n">expression</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+            <span class="n">condition</span><span class="p">,</span> <span class="n">true_value</span><span class="p">,</span> <span class="n">false_value</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+            <span class="n">ternary_expression</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">true_value</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2"> if </span><span class="si">{</span><span class="n">condition</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2"> else </span><span class="si">{</span><span class="n">false_value</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">expression</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(),</span> <span class="n">ternary_expression</span><span class="p">)</span>
+
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">expression</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+    
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">operators</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data_cache</span><span class="p">:</span>
+                <span class="n">data_value</span> <span class="o">=</span> <span class="n">fetch_data</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+                <span class="n">data_cache</span><span class="p">[</span><span class="n">token</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_value</span>
+
+            <span class="n">expression</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">data_cache</span><span class="p">[</span><span class="n">token</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="fetch_data"><a class="viewcode-back" href="../../pages.html#pages.presentation_display.fetch_data">[docs]</a><span class="k">def</span> <span class="nf">fetch_data</span><span class="p">(</span><span class="n">token</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fetch the data for a given token from an external data source.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    token : str</span>
+<span class="sd">        The name of the data field to fetch.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        The fetched data value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data_output</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">data_interface</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">column_names</span><span class="o">=</span><span class="n">token</span><span class="p">,</span> <span class="n">num_rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data_output</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">data_output</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">data_output</span><span class="p">[</span><span class="n">token</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data_output</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">data_output</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Unexpected data type returned from get_data.&quot;</span><span class="p">)</span></div>
+    
+
+<div class="viewcode-block" id="convert_units"><a class="viewcode-back" href="../../pages.html#pages.presentation_display.convert_units">[docs]</a><span class="k">def</span> <span class="nf">convert_units</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">unit_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target_unit</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">frequency</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert the unit of a DataFrame column to a target unit.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pd.DataFrame</span>
+<span class="sd">        The DataFrame containing the values to convert.</span>
+<span class="sd">    unit_str : str</span>
+<span class="sd">        The original unit of the values.</span>
+<span class="sd">    target_unit : str</span>
+<span class="sd">        The target unit for conversion.</span>
+<span class="sd">    frequency : str</span>
+<span class="sd">        The frequency of the time index in the DataFrame.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pd.DataFrame</span>
+<span class="sd">        The DataFrame with values converted to the target unit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">power_energy</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">unit_str</span><span class="p">,</span> <span class="n">target_unit</span><span class="p">,</span> <span class="n">frequency</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="update_sankey_consumption"><a class="viewcode-back" href="../../pages.html#pages.presentation_display.update_sankey_consumption">[docs]</a><span class="k">def</span> <span class="nf">update_sankey_consumption</span><span class="p">(</span><span class="n">sankey_mapping</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">],</span> <span class="n">frequency</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;kWh&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update the &#39;Consumption&#39; fields in sankey_mapping using data from an external data interface.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sankey_mapping : dict</span>
+<span class="sd">        A dictionary containing the mapping for Sankey diagram attributes.</span>
+<span class="sd">    frequency : str</span>
+<span class="sd">        The frequency of the time index in the DataFrame.</span>
+<span class="sd">    unit : str, optional</span>
+<span class="sd">        The desired unit for the consumption values. Default is &quot;kWh&quot;.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        The updated sankey_mapping with &#39;Consumption&#39; values filled and converted to the specified unit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data_cache</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">attributes</span> <span class="ow">in</span> <span class="n">sankey_mapping</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">expression</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="s1">&#39;Consumption&#39;</span><span class="p">]</span>
 
-        <span class="c1"># Replace IF(condition, true_value, false_value) with Python&#39;s ternary operator</span>
-        <span class="k">while</span> <span class="s2">&quot;IF(&quot;</span> <span class="ow">in</span> <span class="n">expression</span><span class="p">:</span>
-            <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;IF\(([^,]+),([^,]+),([^)]+)\)&#39;</span><span class="p">,</span> <span class="n">expression</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
-                <span class="n">condition</span><span class="p">,</span> <span class="n">true_value</span><span class="p">,</span> <span class="n">false_value</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
-                <span class="n">ternary_expression</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">true_value</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2"> if </span><span class="si">{</span><span class="n">condition</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2"> else </span><span class="si">{</span><span class="n">false_value</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="n">expression</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(),</span> <span class="n">ternary_expression</span><span class="p">)</span>
-
-        <span class="c1"># Remove any extra spaces around operators and inside brackets</span>
-        <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">expression</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;( &#39;</span><span class="p">,</span> <span class="s1">&#39;(&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; )&#39;</span><span class="p">,</span> <span class="s1">&#39;)&#39;</span><span class="p">)</span>
-        
-        <span class="c1"># Now split the expression by spaces</span>
-        <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">expression</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
-
-        <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">operators</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
-                <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data_cache</span><span class="p">:</span>
-                    <span class="n">data_output</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">data_interface</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">column_names</span><span class="o">=</span><span class="n">token</span><span class="p">,</span> <span class="n">num_rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-                    
-                    <span class="c1"># Check if it&#39;s a DataFrame or a Series</span>
-                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data_output</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
-                        <span class="k">if</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">data_output</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-                            <span class="n">data_value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">data_output</span><span class="p">[</span><span class="n">token</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-                        <span class="k">else</span><span class="p">:</span>
-                            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Column &#39;</span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&#39; not found in DataFrame.&quot;</span><span class="p">)</span>
-                    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data_output</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
-                        <span class="n">data_value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">data_output</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Unexpected data type returned from get_data.&quot;</span><span class="p">)</span>
-
-                    <span class="n">data_cache</span><span class="p">[</span><span class="n">token</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_value</span>
-
-                <span class="c1"># Replace the token with the actual data value</span>
-                <span class="n">expression</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">data_cache</span><span class="p">[</span><span class="n">token</span><span class="p">]))</span>
-
         <span class="c1"># Evaluate the expression to get the consumption value</span>
-        <span class="n">consumption_value</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+        <span class="n">consumption_value</span> <span class="o">=</span> <span class="n">evaluate_expression</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">data_cache</span><span class="p">)</span>
 
-
-        <span class="c1"># Extract the unit from the key</span>
-        <span class="c1">#key</span>
+        <span class="c1"># Convert the unit to the target unit</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">consumption_value</span><span class="p">]},</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">])</span>
         <span class="n">unit_str</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_[&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;_[&#39;</span> <span class="ow">in</span> <span class="n">key</span> <span class="ow">and</span> <span class="s1">&#39;]&#39;</span> <span class="ow">in</span> <span class="n">key</span> <span class="k">else</span> <span class="kc">None</span>
-        
-        <span class="c1"># Create a DataFrame with a single value and a None index</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">consumption_value</span><span class="p">]},</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">converted_df</span> <span class="o">=</span> <span class="n">convert_units</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">unit_str</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">frequency</span><span class="p">)</span>
+        <span class="n">converted_value</span> <span class="o">=</span> <span class="n">converted_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
-        
-        <span class="c1"># Convert the unit to &quot;kWh&quot; using the power_energy function</span>
-
-        <span class="n">output_df</span> <span class="o">=</span> <span class="n">power_energy</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">unit_str</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span><span class="n">frequency</span><span class="p">)</span>
-
-        <span class="n">converted_value</span> <span class="o">=</span> <span class="n">output_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-        
         <span class="c1"># Update the &#39;Consumption&#39; value in sankey_mapping</span>
         <span class="n">sankey_mapping</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;Consumption&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">converted_value</span>
-            
+
     <span class="k">return</span> <span class="n">sankey_mapping</span></div>
 
 
-<div class="viewcode-block" id="transform_data_for_sankey"><a class="viewcode-back" href="../../pages.html#pages.presentation_display.transform_data_for_sankey">[docs]</a><span class="k">def</span> <span class="nf">transform_data_for_sankey</span><span class="p">(</span><span class="n">sankey_mapping</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<div class="viewcode-block" id="transform_data_for_sankey"><a class="viewcode-back" href="../../pages.html#pages.presentation_display.transform_data_for_sankey">[docs]</a><span class="k">def</span> <span class="nf">transform_data_for_sankey</span><span class="p">(</span><span class="n">sankey_mapping</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Transform the sankey_mapping dictionary to a specific dictionary format suitable for creating Sankey diagrams.</span>
 <span class="sd">    </span>
-<span class="sd">    Parameters:</span>
-<span class="sd">    - sankey_mapping (Dict): A dictionary defining Sankey diagram attributes.</span>
-<span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">    - Dict: Transformed dictionary in the required format.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sankey_mapping : Dict[str, Dict[str, str]]</span>
+<span class="sd">        A dictionary defining Sankey diagram attributes. </span>
+<span class="sd">        Each key is a unique identifier, and the value is another dictionary containing attributes like &#39;Label&#39;, &#39;Consumption&#39;, etc.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Dict[str, list]</span>
+<span class="sd">        Transformed dictionary in the required format. </span>
+<span class="sd">        It contains keys like &#39;Label&#39;, &#39;Consumption&#39;, &#39;Type&#39;, etc., and each key maps to a list of values extracted from the input sankey_mapping.</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; transform_data_for_sankey({&#39;node1&#39;: {&#39;Label&#39;: &#39;Label1&#39;, &#39;Consumption&#39;: 10, &#39;Type&#39;: &#39;Type1&#39;}})</span>
+<span class="sd">    {&#39;Label&#39;: [&#39;Label1&#39;], &#39;Consumption&#39;: [10], &#39;Type&#39;: [&#39;Type1&#39;]}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">labels</span><span class="p">,</span> <span class="n">consumptions</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">energy_type_inputs</span><span class="p">,</span> <span class="n">energy_type_outputs</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">attributes</span> <span class="ow">in</span> <span class="n">sankey_mapping</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -210,113 +272,113 @@
 
 
 
-<span class="c1">#Set datainterface</span>
-<span class="k">if</span> <span class="s2">&quot;data_interface&quot;</span> <span class="ow">in</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="p">:</span>
-    <span class="n">data_interface</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">data_interface</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">st</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;data_interface wurde nicht initialisiert.&quot;</span><span class="p">)</span>
-    <span class="n">st</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<div class="viewcode-block" id="initialize_data_interface"><a class="viewcode-back" href="../../pages.html#pages.presentation_display.initialize_data_interface">[docs]</a><span class="k">def</span> <span class="nf">initialize_data_interface</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initialize the data interface for the application.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Any</span>
+<span class="sd">        The initialized data interface.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    RuntimeError</span>
+<span class="sd">        If the data interface is not initialized.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;data_interface&quot;</span> <span class="ow">in</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">data_interface</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;data_interface wurde nicht initialisiert.&quot;</span><span class="p">)</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
 
 
+<div class="viewcode-block" id="load_module_figs"><a class="viewcode-back" href="../../pages.html#pages.presentation_display.load_module_figs">[docs]</a><span class="k">def</span> <span class="nf">load_module_figs</span><span class="p">(</span><span class="n">data_mapping</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load figures from each module based on the data mapping.</span>
 
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_mapping : Dict</span>
+<span class="sd">        The data mapping for the modules.</span>
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    
-    
-     <span class="c1"># Streamlit Layout</span>
-
-    <span class="n">columns1</span><span class="p">,</span> <span class="n">columns2</span><span class="p">,</span> <span class="n">columns3</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">columns</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-
-    <span class="n">columns1</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Presentation Display&quot;</span><span class="p">)</span>
-    
-    <span class="c1"># Navigation</span>
-    <span class="k">if</span> <span class="n">columns2</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;Main&quot;</span><span class="p">):</span>
-        <span class="n">switch_page</span><span class="p">(</span><span class="s2">&quot;Main&quot;</span><span class="p">)</span>
-
-    <span class="c1">#Define the output unit for sankey values</span>
-    <span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;kW&quot;</span>
-    <span class="n">frequency</span> <span class="o">=</span> <span class="n">data_interface</span><span class="o">.</span><span class="n">get_time_frequency</span><span class="p">()</span>
-
-    <span class="n">last_timestamp</span> <span class="o">=</span> <span class="n">data_interface</span><span class="o">.</span><span class="n">get_last_timestamp</span><span class="p">()</span>
-    <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Timestamp: **:blue[</span><span class="si">{</span><span class="n">last_timestamp</span><span class="si">}</span><span class="s2">]**, Unit: **:blue[[</span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">]]**, Measuring frequency: **:blue[</span><span class="si">{</span><span class="n">frequency</span><span class="si">}</span><span class="s2">]**&quot;</span><span class="p">)</span>
-
-
-    
-    <span class="c1"># Data preparation for Sankey Diagram</span>
-    <span class="n">sankey_mapping</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">sankey_mapping</span><span class="p">)</span>
-
-
-    <span class="c1">#Load consumption data from api into sankey_mapping</span>
-    <span class="n">sankey_mapping_w_data</span> <span class="o">=</span> <span class="n">update_sankey_consumption</span><span class="p">(</span><span class="n">sankey_mapping</span><span class="p">,</span><span class="n">frequency</span><span class="p">,</span> <span class="n">unit</span><span class="p">)</span>    
-
-    <span class="n">transformed_data</span> <span class="o">=</span> <span class="n">transform_data_for_sankey</span><span class="p">(</span><span class="n">sankey_mapping_w_data</span><span class="p">)</span>
-    
-    <span class="n">sankey_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">transformed_data</span><span class="p">)</span>
-    
-    <span class="c1"># Sankey Diagram creation and display</span>
-    <span class="n">sankey_fig</span> <span class="o">=</span> <span class="n">create_dynamic_plotly_sankey</span><span class="p">(</span><span class="n">sankey_table</span><span class="p">)</span>  
-    
-
-
-
-    <span class="n">data_mapping</span><span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">data_mapping</span><span class="p">)</span>
-
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    List</span>
+<span class="sd">        A list of figures from the modules.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">figures</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="c1"># Iterate through each module and its corresponding data</span>
     <span class="k">for</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">module_data</span> <span class="ow">in</span> <span class="n">data_mapping</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        
-        <span class="k">for</span> <span class="n">data_name</span><span class="p">,</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">module_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            
-            <span class="c1"># Dynamically import the module</span>
-            <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;pages.modules.</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s1">_module&#39;</span><span class="p">)</span>
-            
-            <span class="c1"># Load the data from the API</span>
-
+        <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;pages.modules.</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s1">_module&#39;</span><span class="p">)</span>
         <span class="n">figures</span> <span class="o">+=</span> <span class="n">module</span><span class="o">.</span><span class="n">get_module_figs</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">figures</span></div>
 
 
-
-
-
-
-
-   
-    <span class="n">sankey_height</span> <span class="o">=</span> <span class="mi">720</span>
-    <span class="c1"># Setze die Höhe des Sankey-Diagramms auf die kumulierte Höhe der anderen Grafiken</span>
-    <span class="n">sankey_fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">sankey_height</span><span class="p">)</span>
-
-     <span class="c1"># Setze die Höhe jeder Figur manuell</span>
-    <span class="n">individual_height</span> <span class="o">=</span> <span class="n">sankey_height</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">figures</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">fig</span> <span class="ow">in</span> <span class="n">figures</span><span class="p">:</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">individual_height</span><span class="p">)</span>
-
-    <span class="c1"># Streamlit Code</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../pages.html#pages.presentation_display.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main function to run the Streamlit app for Presentation Display.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">,</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">columns</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">])</span>
-    
-    <span class="k">with</span> <span class="n">col1</span><span class="p">:</span>
-        <span class="n">st</span><span class="o">.</span><span class="n">plotly_chart</span><span class="p">(</span><span class="n">sankey_fig</span><span class="p">,</span> <span class="n">use_container_width</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">theme</span><span class="o">=</span><span class="s2">&quot;streamlit&quot;</span><span class="p">,)</span>
-        
-    <span class="k">with</span> <span class="n">col2</span><span class="p">:</span>
+    <span class="c1">#Exception handling for st.rerun if the Code fails </span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Initialize data interface</span>
+        <span class="n">data_interface</span> <span class="o">=</span> <span class="n">initialize_data_interface</span><span class="p">()</span>
+
+        <span class="c1"># Streamlit Layout</span>
+        <span class="n">columns1</span><span class="p">,</span> <span class="n">columns2</span><span class="p">,</span> <span class="n">columns3</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">columns</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">columns1</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Presentation Display&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Navigation</span>
+        <span class="k">if</span> <span class="n">columns2</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;Main&quot;</span><span class="p">):</span>
+            <span class="n">switch_page</span><span class="p">(</span><span class="s2">&quot;Main&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Define the output unit for Sankey values</span>
+        <span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;kWh&quot;</span>
+        <span class="n">frequency</span> <span class="o">=</span> <span class="n">data_interface</span><span class="o">.</span><span class="n">get_time_frequency</span><span class="p">()</span>
+        <span class="n">last_timestamp</span> <span class="o">=</span> <span class="n">data_interface</span><span class="o">.</span><span class="n">get_last_timestamp</span><span class="p">()</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Timestamp: **:blue[</span><span class="si">{</span><span class="n">last_timestamp</span><span class="si">}</span><span class="s2">]**, Unit: **:blue[[</span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">]]**, Measuring frequency: **:blue[</span><span class="si">{</span><span class="n">frequency</span><span class="si">}</span><span class="s2">]**&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Data preparation for Sankey Diagram</span>
+        <span class="n">sankey_mapping</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">sankey_mapping</span><span class="p">)</span>
+        <span class="n">sankey_mapping_w_data</span> <span class="o">=</span> <span class="n">update_sankey_consumption</span><span class="p">(</span><span class="n">sankey_mapping</span><span class="p">,</span> <span class="n">frequency</span><span class="p">,</span> <span class="n">unit</span><span class="p">)</span>    
+        <span class="n">transformed_data</span> <span class="o">=</span> <span class="n">transform_data_for_sankey</span><span class="p">(</span><span class="n">sankey_mapping_w_data</span><span class="p">)</span>
+        <span class="n">sankey_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">transformed_data</span><span class="p">)</span>
+        <span class="n">sankey_fig</span> <span class="o">=</span> <span class="n">create_dynamic_plotly_sankey</span><span class="p">(</span><span class="n">sankey_table</span><span class="p">)</span>  
+
+        <span class="c1"># Load module figures</span>
+        <span class="n">data_mapping</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">data_mapping</span><span class="p">)</span>
+        <span class="n">figures</span> <span class="o">=</span> <span class="n">load_module_figs</span><span class="p">(</span><span class="n">data_mapping</span><span class="p">)</span>
+
+        <span class="c1"># Update layout sizes</span>
+        <span class="n">sankey_height</span> <span class="o">=</span> <span class="mi">720</span>
+        <span class="n">sankey_fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">sankey_height</span><span class="p">)</span>
+        <span class="n">individual_height</span> <span class="o">=</span> <span class="n">sankey_height</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">figures</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">fig</span> <span class="ow">in</span> <span class="n">figures</span><span class="p">:</span>
-            <span class="n">st</span><span class="o">.</span><span class="n">plotly_chart</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">use_container_width</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">theme</span><span class="o">=</span><span class="s2">&quot;streamlit&quot;</span><span class="p">,)</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">individual_height</span><span class="p">)</span>
 
+        <span class="c1"># Streamlit display</span>
+        <span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">,</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">columns</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="k">with</span> <span class="n">col1</span><span class="p">:</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">plotly_chart</span><span class="p">(</span><span class="n">sankey_fig</span><span class="p">,</span> <span class="n">use_container_width</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">theme</span><span class="o">=</span><span class="s2">&quot;streamlit&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">col2</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">fig</span> <span class="ow">in</span> <span class="n">figures</span><span class="p">:</span>
+                <span class="n">st</span><span class="o">.</span><span class="n">plotly_chart</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">use_container_width</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">theme</span><span class="o">=</span><span class="s2">&quot;streamlit&quot;</span><span class="p">)</span>
 
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurs: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
+    <span class="c1"># Auto rerun toggle</span>
     <span class="n">auto_rerun</span> <span class="o">=</span> <span class="n">columns3</span><span class="o">.</span><span class="n">toggle</span><span class="p">(</span><span class="s2">&quot;Auto rerun&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">auto_rerun</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="c1"># Sleep for 1 second</span>
+    <span class="k">if</span> <span class="n">auto_rerun</span><span class="p">:</span>
         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-        <span class="n">st</span><span class="o">.</span><span class="n">rerun</span><span class="p">()</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">rerun</span><span class="p">()</span></div>
 
     
 
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">configure_streamlit_page</span><span class="p">(</span><span class="s2">&quot;Presentation Display&quot;</span><span class="p">)</span>
     <span class="n">main</span><span class="p">()</span>
 
     
@@ -332,7 +394,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Julian W..</p>
+    <p>&#169; Copyright 2023, Julian W.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

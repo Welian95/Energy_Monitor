@@ -16,21 +16,23 @@
 
 import os
 import sys
+#sys.path.insert(0, os.path.abspath('..'))
 
 sys.path.insert(0, os.path.abspath("C:/Users/Jwesterhorstmann/Desktop/Masterarbeit/Energy_monitor"))
 
 
 
+
+
+
 # -- Project information -----------------------------------------------------
 
-project = 'Energy_Monitor'
-copyright = '2023, Julian W.'
-author = 'Julian W.'
+project = 'Energysystemmonitor'
+copyright = '2023, Julian W'
+author = 'Julian W'
 
 # The full version, including alpha/beta/rc tags
 release = '1.0.0'
-
-
 
 
 # -- General configuration ---------------------------------------------------
@@ -38,7 +40,18 @@ release = '1.0.0'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ["sphinx.ext.todo", "sphinx.ext.viewcode", "sphinx.ext.autodoc"]
+
+extensions = [
+    "sphinx.ext.todo",
+    'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.viewcode',
+    'recommonmark'
+]
+
+napoleon_numpy_docstring = True
+napoleon_use_param = True
+napoleon_use_ivar = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -60,5 +73,3 @@ html_theme = 'sphinx_rtd_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
-
-print(sys.path)

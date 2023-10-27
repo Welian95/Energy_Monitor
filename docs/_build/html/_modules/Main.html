@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Main &mdash; Energy_Monitor 1.0.0 documentation</title>
+  <title>Main &mdash; Energysystemmonitor 1.0.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -29,7 +29,7 @@
           
           
           <a href="../index.html" class="icon icon-home">
-            Energy_Monitor
+            Energysystemmonitor
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -50,7 +50,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Energy_Monitor</a>
+          <a href="../index.html">Energysystemmonitor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -76,104 +76,147 @@
 <span class="kn">from</span> <span class="nn">streamlit_extras.switch_page_button</span> <span class="kn">import</span> <span class="n">switch_page</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
 
+<div class="viewcode-block" id="configure_streamlit_page"><a class="viewcode-back" href="../modules.html#Main.configure_streamlit_page">[docs]</a><span class="k">def</span> <span class="nf">configure_streamlit_page</span><span class="p">(</span><span class="n">page_title</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configure the main settings of the Streamlit page.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    page_title : str</span>
+<span class="sd">        The title of the Streamlit page.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">st</span><span class="o">.</span><span class="n">set_page_config</span><span class="p">(</span>
+        <span class="n">page_title</span><span class="o">=</span><span class="n">page_title</span><span class="p">,</span>
+        <span class="n">page_icon</span><span class="o">=</span><span class="s2">&quot;🧊&quot;</span><span class="p">,</span>
+        <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;wide&quot;</span><span class="p">,</span>
+        <span class="n">initial_sidebar_state</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+        <span class="n">menu_items</span><span class="o">=</span><span class="p">{</span>
+            <span class="s1">&#39;About&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;# This is the </span><span class="si">{</span><span class="n">page_title</span><span class="si">}</span><span class="s2"> of the E-Monitoring Software&quot;</span>
+        <span class="p">}</span>
+    <span class="p">)</span></div>
 
 
-<span class="n">api_module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;functions.api&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="import_api_module"><a class="viewcode-back" href="../modules.html#Main.import_api_module">[docs]</a><span class="k">def</span> <span class="nf">import_api_module</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Import the API module and return it.</span>
 
-<span class="c1">#Configer streamlit page</span>
-<span class="n">page_title</span><span class="o">=</span><span class="s2">&quot;Main-Skript&quot;</span>
-<span class="n">st</span><span class="o">.</span><span class="n">set_page_config</span><span class="p">(</span>
-    <span class="n">page_title</span><span class="o">=</span><span class="n">page_title</span><span class="p">,</span>
-    <span class="n">page_icon</span><span class="o">=</span><span class="s2">&quot;🧊&quot;</span><span class="p">,</span>
-    <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;wide&quot;</span><span class="p">,</span>
-    <span class="n">initial_sidebar_state</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
-    <span class="n">menu_items</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;About&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;# This is the </span><span class="si">{</span><span class="n">page_title</span><span class="si">}</span><span class="s2"> of the E-Monitoring Software&quot;</span>
-    <span class="p">}</span>
-    <span class="p">)</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Module</span>
+<span class="sd">        The imported API module.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">api_module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;functions.api&#39;</span><span class="p">)</span>
 
+    <span class="k">return</span> <span class="n">api_module</span></div>
 
-<div class="viewcode-block" id="list_available_interfaces"><a class="viewcode-back" href="../modules.html#Main.list_available_interfaces">[docs]</a><span class="k">def</span> <span class="nf">list_available_interfaces</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    List all available data interfaces that are subclasses of `DataInterface` from the `api_module`.</span>
+<div class="viewcode-block" id="list_available_interfaces"><a class="viewcode-back" href="../modules.html#Main.list_available_interfaces">[docs]</a><span class="k">def</span> <span class="nf">list_available_interfaces</span><span class="p">(</span><span class="n">api_module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;List all available data interfaces that are subclasses of `DataInterface` from the given module.</span>
 
-<span class="sd">    This function dynamically inspects the `api_module` to find all subclasses of `DataInterface`.</span>
+<span class="sd">    This function dynamically inspects the given module to find all subclasses of `DataInterface`.</span>
 <span class="sd">    It does not include `DataInterface` itself in the list.</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        list: A list containing the names of all available data interface subclasses.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    api_module : Module</span>
+<span class="sd">        The module to inspect for subclasses of `DataInterface`.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        A list containing the names of all available data interface subclasses.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">subclasses</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">api_module</span><span class="p">):</span>  <span class="c1"># Verwenden Sie das importierte Modul als Argument</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">api_module</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">api_module</span><span class="o">.</span><span class="n">DataInterface</span><span class="p">)</span> <span class="ow">and</span> <span class="n">obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">api_module</span><span class="o">.</span><span class="n">DataInterface</span><span class="p">:</span>
                 <span class="n">subclasses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">subclasses</span></div>
 
 
-<div class="viewcode-block" id="create_data_interface"><a class="viewcode-back" href="../modules.html#Main.create_data_interface">[docs]</a><span class="k">def</span> <span class="nf">create_data_interface</span><span class="p">(</span><span class="n">selected_interface</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Dynamically creates an instance of the selected data interface from `api_module`.</span>
+<div class="viewcode-block" id="create_data_interface"><a class="viewcode-back" href="../modules.html#Main.create_data_interface">[docs]</a><span class="k">def</span> <span class="nf">create_data_interface</span><span class="p">(</span><span class="n">api_module</span><span class="p">,</span> <span class="n">selected_interface</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Dynamically creates an instance of the selected data interface from the given module.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        selected_interface (str): The name of the data interface class to instantiate.</span>
-<span class="sd">        **kwargs: Arbitrary keyword arguments that will be passed to the constructor of the selected interface.</span>
+<span class="sd">    This function dynamically instantiates a class by its name from the given module.</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        object: An instance of the selected data interface, initialized with the provided keyword arguments.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    api_module : Module</span>
+<span class="sd">        The module to inspect for the selected data interface.</span>
+<span class="sd">    selected_interface : str</span>
+<span class="sd">        The name of the data interface class to instantiate.</span>
+<span class="sd">    **kwargs : dict</span>
+<span class="sd">        Arbitrary keyword arguments that will be passed to the constructor of the selected interface.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    object</span>
+<span class="sd">        An instance of the selected data interface, initialized with the provided keyword arguments.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
     <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">api_module</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="n">selected_interface</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">obj</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        
 
 
-<div class="viewcode-block" id="choose_interface"><a class="viewcode-back" href="../modules.html#Main.choose_interface">[docs]</a><span class="k">def</span> <span class="nf">choose_interface</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Display a Streamlit select box for the user to choose a data interface.</span>
+<div class="viewcode-block" id="choose_interface"><a class="viewcode-back" href="../modules.html#Main.choose_interface">[docs]</a><span class="k">def</span> <span class="nf">choose_interface</span><span class="p">(</span><span class="n">api_module</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Display a Streamlit select box for the user to choose a data interface.</span>
 
-<span class="sd">    The function uses Streamlit to display a select box containing the names of all available data interface subclasses.</span>
-<span class="sd">    An optional default selection can be provided.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    api_module : Module</span>
+<span class="sd">        The module to inspect for available data interfaces.</span>
+<span class="sd">    default : str, optional</span>
+<span class="sd">        The name of the data interface to be selected by default. Defaults to None.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        default (str, optional): The name of the data interface to be selected by default. Defaults to None.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        str: The name of the selected data interface.</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The name of the selected data interface.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">st</span><span class="o">.</span><span class="n">subheader</span><span class="p">(</span><span class="s2">&quot;Available Interfaces:&quot;</span><span class="p">)</span>
-    <span class="n">available_interfaces</span> <span class="o">=</span> <span class="n">list_available_interfaces</span><span class="p">()</span>
-    <span class="n">selected_interface</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="s2">&quot;Choose your interface:&quot;</span><span class="p">,</span> <span class="n">available_interfaces</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">available_interfaces</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">default</span><span class="p">)</span> <span class="k">if</span> <span class="n">default</span> <span class="ow">in</span> <span class="n">available_interfaces</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>  
+    <span class="n">available_interfaces</span> <span class="o">=</span> <span class="n">list_available_interfaces</span><span class="p">(</span><span class="n">api_module</span><span class="p">)</span>
+    <span class="n">selected_interface</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span>
+        <span class="s2">&quot;Choose your interface:&quot;</span><span class="p">,</span> <span class="n">available_interfaces</span><span class="p">,</span> 
+        <span class="n">index</span><span class="o">=</span><span class="n">available_interfaces</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">default</span><span class="p">)</span> <span class="k">if</span> <span class="n">default</span> <span class="ow">in</span> <span class="n">available_interfaces</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="p">)</span>  
     <span class="k">return</span> <span class="n">selected_interface</span></div>
 
 
 <div class="viewcode-block" id="load_saved_mapping"><a class="viewcode-back" href="../modules.html#Main.load_saved_mapping">[docs]</a><span class="k">def</span> <span class="nf">load_saved_mapping</span><span class="p">(</span><span class="n">config_file</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Load the saved data mapping, system modules, and selected interface from a configuration file.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load the saved data mapping, system modules, and selected interface from a configuration file.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        config_file (str): Path to the configuration file.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    config_file : str</span>
+<span class="sd">        Path to the configuration file.</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        tuple: The saved data mapping, the selected system modules, and the selected interface.</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        The saved data mapping, the selected system modules, and the selected interface.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">config_file</span><span class="p">):</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
             <span class="n">saved_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">saved_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;data_mapping&quot;</span><span class="p">,</span> <span class="p">{}),</span> <span class="n">saved_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;system_modules&quot;</span><span class="p">,</span> <span class="p">[]),</span> <span class="n">saved_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;selected_interface&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">saved_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;data_mapping&quot;</span><span class="p">,</span> <span class="p">{}),</span> 
+            <span class="n">saved_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;system_modules&quot;</span><span class="p">,</span> <span class="p">[]),</span> 
+            <span class="n">saved_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;selected_interface&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">{},</span> <span class="p">[],</span> <span class="kc">None</span></div>
 
-
 <div class="viewcode-block" id="save_current_mapping"><a class="viewcode-back" href="../modules.html#Main.save_current_mapping">[docs]</a><span class="k">def</span> <span class="nf">save_current_mapping</span><span class="p">(</span><span class="n">data_mapping</span><span class="p">,</span> <span class="n">system_modules</span><span class="p">,</span> <span class="n">selected_interface</span><span class="p">,</span> <span class="n">config_file</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Save the current data mapping, selected system modules, and selected interface to a configuration file.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save the current data mapping, selected system modules, and selected interface to a configuration file.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        data_mapping (dict): The current data mapping to be saved.</span>
-<span class="sd">        system_modules (list): The selected system modules to be saved.</span>
-<span class="sd">        selected_interface (str): The selected data interface to be saved.</span>
-<span class="sd">        config_file (str): Path to the configuration file.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_mapping : dict</span>
+<span class="sd">        The current data mapping to be saved.</span>
+<span class="sd">    system_modules : list</span>
+<span class="sd">        The selected system modules to be saved.</span>
+<span class="sd">    selected_interface : str</span>
+<span class="sd">        The selected data interface to be saved.</span>
+<span class="sd">    config_file : str</span>
+<span class="sd">        Path to the configuration file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">saved_data</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;data_mapping&quot;</span><span class="p">:</span> <span class="n">data_mapping</span><span class="p">,</span>
@@ -183,48 +226,89 @@
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
         <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">saved_data</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span></div>
 
-<span class="c1"># Function to retrieve available system modules</span>
-<div class="viewcode-block" id="get_available_system_modules"><a class="viewcode-back" href="../modules.html#Main.get_available_system_modules">[docs]</a><span class="k">def</span> <span class="nf">get_available_system_modules</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Retrieve the list of available system modules.</span>
-<span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">        list: A list of module names that are available for selection.</span>
+<div class="viewcode-block" id="get_available_system_modules"><a class="viewcode-back" href="../modules.html#Main.get_available_system_modules">[docs]</a><span class="k">def</span> <span class="nf">get_available_system_modules</span><span class="p">(</span><span class="n">module_path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Retrieve the list of available system modules.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    module_path : str</span>
+<span class="sd">        The file path where system modules are located.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        A list of module names that are available for selection.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">available_system_modules</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">module_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;pages/modules&quot;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">module_path</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;_module.py&quot;</span><span class="p">):</span>
             <span class="n">module_name</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_module.py&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
             <span class="n">available_system_modules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">available_system_modules</span></div>
 
+<div class="viewcode-block" id="get_default_values"><a class="viewcode-back" href="../modules.html#Main.get_default_values">[docs]</a><span class="k">def</span> <span class="nf">get_default_values</span><span class="p">(</span><span class="n">column_list</span><span class="p">,</span> <span class="n">saved_data_mapping</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">data_name</span><span class="p">,</span> <span class="n">units</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get default values for column and unit selection from saved data mapping.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    column_list : list</span>
+<span class="sd">        List of available columns.</span>
+<span class="sd">    saved_data_mapping : dict</span>
+<span class="sd">        Dictionary containing previously saved data mappings.</span>
+<span class="sd">    module_name : str</span>
+<span class="sd">        The name of the system module.</span>
+<span class="sd">    data_name : str</span>
+<span class="sd">        The name of the data to be mapped.</span>
+<span class="sd">    units : list</span>
+<span class="sd">        List of available units.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    int, int</span>
+<span class="sd">        The default indices for column and unit selection.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">saved_unit</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">saved_key</span> <span class="ow">in</span> <span class="n">saved_data_mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="p">{}):</span>
+        <span class="k">if</span> <span class="n">saved_key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">data_name</span><span class="p">):</span>
+            <span class="n">saved_unit</span> <span class="o">=</span> <span class="n">saved_key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;]&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">break</span>
 
-<span class="c1"># Function to display the data mapping user interface</span>
+    <span class="k">if</span> <span class="n">saved_unit</span><span class="p">:</span>
+        <span class="n">value_from_saved_mapping</span> <span class="o">=</span> <span class="n">saved_data_mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_name</span><span class="si">}</span><span class="s2">_[</span><span class="si">{</span><span class="n">saved_unit</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">default_value</span> <span class="o">=</span> <span class="n">column_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">value_from_saved_mapping</span><span class="p">)</span> <span class="k">if</span> <span class="n">value_from_saved_mapping</span> <span class="ow">in</span> <span class="n">column_list</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">default_unit</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">saved_unit</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">default_value</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">default_unit</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">return</span> <span class="n">default_value</span><span class="p">,</span> <span class="n">default_unit</span></div>
+
 <div class="viewcode-block" id="display_data_mapping"><a class="viewcode-back" href="../modules.html#Main.display_data_mapping">[docs]</a><span class="k">def</span> <span class="nf">display_data_mapping</span><span class="p">(</span><span class="n">column_names</span><span class="p">,</span> <span class="n">active_system_modules</span><span class="p">,</span> <span class="n">saved_data_mapping</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Display the data mapping interface for the user to map columns to system modules and select units.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Display the data mapping interface for the user to map columns to system modules and select units.</span>
 <span class="sd">    </span>
-<span class="sd">    Args:</span>
-<span class="sd">        column_names (list): List of available columns.</span>
-<span class="sd">        active_system_modules (list): List of active system modules.</span>
-<span class="sd">        saved_data_mapping (dict, optional): A dictionary containing previously saved data mappings. Defaults to None.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    column_names : list</span>
+<span class="sd">        List of available columns.</span>
+<span class="sd">    active_system_modules : list</span>
+<span class="sd">        List of active system modules.</span>
+<span class="sd">    saved_data_mapping : dict, optional</span>
+<span class="sd">        A dictionary containing previously saved data mappings.</span>
 <span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">        dict: A dictionary representing the user&#39;s data mapping selections.</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        A dictionary representing the user&#39;s data mapping selections.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">st</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Data Mapping&quot;</span><span class="p">)</span>
     <span class="n">data_mapping</span> <span class="o">=</span> <span class="p">{}</span>
-
-    <span class="c1"># Create a Counter to change the selectbox-key in every iteration</span>
-    <span class="n">counter</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># Create a Counter to change the selectbox-key in every iteration</span>
 
     <span class="k">for</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="n">active_system_modules</span><span class="p">:</span>
         <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pages.modules.</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">_module&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Check if the module has the function &quot;get_required_data&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="s2">&quot;get_required_data&quot;</span><span class="p">):</span>
-            <span class="n">st</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The selected system module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; does not contain the function &#39;get_required_data&#39;. Please update this system module or choose another module.&quot;</span><span class="p">)</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The selected system module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; does not contain the function &#39;get_required_data&#39;. Please update this system module or choose another.&quot;</span><span class="p">)</span>
             <span class="k">continue</span>
 
         <span class="n">required_data</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">get_required_data</span><span class="p">()</span>
@@ -232,76 +316,58 @@
         <span class="n">st</span><span class="o">.</span><span class="n">header</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data for </span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">col1</span><span class="p">,</span> <span class="n">col2</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">columns</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-
-        <span class="c1"># Create a dictionary to store the selected data for this module</span>
         <span class="n">module_data_mapping</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="k">for</span> <span class="n">data_name</span><span class="p">,</span> <span class="n">units</span> <span class="ow">in</span> <span class="n">required_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            
-            <span class="c1"># Convert column_names to a list so we can use the index() method</span>
-            <span class="n">column_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">column_names</span><span class="p">)</span>
+            <span class="n">column_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">column_names</span><span class="p">)</span>  <span class="c1"># Convert to list to use the index() method</span>
+            <span class="n">default_value</span><span class="p">,</span> <span class="n">default_unit</span> <span class="o">=</span> <span class="n">get_default_values</span><span class="p">(</span><span class="n">column_list</span><span class="p">,</span> <span class="n">saved_data_mapping</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">data_name</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
 
-            <span class="c1"># Try to find the saved unit for this data_name</span>
-            <span class="n">saved_unit</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">saved_key</span> <span class="ow">in</span> <span class="n">saved_data_mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="p">{}):</span>
-                <span class="k">if</span> <span class="n">saved_key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">data_name</span><span class="p">):</span>
-                    <span class="n">saved_unit</span> <span class="o">=</span> <span class="n">saved_key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;]&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-                    <span class="k">break</span>
-
-            <span class="c1"># If we found the saved unit, set the default value for the column and the unit</span>
-            <span class="k">if</span> <span class="n">saved_unit</span><span class="p">:</span>
-                <span class="n">value_from_saved_mapping</span> <span class="o">=</span> <span class="n">saved_data_mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_name</span><span class="si">}</span><span class="s2">_[</span><span class="si">{</span><span class="n">saved_unit</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-                <span class="n">default_value</span> <span class="o">=</span> <span class="n">column_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">value_from_saved_mapping</span><span class="p">)</span> <span class="k">if</span> <span class="n">value_from_saved_mapping</span> <span class="ow">in</span> <span class="n">column_list</span> <span class="k">else</span> <span class="mi">0</span>
-                <span class="n">default_unit</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">saved_unit</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">default_value</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="n">default_unit</span> <span class="o">=</span> <span class="mi">0</span>
-
-            
-            <span class="n">selected_column</span> <span class="o">=</span> <span class="n">col1</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Select input data from source for </span><span class="si">{</span><span class="n">data_name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="n">column_list</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">default_value</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">counter</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The data series required for the selected plant component are to be entered here. The dropdown selection lists all data series from the interface to the database. &quot;</span> <span class="p">)</span>
+            <span class="n">selected_column</span> <span class="o">=</span> <span class="n">col1</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Select input data for </span><span class="si">{</span><span class="n">data_name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="n">column_list</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">default_value</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">counter</span><span class="p">)</span>
+            <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">selected_unit</span> <span class="o">=</span> <span class="n">col2</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Select input unit for </span><span class="si">{</span><span class="n">data_name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">default_unit</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">counter</span><span class="p">)</span>
             <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
 
-            <span class="n">selected_unit</span> <span class="o">=</span> <span class="n">col2</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Select input unit from source  for </span><span class="si">{</span><span class="n">data_name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">default_unit</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">counter</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Here you must select the unit which the data from the data source was acquired. &quot;</span><span class="p">)</span>
-            <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
-       
-
-
-            <span class="c1"># Concatenate the selected column and the unit</span>
             <span class="n">module_data_mapping</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_name</span><span class="si">}</span><span class="s2">_[</span><span class="si">{</span><span class="n">selected_unit</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">selected_column</span>
 
-        <span class="c1"># Store the data mapping for this module in the main data_mapping</span>
         <span class="n">data_mapping</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">module_data_mapping</span>
-
 
     <span class="k">return</span> <span class="n">data_mapping</span></div>
 
 
 
-<div class="viewcode-block" id="set_sankey_mapping"><a class="viewcode-back" href="../modules.html#Main.set_sankey_mapping">[docs]</a><span class="k">def</span> <span class="nf">set_sankey_mapping</span><span class="p">(</span><span class="n">active_system_modules</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a sankey mapping dictionary based on active system modules.</span>
-<span class="sd">    </span>
-<span class="sd">    Parameters:</span>
-<span class="sd">    - active_system_modules: list of strings, names of the active system modules</span>
-<span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">    - sankey_mapping: dictionary, the mapping created by merging all active system modules</span>
+
+<div class="viewcode-block" id="set_sankey_mapping"><a class="viewcode-back" href="../modules.html#Main.set_sankey_mapping">[docs]</a><span class="k">def</span> <span class="nf">set_sankey_mapping</span><span class="p">(</span><span class="n">active_system_modules</span><span class="p">,</span> <span class="n">module_path</span><span class="o">=</span><span class="s2">&quot;pages.modules&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sankey mapping dictionary based on active system modules.</span>
+
+<span class="sd">    This function dynamically imports modules based on their names, invokes</span>
+<span class="sd">    a `get_sankey_mapping` function in each module (if it exists), and merges</span>
+<span class="sd">    the returned mappings.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    active_system_modules : list</span>
+<span class="sd">        List of strings, names of the active system modules.</span>
+<span class="sd">    module_path : str, optional</span>
+<span class="sd">        The file path where system modules are located. Defaults to &quot;pages.modules&quot;.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        The sankey mapping created by merging all active system modules.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">sankey_mapping</span> <span class="o">=</span> <span class="p">{}</span>
     
     <span class="k">for</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="n">active_system_modules</span><span class="p">:</span>
         <span class="c1"># Import the module dynamically</span>
-        <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pages.modules.</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">_module&quot;</span><span class="p">)</span>
+        <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">module_path</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">_module&quot;</span><span class="p">)</span>
         
         <span class="c1"># Check if the module has the function &quot;get_sankey_mapping&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="s2">&quot;get_sankey_mapping&quot;</span><span class="p">):</span>
-            <span class="c1"># Assuming `st.warning` is a Streamlit function to show a warning message</span>
-            <span class="n">st</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The selected system module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; does not contain the function &#39;get_sankey_mapping&#39;. Please update this system module or choose another module.&quot;</span><span class="p">)</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The selected system module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; does not contain the function &#39;get_sankey_mapping&#39;. Please update this system module or choose another.&quot;</span><span class="p">)</span>
             <span class="k">continue</span>
         
         <span class="c1"># Get the mapping for the current module</span>
         <span class="n">module_mapping</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">get_sankey_mapping</span><span class="p">()</span>
-
         
         <span class="c1"># Merge the mapping into the existing sankey_mapping</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">module_mapping</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -314,46 +380,59 @@
 
 
 
-<div class="viewcode-block" id="map_consumption_values"><a class="viewcode-back" href="../modules.html#Main.map_consumption_values">[docs]</a><span class="k">def</span> <span class="nf">map_consumption_values</span><span class="p">(</span><span class="n">data_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">sankey_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Maps the &#39;Consumption&#39; values in sankey_mapping using the values from data_mapping.</span>
-<span class="sd">    Also includes units in the keys of the sankey_mapping.</span>
+
+<div class="viewcode-block" id="flatten_data_mapping"><a class="viewcode-back" href="../modules.html#Main.flatten_data_mapping">[docs]</a><span class="k">def</span> <span class="nf">flatten_data_mapping</span><span class="p">(</span><span class="n">data_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Flatten a nested dictionary into a single-level dictionary.</span>
 <span class="sd">    </span>
-<span class="sd">    Parameters:</span>
-<span class="sd">    - data_mapping (dict): A dictionary containing the mapping between data fields and their labels.</span>
-<span class="sd">    - sankey_mapping (dict): A dictionary defining Sankey diagram attributes like &#39;Label&#39;, &#39;Consumption&#39;, etc.</span>
-<span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">    - dict: The updated sankey_mapping with &#39;Consumption&#39; values and units in keys.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_mapping : dict</span>
+<span class="sd">        A nested dictionary to be flattened.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        A single-level dictionary.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="c1"># Flatten the data_mapping dictionary for easier lookup</span>
     <span class="n">flat_data_mapping</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">main_key</span><span class="p">,</span> <span class="n">sub_dict</span> <span class="ow">in</span> <span class="n">data_mapping</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">flat_data_mapping</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sub_dict</span><span class="p">)</span>
-    
-    <span class="c1"># New sankey_mapping</span>
+    <span class="k">return</span> <span class="n">flat_data_mapping</span></div>
+
+<div class="viewcode-block" id="map_consumption_values"><a class="viewcode-back" href="../modules.html#Main.map_consumption_values">[docs]</a><span class="k">def</span> <span class="nf">map_consumption_values</span><span class="p">(</span><span class="n">data_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">sankey_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Maps the &#39;Consumption&#39; values in sankey_mapping using the values from data_mapping.</span>
+<span class="sd">    Also includes units in the keys of the sankey_mapping.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_mapping : dict</span>
+<span class="sd">        A dictionary containing the mapping between data fields and their labels.</span>
+<span class="sd">    sankey_mapping : dict</span>
+<span class="sd">        A dictionary defining Sankey diagram attributes like &#39;Label&#39;, &#39;Consumption&#39;, etc.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        The updated sankey_mapping with &#39;Consumption&#39; values and units in keys.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">flat_data_mapping</span> <span class="o">=</span> <span class="n">flatten_data_mapping</span><span class="p">(</span><span class="n">data_mapping</span><span class="p">)</span>
     <span class="n">new_sankey_mapping</span> <span class="o">=</span> <span class="p">{}</span>
     
     <span class="k">for</span> <span class="n">sankey_key</span><span class="p">,</span> <span class="n">attributes</span> <span class="ow">in</span> <span class="n">sankey_mapping</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="c1"># Copy the attributes to keep other fields</span>
         <span class="n">new_attributes</span> <span class="o">=</span> <span class="n">attributes</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         
-        <span class="c1"># Case 1: Consumption is None</span>
         <span class="k">if</span> <span class="n">attributes</span><span class="p">[</span><span class="s1">&#39;Consumption&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">sub_key</span><span class="p">,</span> <span class="n">sub_value</span> <span class="ow">in</span> <span class="n">flat_data_mapping</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">clean_sub_key</span> <span class="o">=</span> <span class="n">sub_key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_[&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">clean_sub_key</span> <span class="o">==</span> <span class="n">sankey_key</span><span class="p">:</span>
                     <span class="n">new_attributes</span><span class="p">[</span><span class="s1">&#39;Consumption&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub_value</span>
-                    <span class="c1"># Append unit to the sankey_key</span>
                     <span class="n">unit</span> <span class="o">=</span> <span class="n">sub_key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_[&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;_[&#39;</span> <span class="ow">in</span> <span class="n">sub_key</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
                     <span class="n">new_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sankey_key</span><span class="si">}</span><span class="s2">_[</span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">]&quot;</span> <span class="k">if</span> <span class="n">unit</span> <span class="k">else</span> <span class="n">sankey_key</span>
                     <span class="n">new_sankey_mapping</span><span class="p">[</span><span class="n">new_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_attributes</span>
-                    <span class="k">break</span>  <span class="c1"># No need to continue the loop once we&#39;ve found a match</span>
-            <span class="k">else</span><span class="p">:</span>  <span class="c1"># This else clause corresponds to the for-loop, not the if-statement</span>
+                    <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
                 <span class="n">new_sankey_mapping</span><span class="p">[</span><span class="n">sankey_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_attributes</span>
                 
-        <span class="c1"># Case 2: Consumption is not None (i.e., it&#39;s an expression)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">expression</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="s1">&#39;Consumption&#39;</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">sub_key</span><span class="p">,</span> <span class="n">sub_value</span> <span class="ow">in</span> <span class="n">flat_data_mapping</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -367,14 +446,31 @@
 
 
 
+<div class="viewcode-block" id="load_configuration"><a class="viewcode-back" href="../modules.html#Main.load_configuration">[docs]</a><span class="k">def</span> <span class="nf">load_configuration</span><span class="p">(</span><span class="n">config_file_path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load saved configurations from a JSON file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    config_file_path : str</span>
+<span class="sd">        Absolute or relative path to the configuration JSON file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        A tuple containing saved_data_mapping, saved_system_modules, and saved_interface.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">load_saved_mapping</span><span class="p">(</span><span class="n">config_file_path</span><span class="p">)</span></div>
 
 
 
 
-<span class="c1"># Main function of the main script</span>
+
+<span class="c1"># Main function of the Main script </span>
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../modules.html#Main.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Main function to run the Streamlit application for data mapping.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Main function to run the Streamlit application for data mapping.</span>
+
+<span class="sd">    This function serves as the entry point for the Streamlit application.</span>
+<span class="sd">    It handles interface selection, data mapping, and saving configurations.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
 
@@ -398,7 +494,8 @@
 
     <span class="n">st</span><span class="o">.</span><span class="n">sidebar</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Select System Modules&quot;</span><span class="p">)</span>
     <span class="c1"># List all available system modules (retrieve dynamically)</span>
-    <span class="n">available_system_modules</span> <span class="o">=</span> <span class="n">get_available_system_modules</span><span class="p">()</span>
+    <span class="n">module_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;pages/modules&quot;</span><span class="p">)</span>
+    <span class="n">available_system_modules</span> <span class="o">=</span> <span class="n">get_available_system_modules</span><span class="p">(</span><span class="n">module_path</span><span class="p">)</span>
 
     <span class="c1"># Load the saved configuration</span>
     <span class="n">config_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;Configuration.json&quot;</span><span class="p">)</span>
@@ -416,15 +513,15 @@
 
     
 
-    <span class="c1"># Pfad zum Verzeichnis der aktuellen Datei (Main.py) ermitteln</span>
+    <span class="c1"># Path to current file-dir (Main.py) </span>
     <span class="n">current_file_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
 
-    <span class="c1"># Arbeitsverzeichnis auf das Verzeichnis der Main.py setzen</span>
+    <span class="c1">#Set working directory for Main.py</span>
     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">current_file_directory</span><span class="p">)</span>
 
 
     <span class="c1"># Set interface</span>
-    <span class="n">selected_interface</span> <span class="o">=</span> <span class="n">choose_interface</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">saved_interface</span><span class="p">)</span>
+    <span class="n">selected_interface</span> <span class="o">=</span> <span class="n">choose_interface</span><span class="p">(</span><span class="n">api_module</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">saved_interface</span><span class="p">)</span>
 
     <span class="c1"># Check if the selected interface is CSVDataInterface to prompt for file path</span>
     <span class="k">if</span> <span class="n">selected_interface</span> <span class="o">==</span> <span class="s2">&quot;CSVDataInterface&quot;</span><span class="p">:</span>
@@ -438,10 +535,10 @@
         <span class="n">encoding</span><span class="o">=</span><span class="n">c4</span><span class="o">.</span><span class="n">text_input</span><span class="p">(</span><span class="s2">&quot;CSV encoding&quot;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">encoding</span> <span class="o">==</span> <span class="s2">&quot;None&quot;</span><span class="p">:</span>
             <span class="n">encoding</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">data_interface</span> <span class="o">=</span> <span class="n">create_data_interface</span><span class="p">(</span><span class="n">selected_interface</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">csv_file_path</span><span class="p">,</span><span class="n">timestamp_col</span><span class="o">=</span><span class="n">timestamp_col</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="n">decimal</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+        <span class="n">data_interface</span> <span class="o">=</span> <span class="n">create_data_interface</span><span class="p">(</span><span class="n">api_module</span><span class="p">,</span> <span class="n">selected_interface</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">csv_file_path</span><span class="p">,</span><span class="n">timestamp_col</span><span class="o">=</span><span class="n">timestamp_col</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="n">decimal</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
     
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">data_interface</span> <span class="o">=</span> <span class="n">create_data_interface</span><span class="p">(</span><span class="n">selected_interface</span><span class="p">)</span>
+        <span class="n">data_interface</span> <span class="o">=</span> <span class="n">create_data_interface</span><span class="p">(</span><span class="n">api_module</span><span class="p">,</span> <span class="n">selected_interface</span><span class="p">)</span>
     
     
     <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">data_interface</span> <span class="o">=</span> <span class="n">data_interface</span>
@@ -456,7 +553,7 @@
 
 
     <span class="c1"># Save sankey mapping in session state</span>
-    <span class="n">sankey_mapping</span> <span class="o">=</span> <span class="n">set_sankey_mapping</span><span class="p">(</span><span class="n">active_system_modules</span><span class="p">)</span>
+    <span class="n">sankey_mapping</span> <span class="o">=</span> <span class="n">set_sankey_mapping</span><span class="p">(</span><span class="n">active_system_modules</span><span class="p">,)</span>
 
 
     <span class="n">updated_sankey_mapping</span> <span class="o">=</span> <span class="n">map_consumption_values</span><span class="p">(</span><span class="n">data_mapping</span><span class="p">,</span> <span class="n">sankey_mapping</span><span class="p">)</span>
@@ -476,7 +573,7 @@
     <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="s1">&#39;****&#39;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">st</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s1">&#39;Save Mapping&#39;</span><span class="p">):</span>
-        <span class="n">st</span><span class="o">.</span><span class="n">experimental_rerun</span><span class="p">()</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">rerun</span><span class="p">()</span>
 
     <span class="c1"># show mapping </span>
 
@@ -497,6 +594,8 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">api_module</span> <span class="o">=</span> <span class="n">import_api_module</span><span class="p">()</span>
+    <span class="n">configure_streamlit_page</span><span class="p">(</span><span class="s2">&quot;Main-Skript&quot;</span><span class="p">)</span>
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
 
@@ -507,7 +606,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Julian W..</p>
+    <p>&#169; Copyright 2023, Julian W.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>functions.sankey &mdash; Energy_Monitor 1.0.0 documentation</title>
+  <title>functions.sankey &mdash; Energysystemmonitor 1.0.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -29,7 +29,7 @@
           
           
           <a href="../../index.html" class="icon icon-home">
-            Energy_Monitor
+            Energysystemmonitor
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -41,7 +41,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Energy_monitor Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Energy_monitor</a></li>
 </ul>
 
         </div>
@@ -50,7 +50,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Energy_Monitor</a>
+          <a href="../../index.html">Energysystemmonitor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -76,27 +76,73 @@
 
 
 
+<div class="viewcode-block" id="extract_rgba_components"><a class="viewcode-back" href="../../functions.html#functions.sankey.extract_rgba_components">[docs]</a><span class="k">def</span> <span class="nf">extract_rgba_components</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract RGBA components from a given color string.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    color : str</span>
+<span class="sd">        The color string in the format &#39;rgba(r, g, b, a)&#39;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        A tuple containing the RGBA components as integers and float.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">color</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span></div>
+
 <div class="viewcode-block" id="mix_colors"><a class="viewcode-back" href="../../functions.html#functions.sankey.mix_colors">[docs]</a><span class="k">def</span> <span class="nf">mix_colors</span><span class="p">(</span><span class="n">color1</span><span class="p">,</span> <span class="n">color2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Mix two RGBA colors.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Parameters:</span>
-<span class="sd">        color1, color2 (str): The input colors in the format &#39;rgba(r, g, b, a)&#39;.</span>
-<span class="sd">        </span>
+<span class="sd">    ----------</span>
+<span class="sd">    color1 : str</span>
+<span class="sd">        The first input color in the format &#39;rgba(r, g, b, a)&#39;.</span>
+<span class="sd">    color2 : str</span>
+<span class="sd">        The second input color in the format &#39;rgba(r, g, b, a)&#39;.</span>
+
 <span class="sd">    Returns:</span>
-<span class="sd">        str: The mixed color in the same format.</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The mixed color in the same format.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">r1</span><span class="p">,</span> <span class="n">g1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">a1</span> <span class="o">=</span> <span class="n">color1</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span>
-    <span class="n">r2</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">a2</span> <span class="o">=</span> <span class="n">color2</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span>
+    <span class="n">r1</span><span class="p">,</span> <span class="n">g1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">a1</span> <span class="o">=</span> <span class="n">extract_rgba_components</span><span class="p">(</span><span class="n">color1</span><span class="p">)</span>
+    <span class="n">r2</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">a2</span> <span class="o">=</span> <span class="n">extract_rgba_components</span><span class="p">(</span><span class="n">color2</span><span class="p">)</span>
     
-    <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">r1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">r2</span><span class="p">))</span> <span class="o">//</span> <span class="mi">2</span>
-    <span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">g2</span><span class="p">))</span> <span class="o">//</span> <span class="mi">2</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">b1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">b2</span><span class="p">))</span> <span class="o">//</span> <span class="mi">2</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">a2</span><span class="p">))</span> <span class="o">/</span> <span class="mf">2.0</span>  <span class="c1"># Use float for the alpha component</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">r1</span> <span class="o">+</span> <span class="n">r2</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">g1</span> <span class="o">+</span> <span class="n">g2</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">b1</span> <span class="o">+</span> <span class="n">b2</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">a1</span> <span class="o">+</span> <span class="n">a2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>  <span class="c1"># Use float for the alpha component</span>
     
     <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;rgba(</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">g</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
+<div class="viewcode-block" id="initialize_label_dicts"><a class="viewcode-back" href="../../functions.html#functions.sankey.initialize_label_dicts">[docs]</a><span class="k">def</span> <span class="nf">initialize_label_dicts</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initialize dictionaries for label indices and energy type colors.</span>
 
+<span class="sd">    Parameters:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    table : pd.DataFrame</span>
+<span class="sd">        The input table containing relevant columns for &#39;Label&#39;, &#39;Type&#39;, &#39;EnergyTypeInput&#39;, </span>
+<span class="sd">        and &#39;EnergyTypeOutput&#39;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        Two dictionaries - one for label indices and another for energy type colors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">label_index_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># Initialize the index dictionary for each unique label and energy type</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Label&#39;</span><span class="p">,</span> <span class="s1">&#39;EnergyTypeInput&#39;</span><span class="p">,</span> <span class="s1">&#39;EnergyTypeOutput&#39;</span><span class="p">]:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">label</span> <span class="ow">and</span> <span class="n">label</span> <span class="o">!=</span> <span class="s1">&#39;-&#39;</span> <span class="ow">and</span> <span class="n">label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">label_index_dict</span><span class="p">:</span>
+                <span class="n">label_index_dict</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">label_index_dict</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">label_index_dict</span></div>
 
 <div class="viewcode-block" id="generate_sankey_data_from_table"><a class="viewcode-back" href="../../functions.html#functions.sankey.generate_sankey_data_from_table">[docs]</a><span class="k">def</span> <span class="nf">generate_sankey_data_from_table</span><span class="p">(</span><span class="n">table</span><span class="p">):</span> 
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -116,17 +162,18 @@
 <span class="sd">    - value: A list of energy values (consumption or transformation) for each source-target pair.</span>
 <span class="sd">    - color: A list of colors for each flow link between source and target nodes.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        table (pd.DataFrame): The input table containing columns for &#39;Label&#39;, &#39;Type&#39;, &#39;EnergyTypeInput&#39;, </span>
-<span class="sd">                               &#39;EnergyTypeOutput&#39;, and &#39;Consumption&#39;.</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    table : pd.DataFrame</span>
+<span class="sd">        The input table containing columns for &#39;Label&#39;, &#39;Type&#39;, &#39;EnergyTypeInput&#39;, </span>
+<span class="sd">        &#39;EnergyTypeOutput&#39;, and &#39;Consumption&#39;.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        tuple: A tuple containing five lists - (labels_with_values, source, target, value, color).</span>
-
-<span class="sd">    Note:</span>
-<span class="sd">        - The function assumes that the &#39;table&#39; DataFrame does not contain NaN or missing values in the relevant columns.</span>
-<span class="sd">        - It also assumes that the &#39;Consumption&#39; column contains numerical values.</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        A tuple containing five lists - (labels_with_values, source, target, value, color).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    
     <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">source</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">target</span> <span class="o">=</span> <span class="p">[]</span>
@@ -136,24 +183,21 @@
     <span class="c1"># New list to keep track of the values of nodes</span>
     <span class="n">node_values</span> <span class="o">=</span> <span class="p">[]</span>
     
-    <span class="n">label_index_dict</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">energy_type_color_dict</span> <span class="o">=</span> <span class="p">{}</span>
-    
+    <span class="n">label_index_dict</span> <span class="o">=</span> <span class="n">initialize_label_dicts</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+
     <span class="c1"># Predefined colors for certain types of energy</span>
     <span class="n">predefined_colors</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;electricity&quot;</span><span class="p">:</span> <span class="s2">&quot;rgba(173, 216, 230, 0.8)&quot;</span><span class="p">,</span>
         <span class="s2">&quot;heat&quot;</span><span class="p">:</span> <span class="s2">&quot;rgba(255, 213, 128, 0.8)&quot;</span>
     <span class="p">}</span>
-
-    <span class="c1"># Initialize node_values with zeros for each label and EnergyTypeInput/Output</span>
+    
     <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Label&#39;</span><span class="p">,</span> <span class="s1">&#39;EnergyTypeInput&#39;</span><span class="p">,</span> <span class="s1">&#39;EnergyTypeOutput&#39;</span><span class="p">]:</span>
             <span class="n">label</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">label</span> <span class="ow">and</span> <span class="n">label</span> <span class="o">!=</span> <span class="s1">&#39;-&#39;</span> <span class="ow">and</span> <span class="n">label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">label_index_dict</span><span class="p">:</span>
-                <span class="n">label_index_dict</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">label</span> <span class="ow">and</span> <span class="n">label</span> <span class="o">!=</span> <span class="s1">&#39;-&#39;</span> <span class="ow">and</span> <span class="n">label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">:</span>
                 <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
                 <span class="n">node_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Initialize with zero</span>
-            
+
     <span class="c1"># Populate source, target, value, and color lists based on the table rows</span>
     <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
         <span class="n">label</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
@@ -184,30 +228,32 @@
             <span class="n">source</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
             <span class="n">target</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tgt</span><span class="p">)</span>
             <span class="n">value</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Consumption&#39;</span><span class="p">])</span>
-    
-    
-    
+
     <span class="c1"># Combine labels and node_values to display next to nodes</span>
     <span class="n">labels_with_values</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">value</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span> <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">node_values</span><span class="p">)]</span>
 
-    <span class="c1"># Alternitive: Combine labels and node_values to display next to nodes, rounding to whole numbers</span>
-    <span class="c1">#labels_with_values = [f&quot;{label} ({int(round(value))})&quot; for label, value in zip(labels, node_values)]</span>
-    
     <span class="k">return</span> <span class="n">labels_with_values</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">color</span></div>
-
 
 
 <div class="viewcode-block" id="create_dynamic_plotly_sankey"><a class="viewcode-back" href="../../functions.html#functions.sankey.create_dynamic_plotly_sankey">[docs]</a><span class="k">def</span> <span class="nf">create_dynamic_plotly_sankey</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a dynamic Plotly Sankey diagram based on given table.</span>
-<span class="sd">    </span>
-<span class="sd">    Parameters:</span>
-<span class="sd">        table (DataFrame): The DataFrame containing input data for Sankey diagram.</span>
-<span class="sd">        </span>
-<span class="sd">    Returns:</span>
-<span class="sd">        fig: Plotly figure object containing the Sankey diagram.</span>
+<span class="sd">    Create a dynamic Plotly Sankey diagram based on the given table.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    table : pd.DataFrame</span>
+<span class="sd">        The DataFrame containing input data for the Sankey diagram. It should have a &#39;Consumption&#39; column</span>
+<span class="sd">        and other columns that `generate_sankey_data_from_table` expects.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    fig : plotly.graph_objects.Figure</span>
+<span class="sd">        Plotly figure object containing the Sankey diagram.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The function modifies the &#39;Consumption&#39; column in the input DataFrame to its absolute value.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
 
     <span class="n">table</span><span class="p">[</span><span class="s1">&#39;Consumption&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;Consumption&#39;</span><span class="p">])</span>
 
@@ -241,7 +287,9 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Streamlit UI to test the function in development</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
    
 
@@ -311,7 +359,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Julian W..</p>
+    <p>&#169; Copyright 2023, Julian W.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

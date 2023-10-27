@@ -1,5 +1,5 @@
 # Standard Libraries
-from typing import Dict
+from typing import Dict, Union, Any, List
 import copy 
 import importlib
 import time
@@ -16,108 +16,170 @@ from functions.conversion import convert_unit_of_value
 from functions.compute_energy import power_energy
 
 
-page_title="Presentation Display"
-st.set_page_config(
-    page_title=page_title,
-    page_icon="🧊",
-    layout="wide",
-    initial_sidebar_state="collapsed",
-    menu_items={
-        'About': f"# This is the {page_title} of the E-Monitoring Software"
-    }
-    )
+def configure_streamlit_page(page_title):
+    """Configure the main settings of the Streamlit page.
 
-
-
-
-def update_sankey_consumption(sankey_mapping: dict, frequency, unit="kWh") -> dict:
+    Parameters
+    ----------
+    page_title : str
+        The title of the Streamlit page.
     """
-    Updates the 'Consumption' fields in sankey_mapping using data from an external data interface.
-    Allows for mathematical expressions and conditions within the 'Consumption' fields.
-    Converts the unit of the consumption value to a specified unit (default is "kWh").
-    
-    Parameters:
-    - sankey_mapping (dict): A dictionary defining Sankey diagram attributes.
-    - frequency (str): The frequency of the time index in the DataFrame.
-    - unit (str, optional): The desired output unit for the consumption values. Default is "kWh".
-    
-    Returns:
-    - dict: Updated sankey_mapping with 'Consumption' values filled and converted to the specified unit.
+    st.set_page_config(
+        page_title=page_title,
+        page_icon="🧊",
+        layout="wide",
+        initial_sidebar_state="collapsed",
+        menu_items={
+            'About': f"# This is the {page_title} of the E-Monitoring Software"
+        }
+        )
+
+
+
+
+def evaluate_expression(expression: str, data_cache: Dict[str, Union[int, float]]) -> float:
     """
-    data_cache = {}
+    Evaluate a mathematical expression and return its value.
+
+    Parameters
+    ----------
+    expression : str
+        The mathematical expression to evaluate.
+    data_cache : dict
+        A dictionary containing previously fetched data for optimization.
+
+    Returns
+    -------
+    float
+        The evaluated value of the expression.
+    """
     operators = set(["+", "-", "*", "/", "(", ")", "if", "else", ">=", "<=", ">", "<", "=="])
 
+    # Replace IF(condition, true_value, false_value) with Python's ternary operator
+    while "IF(" in expression:
+        match = re.search(r'IF\(([^,]+),([^,]+),([^)]+)\)', expression)
+        if match:
+            condition, true_value, false_value = match.groups()
+            ternary_expression = f"{true_value.strip()} if {condition.strip()} else {false_value.strip()}"
+            expression = expression.replace(match.group(), ternary_expression)
+
+    tokens = [token for token in expression.split(" ") if token.strip()]
+    
+    for token in tokens:
+        if token not in operators and not token.replace(".", "", 1).isdigit():
+            if token not in data_cache:
+                data_value = fetch_data(token)
+                data_cache[token] = data_value
+
+            expression = expression.replace(token, str(data_cache[token]))
+
+    return eval(expression)
+
+
+
+def fetch_data(token: str) -> float:
+    """
+    Fetch the data for a given token from an external data source.
+
+    Parameters
+    ----------
+    token : str
+        The name of the data field to fetch.
+
+    Returns
+    -------
+    float
+        The fetched data value.
+    """
+    data_output = st.session_state.data_interface.get_data(column_names=token, num_rows=1, ascending=False)
+    if isinstance(data_output, pd.DataFrame):
+        if token in data_output.columns:
+            return float(data_output[token].iloc[0])
+    elif isinstance(data_output, pd.Series):
+        return float(data_output.iloc[0])
+    else:
+        raise TypeError("Unexpected data type returned from get_data.")
+    
+
+def convert_units(df: pd.DataFrame, unit_str: str, target_unit: str, frequency: str) -> pd.DataFrame:
+    """
+    Convert the unit of a DataFrame column to a target unit.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The DataFrame containing the values to convert.
+    unit_str : str
+        The original unit of the values.
+    target_unit : str
+        The target unit for conversion.
+    frequency : str
+        The frequency of the time index in the DataFrame.
+
+    Returns
+    -------
+    pd.DataFrame
+        The DataFrame with values converted to the target unit.
+    """
+    return power_energy(df, unit_str, target_unit, frequency)
+
+def update_sankey_consumption(sankey_mapping: Dict[str, Dict], frequency: str, unit: str = "kWh") -> Dict[str, Dict]:
+    """
+    Update the 'Consumption' fields in sankey_mapping using data from an external data interface.
+
+    Parameters
+    ----------
+    sankey_mapping : dict
+        A dictionary containing the mapping for Sankey diagram attributes.
+    frequency : str
+        The frequency of the time index in the DataFrame.
+    unit : str, optional
+        The desired unit for the consumption values. Default is "kWh".
+
+    Returns
+    -------
+    dict
+        The updated sankey_mapping with 'Consumption' values filled and converted to the specified unit.
+    """
+    data_cache = {}
     for key, attributes in sankey_mapping.items():
         expression = attributes['Consumption']
 
-        # Replace IF(condition, true_value, false_value) with Python's ternary operator
-        while "IF(" in expression:
-            match = re.search(r'IF\(([^,]+),([^,]+),([^)]+)\)', expression)
-            if match:
-                condition, true_value, false_value = match.groups()
-                ternary_expression = f"{true_value.strip()} if {condition.strip()} else {false_value.strip()}"
-                expression = expression.replace(match.group(), ternary_expression)
-
-        # Remove any extra spaces around operators and inside brackets
-        expression = re.sub(r'\s+', ' ', expression).replace('( ', '(').replace(' )', ')')
-        
-        # Now split the expression by spaces
-        tokens = [token for token in expression.split(" ") if token.strip()]
-
-        for token in tokens:
-            if token not in operators and not token.replace(".", "", 1).isdigit():
-                if token not in data_cache:
-                    data_output = st.session_state.data_interface.get_data(column_names=token, num_rows=1, ascending=False)
-                    
-                    # Check if it's a DataFrame or a Series
-                    if isinstance(data_output, pd.DataFrame):
-                        if token in data_output.columns:
-                            data_value = float(data_output[token].iloc[0])
-                        else:
-                            raise ValueError(f"Column '{token}' not found in DataFrame.")
-                    elif isinstance(data_output, pd.Series):
-                        data_value = float(data_output.iloc[0])
-                    else:
-                        raise TypeError("Unexpected data type returned from get_data.")
-
-                    data_cache[token] = data_value
-
-                # Replace the token with the actual data value
-                expression = expression.replace(token, str(data_cache[token]))
-
         # Evaluate the expression to get the consumption value
-        consumption_value = eval(expression)
+        consumption_value = evaluate_expression(expression, data_cache)
 
-
-        # Extract the unit from the key
-        #key
+        # Convert the unit to the target unit
+        df = pd.DataFrame({'Value': [consumption_value]}, index=[None])
         unit_str = key.split('_[')[1][:-1] if '_[' in key and ']' in key else None
-        
-        # Create a DataFrame with a single value and a None index
-        df = pd.DataFrame({'Value': [consumption_value]}, index=None)
+        converted_df = convert_units(df, unit_str, unit, frequency)
+        converted_value = converted_df.iloc[0, 0]
 
-        
-        # Convert the unit to "kWh" using the power_energy function
-
-        output_df = power_energy(df, unit_str, unit,frequency)
-
-        converted_value = output_df.iloc[0, 0]
-        
         # Update the 'Consumption' value in sankey_mapping
         sankey_mapping[key]['Consumption'] = converted_value
-            
+
     return sankey_mapping
 
 
-def transform_data_for_sankey(sankey_mapping: Dict) -> Dict:
+def transform_data_for_sankey(sankey_mapping: Dict[str, Dict[str, str]]) -> Dict[str, list]:
     """
     Transform the sankey_mapping dictionary to a specific dictionary format suitable for creating Sankey diagrams.
     
-    Parameters:
-    - sankey_mapping (Dict): A dictionary defining Sankey diagram attributes.
-    
-    Returns:
-    - Dict: Transformed dictionary in the required format.
+    Parameters
+    ----------
+    sankey_mapping : Dict[str, Dict[str, str]]
+        A dictionary defining Sankey diagram attributes. 
+        Each key is a unique identifier, and the value is another dictionary containing attributes like 'Label', 'Consumption', etc.
+
+    Returns
+    -------
+    Dict[str, list]
+        Transformed dictionary in the required format. 
+        It contains keys like 'Label', 'Consumption', 'Type', etc., and each key maps to a list of values extracted from the input sankey_mapping.
+
+    Example
+    -------
+    >>> transform_data_for_sankey({'node1': {'Label': 'Label1', 'Consumption': 10, 'Type': 'Type1'}})
+    {'Label': ['Label1'], 'Consumption': [10], 'Type': ['Type1']}
     """
     labels, consumptions, types, energy_type_inputs, energy_type_outputs = [], [], [], [], []
     for key, attributes in sankey_mapping.items():
@@ -139,106 +201,105 @@ def transform_data_for_sankey(sankey_mapping: Dict) -> Dict:
 
 
 
-#Set datainterface
-if "data_interface" in st.session_state:
-    data_interface = st.session_state.data_interface
-else:
-    st.error("data_interface wurde nicht initialisiert.")
-    st.stop()
+def initialize_data_interface() -> Any:
+    """
+    Initialize the data interface for the application.
+
+    Returns
+    -------
+    Any
+        The initialized data interface.
+
+    Raises
+    ------
+    RuntimeError
+        If the data interface is not initialized.
+    """
+    if "data_interface" in st.session_state:
+        return st.session_state.data_interface
+    else:
+        st.error("data_interface wurde nicht initialisiert.")
+        st.stop()
 
 
+def load_module_figs(data_mapping: Dict) -> List:
+    """
+    Load figures from each module based on the data mapping.
+
+    Parameters
+    ----------
+    data_mapping : Dict
+        The data mapping for the modules.
+
+    Returns
+    -------
+    List
+        A list of figures from the modules.
+    """
+    figures = []
+    for module_name, module_data in data_mapping.items():
+        module = importlib.import_module(f'pages.modules.{module_name}_module')
+        figures += module.get_module_figs()
+    return figures
 
 
 def main():
+    """
+    Main function to run the Streamlit app for Presentation Display.
+    """
     
-    
-     # Streamlit Layout
+    #Exception handling for st.rerun if the Code fails 
+    try:
+        # Initialize data interface
+        data_interface = initialize_data_interface()
 
-    columns1, columns2, columns3 = st.columns([5, 1, 1])
+        # Streamlit Layout
+        columns1, columns2, columns3 = st.columns([5, 1, 1])
+        columns1.title("Presentation Display")
 
-    columns1.title("Presentation Display")
-    
-    # Navigation
-    if columns2.button("Main"):
-        switch_page("Main")
+        # Navigation
+        if columns2.button("Main"):
+            switch_page("Main")
 
-    #Define the output unit for sankey values
-    unit = "kW"
-    frequency = data_interface.get_time_frequency()
+        # Define the output unit for Sankey values
+        unit = "kWh"
+        frequency = data_interface.get_time_frequency()
+        last_timestamp = data_interface.get_last_timestamp()
+        st.markdown(f"Timestamp: **:blue[{last_timestamp}]**, Unit: **:blue[[{unit}]]**, Measuring frequency: **:blue[{frequency}]**")
 
-    last_timestamp = data_interface.get_last_timestamp()
-    st.markdown(f"Timestamp: **:blue[{last_timestamp}]**, Unit: **:blue[[{unit}]]**, Measuring frequency: **:blue[{frequency}]**")
+        # Data preparation for Sankey Diagram
+        sankey_mapping = copy.deepcopy(st.session_state.sankey_mapping)
+        sankey_mapping_w_data = update_sankey_consumption(sankey_mapping, frequency, unit)    
+        transformed_data = transform_data_for_sankey(sankey_mapping_w_data)
+        sankey_table = pd.DataFrame(transformed_data)
+        sankey_fig = create_dynamic_plotly_sankey(sankey_table)  
 
+        # Load module figures
+        data_mapping = copy.deepcopy(st.session_state.data_mapping)
+        figures = load_module_figs(data_mapping)
 
-    
-    # Data preparation for Sankey Diagram
-    sankey_mapping = copy.deepcopy(st.session_state.sankey_mapping)
-
-
-    #Load consumption data from api into sankey_mapping
-    sankey_mapping_w_data = update_sankey_consumption(sankey_mapping,frequency, unit)    
-
-    transformed_data = transform_data_for_sankey(sankey_mapping_w_data)
-    
-    sankey_table = pd.DataFrame(transformed_data)
-    
-    # Sankey Diagram creation and display
-    sankey_fig = create_dynamic_plotly_sankey(sankey_table)  
-    
-
-
-
-    data_mapping= copy.deepcopy(st.session_state.data_mapping)
-
-    figures = []
-
-    # Iterate through each module and its corresponding data
-    for module_name, module_data in data_mapping.items():
-        
-        for data_name, column_name in module_data.items():
-            
-            # Dynamically import the module
-            module = importlib.import_module(f'pages.modules.{module_name}_module')
-            
-            # Load the data from the API
-
-        figures += module.get_module_figs()
-
-
-
-
-
-
-
-   
-    sankey_height = 720
-    # Setze die Höhe des Sankey-Diagramms auf die kumulierte Höhe der anderen Grafiken
-    sankey_fig.update_layout(height=sankey_height)
-
-     # Setze die Höhe jeder Figur manuell
-    individual_height = sankey_height / len(figures)
-    for fig in figures:
-        fig.update_layout(height=individual_height)
-
-    # Streamlit Code
-    
-    col1, col2, = st.columns([5, 1, ])
-    
-    with col1:
-        st.plotly_chart(sankey_fig, use_container_width=True, theme="streamlit",)
-        
-    with col2:
+        # Update layout sizes
+        sankey_height = 720
+        sankey_fig.update_layout(height=sankey_height)
+        individual_height = sankey_height / len(figures)
         for fig in figures:
-            st.plotly_chart(fig, use_container_width=True, theme="streamlit",)
+            fig.update_layout(height=individual_height)
 
+        # Streamlit display
+        col1, col2, = st.columns([5, 1])
+        with col1:
+            st.plotly_chart(sankey_fig, use_container_width=True, theme="streamlit")
+        with col2:
+            for fig in figures:
+                st.plotly_chart(fig, use_container_width=True, theme="streamlit")
 
+    except Exception as e:
+        st.warning(f"An error occurs: {e}")
 
+    # Auto rerun toggle
     auto_rerun = columns3.toggle("Auto rerun")
-
-    if auto_rerun == True:
-        # Sleep for 1 second
+    if auto_rerun:
         time.sleep(1)
-
         st.rerun()
 
     
@@ -246,6 +307,7 @@ def main():
 
 
 if __name__ == "__main__":
+    configure_streamlit_page("Presentation Display")
     main()
 
     

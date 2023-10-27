@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Main.py &mdash; Energysystemmonitor 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Pages" href="pages/index.html" />
+    <link rel="prev" title="Welcome to Energy_Monitor’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Energysystemmonitor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Main.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/index.html">Pages</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Energysystemmonitor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Main.py</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Main.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-Main">
+<span id="main-py"></span><h1>Main.py<a class="headerlink" href="#module-Main" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.choose_interface">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">choose_interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#choose_interface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.choose_interface" title="Permalink to this definition"></a></dt>
+<dd><p>Display a Streamlit select box for the user to choose a data interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>api_module</strong> (<em>Module</em>) – The module to inspect for available data interfaces.</p></li>
+<li><p><strong>default</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the data interface to be selected by default. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The name of the selected data interface.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.configure_streamlit_page">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">configure_streamlit_page</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">page_title</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#configure_streamlit_page"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.configure_streamlit_page" title="Permalink to this definition"></a></dt>
+<dd><p>Configure the main settings of the Streamlit page.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>page_title</strong> (<em>str</em>) – The title of the Streamlit page.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.create_data_interface">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">create_data_interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_interface</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#create_data_interface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.create_data_interface" title="Permalink to this definition"></a></dt>
+<dd><p>Dynamically creates an instance of the selected data interface from the given module.</p>
+<p>This function dynamically instantiates a class by its name from the given module.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>api_module</strong> (<em>Module</em>) – The module to inspect for the selected data interface.</p></li>
+<li><p><strong>selected_interface</strong> (<em>str</em>) – The name of the data interface class to instantiate.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Arbitrary keyword arguments that will be passed to the constructor of the selected interface.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of the selected data interface, initialized with the provided keyword arguments.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.display_data_mapping">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">display_data_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">active_system_modules</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saved_data_mapping</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#display_data_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.display_data_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Display the data mapping interface for the user to map columns to system modules and select units.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>column_names</strong> (<em>list</em>) – List of available columns.</p></li>
+<li><p><strong>active_system_modules</strong> (<em>list</em>) – List of active system modules.</p></li>
+<li><p><strong>saved_data_mapping</strong> (<em>dict</em><em>, </em><em>optional</em>) – A dictionary containing previously saved data mappings.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary representing the user’s data mapping selections.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.flatten_data_mapping">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">flatten_data_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/Main.html#flatten_data_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.flatten_data_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Flatten a nested dictionary into a single-level dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_mapping</strong> (<em>dict</em>) – A nested dictionary to be flattened.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A single-level dictionary.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.get_available_system_modules">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">get_available_system_modules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#get_available_system_modules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.get_available_system_modules" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve the list of available system modules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>module_path</strong> (<em>str</em>) – The file path where system modules are located.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of module names that are available for selection.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.get_default_values">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">get_default_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saved_data_mapping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#get_default_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.get_default_values" title="Permalink to this definition"></a></dt>
+<dd><p>Get default values for column and unit selection from saved data mapping.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>column_list</strong> (<em>list</em>) – List of available columns.</p></li>
+<li><p><strong>saved_data_mapping</strong> (<em>dict</em>) – Dictionary containing previously saved data mappings.</p></li>
+<li><p><strong>module_name</strong> (<em>str</em>) – The name of the system module.</p></li>
+<li><p><strong>data_name</strong> (<em>str</em>) – The name of the data to be mapped.</p></li>
+<li><p><strong>units</strong> (<em>list</em>) – List of available units.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The default indices for column and unit selection.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int, int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.import_api_module">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">import_api_module</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#import_api_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.import_api_module" title="Permalink to this definition"></a></dt>
+<dd><p>Import the API module and return it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The imported API module.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.list_available_interfaces">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">list_available_interfaces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#list_available_interfaces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.list_available_interfaces" title="Permalink to this definition"></a></dt>
+<dd><p>List all available data interfaces that are subclasses of <cite>DataInterface</cite> from the given module.</p>
+<p>This function dynamically inspects the given module to find all subclasses of <cite>DataInterface</cite>.
+It does not include <cite>DataInterface</cite> itself in the list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>api_module</strong> (<em>Module</em>) – The module to inspect for subclasses of <cite>DataInterface</cite>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing the names of all available data interface subclasses.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.load_configuration">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">load_configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#load_configuration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.load_configuration" title="Permalink to this definition"></a></dt>
+<dd><p>Load saved configurations from a JSON file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_file_path</strong> (<em>str</em>) – Absolute or relative path to the configuration JSON file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing saved_data_mapping, saved_system_modules, and saved_interface.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.load_saved_mapping">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">load_saved_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#load_saved_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.load_saved_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Load the saved data mapping, system modules, and selected interface from a configuration file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_file</strong> (<em>str</em>) – Path to the configuration file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The saved data mapping, the selected system modules, and the selected interface.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.main">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.main" title="Permalink to this definition"></a></dt>
+<dd><p>Main function to run the Streamlit application for data mapping.</p>
+<p>This function serves as the entry point for the Streamlit application.
+It handles interface selection, data mapping, and saving configurations.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.map_consumption_values">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">map_consumption_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sankey_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/Main.html#map_consumption_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.map_consumption_values" title="Permalink to this definition"></a></dt>
+<dd><p>Maps the ‘Consumption’ values in sankey_mapping using the values from data_mapping.
+Also includes units in the keys of the sankey_mapping.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_mapping</strong> (<em>dict</em>) – A dictionary containing the mapping between data fields and their labels.</p></li>
+<li><p><strong>sankey_mapping</strong> (<em>dict</em>) – A dictionary defining Sankey diagram attributes like ‘Label’, ‘Consumption’, etc.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated sankey_mapping with ‘Consumption’ values and units in keys.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.save_current_mapping">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">save_current_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_mapping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_modules</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_interface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#save_current_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.save_current_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Save the current data mapping, selected system modules, and selected interface to a configuration file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_mapping</strong> (<em>dict</em>) – The current data mapping to be saved.</p></li>
+<li><p><strong>system_modules</strong> (<em>list</em>) – The selected system modules to be saved.</p></li>
+<li><p><strong>selected_interface</strong> (<em>str</em>) – The selected data interface to be saved.</p></li>
+<li><p><strong>config_file</strong> (<em>str</em>) – Path to the configuration file.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.set_sankey_mapping">
+<span class="sig-prename descclassname"><span class="pre">Main.</span></span><span class="sig-name descname"><span class="pre">set_sankey_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">active_system_modules</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pages.modules'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main.html#set_sankey_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.set_sankey_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Create a sankey mapping dictionary based on active system modules.</p>
+<p>This function dynamically imports modules based on their names, invokes
+a <cite>get_sankey_mapping</cite> function in each module (if it exists), and merges
+the returned mappings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>active_system_modules</strong> (<em>list</em>) – List of strings, names of the active system modules.</p></li>
+<li><p><strong>module_path</strong> (<em>str</em><em>, </em><em>optional</em>) – The file path where system modules are located. Defaults to “pages.modules”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The sankey mapping created by merging all active system modules.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Energy_Monitor’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pages/index.html" class="btn btn-neutral float-right" title="Pages" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Julian W.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

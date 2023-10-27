@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Overview &mdash; Energysystemmonitor 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Main.py" href="Main.html" />
+    <link rel="prev" title="Welcome to Energy_Monitor’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Energysystemmonitor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Main.html">Main.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/index.html">Pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Energysystemmonitor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Overview</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/overview.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h1>
+<p># Energy Monitor</p>
+<p>## Overview</p>
+<p>The Energy Monitor is a comprehensive software solution for analyzing and visualizing energy flows and data. Developed in Python using Streamlit, it allows users to select different system modules, map data, and perform energy analyses.</p>
+<p>## Structure</p>
+<p>The project follows a modular architecture, subdivided into:</p>
+<ul class="simple">
+<li><p><strong>Main Script</strong>: Controls the execution of modules and presentation.</p></li>
+<li><p><strong>System Modules</strong>: Specific modules for different technical systems.</p></li>
+<li><p><strong>Data API</strong>: Interface for retrieving data. (See [Data Access API Documentation](#data-access-api-documentation))</p></li>
+<li><p><strong>Presentation and Analysis Layers</strong>: User interfaces for displaying and analyzing data.</p></li>
+</ul>
+<p>## Main Features</p>
+<ul class="simple">
+<li><p><strong>Data Access</strong>: Support for CSV files.</p></li>
+<li><p><strong>Modular Analysis</strong>: Various modules for specific techniques like heat pumps, PV modules, etc.</p></li>
+<li><p><strong>Visualization</strong>: Displays energy flows and technology-specific metrics.</p></li>
+<li><p><strong>Analysis Layer</strong>: Enables historical analyses with interactive Plotly charts.</p></li>
+</ul>
+<p>## Current Status</p>
+<p>The project is in an advanced stage of development with a clear structure and defined functions. The user interface, modules, and data access layers are implemented. Further improvements and expansions are planned.</p>
+<p>## Next Steps</p>
+<ul class="simple">
+<li><p><strong>Expand Modules</strong>: Additional analysis and visualization functions.</p></li>
+<li><p><strong>Integration of Additional Data Sources</strong>: Support for more databases or APIs.</p></li>
+<li><p><strong>User Interface and UX Optimization</strong>: The possibility of adding calculated data sets via the UI. Make system modules integrable via the UI.</p></li>
+<li><p><strong>Testing and Validation</strong>: Implementing quality assurance tests.</p></li>
+<li><p><strong>Documentation and Training</strong>: Creating comprehensive documentation.</p></li>
+<li><p><strong>Warning Systems</strong>:Integration of a warning system for key figures</p></li>
+<li><p>Revised calculation methods: Calculation of weeks and months in analyselayer with dynamic frequencies</p></li>
+<li><p>Revise data mapping:Implement the possibility for calculated datasets in the analyselayer.</p></li>
+</ul>
+<p>## Installation Guide</p>
+<ol class="arabic simple">
+<li><p>Ensure that Python and pip are installed on your machine.</p></li>
+<li><p>Open the Terminal.</p></li>
+<li><dl class="simple">
+<dt>Execute the command:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">pip</span> <span class="pre">install</span> <span class="pre">virtualenv</span>
+<span class="pre">`</span></code></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Create a virtual environment with:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">virtualenv</span> <span class="pre">venv</span>
+<span class="pre">`</span></code></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Activate the virtual environment using:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">source</span> <span class="pre">venv/bin/activate</span>
+<span class="pre">`</span></code></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Clone the repository using:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/Welian95/Energy_Monitor</span>
+<span class="pre">`</span></code>
+(If git is not installed, download the repository from GitHub into your desired folder).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Navigate to the project directory:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">cd</span> <span class="pre">Energy_Monitor</span>
+<span class="pre">`</span></code></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Install the required packages using:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span>
+<span class="pre">`</span></code></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Run the program using:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">python</span> <span class="pre">Main.py</span>
+<span class="pre">`</span></code></p>
+</dd>
+</dl>
+</li>
+<li><p>Launch the Streamlit interface with:
+<code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">streamlit</span> <span class="pre">run</span> <span class="pre">Main.py</span>
+<span class="pre">`</span></code></p></li>
+</ol>
+<p>## Usage</p>
+<ol class="arabic simple">
+<li><p>After you have connected your database to the datamapping via an interface, you can start the Main.py.</p></li>
+<li><p>Select your interface.</p></li>
+</ol>
+<p>![choose_api](images/choose_api.png)</p>
+<ol class="arabic simple" start="3">
+<li><p>Select your System Modules. (Currently only modules for the sample dataset are available, if you want to add new modules you can do so.)</p></li>
+</ol>
+<p>![select_modules](images/select_modules.png)</p>
+<ol class="arabic simple" start="4">
+<li><p>After the module selection you can start the data mapping. Select a measurement series from your database for each measurement point required by the selected modules.</p></li>
+</ol>
+<p>![data_mapping](images/data_mapping.png)</p>
+<ol class="arabic simple" start="5">
+<li><p>After correct assignment, you can view the energy balance of your system in the presentation dsiplay. The key figures of the technology modules are also displayed here.</p></li>
+</ol>
+<p>![presentation_display](images/presentation_display.gif)</p>
+<ol class="arabic simple" start="6">
+<li><p>In the analysis layer, you can now visually display historical data from your database. You have a choice of 5 diagram types, such as a Theme River. You can also convert your data or adjust the time frequency. A detailed explanation will follow shortly.</p></li>
+</ol>
+<p>![themeriver](images/themeriver.png)</p>
+<p>## Data Access API Documentation</p>
+<p>#### Overview</p>
+<p>The Data Access API is designed to provide a consistent interface for accessing different data sources. Currently, there is an implementation for accessing CSV files, but the API is extensible and can be adapted for other data sources like SQL databases, InfluxDB, APIs, etc.</p>
+<p>#### Main Components</p>
+<ul class="simple">
+<li><p><strong>`get_column_names()`</strong>: Returns the names of the columns.</p></li>
+<li><p><strong>`get_time_frequency()`</strong>: Returns the time frequency of the measurement data.</p></li>
+<li><p><strong>`get_data()`</strong>: Reads and filters the data based on various parameters. It allows multi-dimensional filtering based on columns, rows (both forward and backward), and timestamps.</p></li>
+<li><p><strong>`get_first_timestamp()`</strong>: Returns the first timestamp in the data.</p></li>
+<li><p><strong>`get_last_timestamp()`</strong>: Returns the last timestamp in the data.</p></li>
+</ul>
+<p>Each interface must have these components with the same outputs and functions.
+The <strong>Abstract Base Class</strong> Defines the basic methods that must be provided by concrete implementations.</p>
+<p>#### Creating a New Concrete Class</p>
+<p>To create a new concrete class that, for example, works on an SQL or InfluxDB database, you need to implement the abstract methods from the <strong>`DataInterface`</strong> class.</p>
+<p>#### Note
+Make sure the get_data() method supports similar filter parameters as the CSVDataInterface class to maintain consistency.
+Ensure that timestamps are returned as pd.Timestamp objects to maintain consistency with other implementations.</p>
+<p>## License</p>
+<p>Considering this is a project for a scientific thesis and relies on open-source modules, the project is under [MIT License](<a class="reference external" href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>). It allows for free use, modification, and distribution, with an acknowledgment of the original creation.</p>
+<p>## Contact</p>
+<p>For any questions or suggestions, please contact via GitHub or email at [<a class="reference external" href="mailto:westerhorstmann&#37;&#52;&#48;bode&#46;ms">westerhorstmann<span>&#64;</span>bode<span>&#46;</span>ms</a>](<a class="reference external" href="mailto:westerhorstmann&#37;&#52;&#48;bode&#46;ms">mailto:westerhorstmann<span>&#64;</span>bode<span>&#46;</span>ms</a>).</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Energy_Monitor’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Main.html" class="btn btn-neutral float-right" title="Main.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Julian W.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

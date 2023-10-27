@@ -5,9 +5,6 @@ import numpy as np
 
 ureg = pint.UnitRegistry()
 
-
-
-
 if __name__ != "__main__":
     
     from functions import imputation
@@ -17,13 +14,19 @@ def convert_unit_of_value(value, input_unit, output_unit):
     """
     Converts a single value from one unit to another using pint.
     
-    Parameters:
-    - value (float): The value to be converted.
-    - input_unit (str): The original unit of the value. Must be a valid pint unit, e.g., 'W' for Watt.
-    - output_unit (str): The desired unit for the value. Must be a valid pint unit and compatible with the input_unit, e.g., 'kW' for kiloWatt.
+    Parameters
+    ----------
+    value : float
+        The value to be converted.
+    input_unit : str
+        The original unit of the value. Must be a valid pint unit, e.g., 'W' for Watt.
+    output_unit : str
+        The desired unit for the value. Must be a valid pint unit and compatible with the input_unit, e.g., 'kW' for kiloWatt.
     
-    Returns:
-    - float: The converted value.
+    Returns
+    -------
+    float
+        The converted value.
     """
     # Create a pint Quantity for the value and input unit
     value_with_unit = ureg.Quantity(value, input_unit)
@@ -38,14 +41,21 @@ def convert_unit_of_dataframe(df, input_unit, output_unit, column_name=None):
     """
     Converts the values of a specific column in a DataFrame from one unit to another.
 
-    Args:
-    - df (pandas.DataFrame): The DataFrame whose values need to be converted.
-    - input_unit (str): The original unit of the values in the DataFrame. Must be a valid pint unit, e.g., 'meter', 'kilogram', 'second'.
-    - output_unit (str): The desired unit for the values in the DataFrame. Must be a valid pint unit and compatible with the input_unit, e.g., 'kilometer', 'gram'.
-    - column_name (str): The name of the column to convert.
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        The DataFrame containing the values to be converted.
+    input_unit : str
+        The original unit of the values in the DataFrame.
+    output_unit : str
+        The desired unit for the values in the DataFrame.
+    column_name : str, optional
+        The name of the column to convert. Defaults to the first column if not provided.
 
-    Returns:
-    - pandas.DataFrame: A DataFrame with the converted values in the specified column.
+    Returns
+    -------
+    pandas.DataFrame
+        A DataFrame with the converted values in the specified column.
     """
      # If no column name is specified, use the first column
     if column_name is None:
@@ -120,6 +130,10 @@ def find_compatible_units(base_unit):
 
 
 if __name__ == "__main__":
+    '''
+    Streamlit UI to test the function in development
+    '''
+
     import imputation
 
     st.title("Conversion.py")
@@ -130,9 +144,6 @@ if __name__ == "__main__":
     
 
     #Choose Unit
-
-
-    
     input_unit = st.text_input("Choose input unit:")
 
     compatible_energy_units = find_compatible_units(input_unit)
@@ -141,7 +152,7 @@ if __name__ == "__main__":
 
     col1, col2 = st.columns(2)
 
-    # Erstellen eines Beispiel-DataFrames zur Überprüfung der Funktion
+
     example_data = {
         f'Data [{input_unit}]': [12, 7, 10, 9, 11, 5],}
     
@@ -151,8 +162,7 @@ if __name__ == "__main__":
     col1.write("Input Dataframe:")
     col1.write(example_df)
 
-
-    #Umrechnung 
+ 
     converted_df = convert_unit_of_dataframe(example_df, input_unit, output_unit, )
 
     converted_df.columns = converted_df.columns.str.replace(r'\[.*\]', f'[{output_unit}]')

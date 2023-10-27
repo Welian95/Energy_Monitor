@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>analysis_layer.py &mdash; Energysystemmonitor 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="presentation_display.py" href="presentation_display.html" />
+    <link rel="prev" title="Pages" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Energysystemmonitor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Main.html">Main.py</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Pages</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">analysis_layer.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="presentation_display.html">presentation_display.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/modules.html">System Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../functions.html">Functions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Energysystemmonitor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Pages</a></li>
+      <li class="breadcrumb-item active">analysis_layer.py</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/pages/analysis_layer.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pages.analysis_layer">
+<span id="analysis-layer-py"></span><h1>analysis_layer.py<a class="headerlink" href="#module-pages.analysis_layer" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.configure_streamlit_page">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">configure_streamlit_page</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">page_title</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/analysis_layer.html#configure_streamlit_page"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.configure_streamlit_page" title="Permalink to this definition"></a></dt>
+<dd><p>Configure the main settings of the Streamlit page.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>page_title</strong> (<em>str</em>) – The title of the Streamlit page.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.convert_processed_data">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">convert_processed_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/pages/analysis_layer.html#convert_processed_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.convert_processed_data" title="Permalink to this definition"></a></dt>
+<dd><p>Processes and converts the selected data entered by the user via the Streamlit user interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>selected_data</strong> (<em>dict</em>) – A dictionary containing the selected data from different modules.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the processed and possibly converted data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.convert_to_dataframe">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">convert_to_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nested_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/pages/analysis_layer.html#convert_to_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.convert_to_dataframe" title="Permalink to this definition"></a></dt>
+<dd><p>Converts a nested dictionary to a single-level Pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nested_dict</strong> (<em>dict</em>) – The nested dictionary containing the data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame containing the flattened data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.create_bar_figure">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">create_bar_figure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/analysis_layer.html#create_bar_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.create_bar_figure" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a list of combined Plotly bar charts based on the selected data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>selected_data</strong> (<em>dict</em>) – A dictionary containing the selected data.</p></li>
+<li><p><strong>start_date</strong> (<em>str</em><em> or </em><em>datetime object</em>) – A string or datetime object indicating the start date.</p></li>
+<li><p><strong>end_date</strong> (<em>str</em><em> or </em><em>datetime object</em>) – A string or datetime object indicating the end date.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of Plotly figures.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.create_duration_curve_figure">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">create_duration_curve_figure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/analysis_layer.html#create_duration_curve_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.create_duration_curve_figure" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a list of combined Plotly duration curve charts with the x-axis in hours based on the selected data.
+The function automatically infers the time frequency from the data index using pd.infer_freq and converts it to minutes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>selected_data</strong> (<em>dict</em>) – A dictionary containing the selected data.</p></li>
+<li><p><strong>start_date</strong> (<em>str</em><em> or </em><em>datetime object</em>) – A string or datetime object indicating the start date.</p></li>
+<li><p><strong>end_date</strong> (<em>str</em><em> or </em><em>datetime object</em>) – A string or datetime object indicating the end date.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of Plotly figures.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.create_heatmap_figure">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">create_heatmap_figure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/analysis_layer.html#create_heatmap_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.create_heatmap_figure" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a list of Plotly heatmap figures based on the selected data. Each data series will have its own figure.
+The x-axis represents the date, the y-axis represents the hours of the day, and the color represents the value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>selected_data</strong> (<em>dict</em>) – A dictionary containing the selected data.</p></li>
+<li><p><strong>start_date</strong> (<em>str</em><em> or </em><em>datetime object</em>) – A string or datetime object indicating the start date.</p></li>
+<li><p><strong>end_date</strong> (<em>str</em><em> or </em><em>datetime object</em>) – A string or datetime object indicating the end date.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of Plotly figures.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.create_line_figure">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">create_line_figure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/analysis_layer.html#create_line_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.create_line_figure" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a list of combined Plotly figures based on the selected data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>selected_data</strong> (<em>dict</em>) – A dictionary containing the selected data.</p></li>
+<li><p><strong>start_date</strong> (<em>str</em><em> or </em><em>datetime object</em>) – A string or datetime object indicating the start date.</p></li>
+<li><p><strong>end_date</strong> (<em>str</em><em> or </em><em>datetime object</em>) – A string or datetime object indicating the end date.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of Plotly figures.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.create_themeriver_figure">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">create_themeriver_figure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/analysis_layer.html#create_themeriver_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.create_themeriver_figure" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a list of Plotly ThemeRiver figures based on the selected data.
+Each figure represents a group of data series with the same unit.
+The y-values of the series are summed up to create the ‘river’ shape.
+The hover mode is customized to only show the sum of the river.
+The fill between lines is also implemented to represent the stacked nature of the series.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>selected_data</strong> (<em>dict</em>) – A dictionary containing the selected data.</p></li>
+<li><p><strong>start_date</strong> (<em>str</em><em> or </em><em>datetime object</em>) – A string or datetime object indicating the start date.</p></li>
+<li><p><strong>end_date</strong> (<em>str</em><em> or </em><em>datetime object</em>) – A string or datetime object indicating the end date.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of Plotly figures.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.date_range_selector">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">date_range_selector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="../_modules/pages/analysis_layer.html#date_range_selector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.date_range_selector" title="Permalink to this definition"></a></dt>
+<dd><p>Display a date range selector UI using Streamlit and return the selected date range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_date</strong> (<em>datetime.date</em>) – The earliest selectable date.</p></li>
+<li><p><strong>end_date</strong> (<em>datetime.date</em>) – The latest selectable date.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the selected start and end dates (datetime.date, datetime.date).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.display_figures">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">display_figures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figure_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processed_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/analysis_layer.html#display_figures"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.display_figures" title="Permalink to this definition"></a></dt>
+<dd><p>Display the selected type of figure based on the processed data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>figure_type</strong> (<em>str</em>) – The type of figure to display.</p></li>
+<li><p><strong>processed_data</strong> (<em>dict</em>) – The processed data.</p></li>
+<li><p><strong>start_time</strong> (<em>datetime</em>) – The start time.</p></li>
+<li><p><strong>end_time</strong> (<em>datetime</em>) – The end time.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.ensure_date_order">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">ensure_date_order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">date</span></span></span><a class="reference internal" href="../_modules/pages/analysis_layer.html#ensure_date_order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.ensure_date_order" title="Permalink to this definition"></a></dt>
+<dd><p>Ensure that the end date is at least one day after the start date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_date</strong> (<em>datetime.date</em>) – The start date.</p></li>
+<li><p><strong>end_date</strong> (<em>datetime.date</em>) – The end date.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Adjusted end date.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>datetime.date</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.extract_unit">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">extract_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pages/analysis_layer.html#extract_unit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.extract_unit" title="Permalink to this definition"></a></dt>
+<dd><p>Extract the unit from a column name enclosed in square brackets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>column_name</strong> (<em>str</em>) – The name of the column, e.g., “Temperature [C]”.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The unit extracted from the column name, e.g., “C”.
+Returns None if no unit is found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">extract_unit</span><span class="p">(</span><span class="s2">&quot;Temperature [C]&quot;</span><span class="p">)</span>
+<span class="go">&#39;C&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">extract_unit</span><span class="p">(</span><span class="s2">&quot;Pressure&quot;</span><span class="p">)</span>
+<span class="go">None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.get_selected_data">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">get_selected_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_mapping:</span> <span class="pre">~typing.Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time:</span> <span class="pre">&lt;module</span> <span class="pre">'datetime'</span> <span class="pre">from</span> <span class="pre">'C:\\Users\\Jwesterhorstmann\\Anaconda3\\lib\\datetime.py'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_time:</span> <span class="pre">&lt;module</span> <span class="pre">'datetime'</span> <span class="pre">from</span> <span class="pre">'C:\\Users\\Jwesterhorstmann\\Anaconda3\\lib\\datetime.py'&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/pages/analysis_layer.html#get_selected_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.get_selected_data" title="Permalink to this definition"></a></dt>
+<dd><p>Process selected data based on user input from the Streamlit sidebar.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_mapping</strong> (<em>Dict</em>) – A dictionary that maps module names to data names and column names.</p></li>
+<li><p><strong>start_time</strong> (<em>datetime</em>) – The start time for data filtering.</p></li>
+<li><p><strong>end_time</strong> (<em>datetime</em>) – The end time for data filtering.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the selected data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_selected_data</span><span class="p">({</span><span class="s1">&#39;Module1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Data1&#39;</span><span class="p">:</span> <span class="s1">&#39;Column1&#39;</span><span class="p">}},</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">)</span>
+<span class="go">{&#39;Module1&#39;: {&#39;Data1&#39;: loaded_data}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.get_timestamps">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">get_timestamps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_interface</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/analysis_layer.html#get_timestamps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.get_timestamps" title="Permalink to this definition"></a></dt>
+<dd><p>Get the first and last timestamps from the data interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_interface</strong> (<em>object</em>) – The data interface object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the first and last timestamps.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.handle_interpolation_settings">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">handle_interpolation_settings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">col1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/pages/analysis_layer.html#handle_interpolation_settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.handle_interpolation_settings" title="Permalink to this definition"></a></dt>
+<dd><p>Handle interpolation settings and return the selected frequency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>col1</strong> (<em>object</em>) – Streamlit column object for placing widgets.</p></li>
+<li><p><strong>col2</strong> (<em>object</em>) – Streamlit column object for placing widgets.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The selected frequency for interpolation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.initialize_session_state">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">initialize_session_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/analysis_layer.html#initialize_session_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.initialize_session_state" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize Streamlit session state variables for start and end dates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_date</strong> (<em>datetime.date</em>) – The earliest selectable date.</p></li>
+<li><p><strong>end_date</strong> (<em>datetime.date</em>) – The latest selectable date.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.load_module_data">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">load_module_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module_name:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_mapping:</span> <span class="pre">~typing.Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time:</span> <span class="pre">&lt;module</span> <span class="pre">'datetime'</span> <span class="pre">from</span> <span class="pre">'C:\\Users\\Jwesterhorstmann\\Anaconda3\\lib\\datetime.py'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_time:</span> <span class="pre">&lt;module</span> <span class="pre">'datetime'</span> <span class="pre">from</span> <span class="pre">'C:\\Users\\Jwesterhorstmann\\Anaconda3\\lib\\datetime.py'&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/analysis_layer.html#load_module_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.load_module_data" title="Permalink to this definition"></a></dt>
+<dd><p>Dynamically imports a module and loads its data based on the provided time range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module_name</strong> (<em>str</em>) – The name of the module to be imported.</p></li>
+<li><p><strong>data_mapping</strong> (<em>Dict</em>) – A dictionary that maps module names to data names and column names.</p></li>
+<li><p><strong>start_time</strong> (<em>datetime</em>) – The start time for data filtering.</p></li>
+<li><p><strong>end_time</strong> (<em>datetime</em>) – The end time for data filtering.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Loaded data as a dictionary.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If the data could not be loaded.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.main">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/analysis_layer.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.main" title="Permalink to this definition"></a></dt>
+<dd><p>Main function to run the Streamlit app for Analysis Layer.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.manage_units_and_subplots">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">manage_units_and_subplots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figures</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/analysis_layer.html#manage_units_and_subplots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.manage_units_and_subplots" title="Permalink to this definition"></a></dt>
+<dd><p>Manages the list of units and creates new subplots as needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>figures</strong> (<em>list</em>) – List of existing figures and their associated unit lists.</p></li>
+<li><p><strong>unit</strong> (<em>str</em>) – The unit to be added.</p></li>
+<li><p><strong>fig</strong> (<em>plotly.graph_objs.Figure</em><em>, </em><em>optional</em>) – Current working figure.</p></li>
+<li><p><strong>unit_list</strong> (<em>list</em><em>, </em><em>optional</em>) – List of units already added to the current figure.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>figures</strong> (<em>list</em>) – List of figures, potentially with a new figure added.</p></li>
+<li><p><strong>fig</strong> (<em>plotly.graph_objs.Figure</em>) – The updated or new figure.</p></li>
+<li><p><strong>unit_list</strong> (<em>list</em>) – The updated list of units.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.select_and_process_data">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">select_and_process_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_mapping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/analysis_layer.html#select_and_process_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.select_and_process_data" title="Permalink to this definition"></a></dt>
+<dd><p>Select and process the data based on the time range and data mapping.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_mapping</strong> (<em>dict</em>) – The mapping of available data.</p></li>
+<li><p><strong>start_time</strong> (<em>datetime</em>) – The start time.</p></li>
+<li><p><strong>end_time</strong> (<em>datetime</em>) – The end time.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The processed data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.select_time_range">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">select_time_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">first_timestamp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_timestamp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/analysis_layer.html#select_time_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.select_time_range" title="Permalink to this definition"></a></dt>
+<dd><p>Select the time range using a date range selector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>first_timestamp</strong> (<em>datetime</em>) – The first available timestamp.</p></li>
+<li><p><strong>last_timestamp</strong> (<em>datetime</em>) – The last available timestamp.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the selected start and end times.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.unit_conversion_settings">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">unit_conversion_settings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">display_option</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pages/analysis_layer.html#unit_conversion_settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.unit_conversion_settings" title="Permalink to this definition"></a></dt>
+<dd><p>Handle unit conversion settings based on the selected display option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>display_option</strong> (<em>str</em>) – The selected display option: “Individual”, “Display as energy”, “Display as power”.</p></li>
+<li><p><strong>col</strong> (<em>object</em>) – Streamlit column object for placing widgets.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The selected unit for energy or power conversion. None if “Individual” is selected.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.analysis_layer.update_figure_layout">
+<span class="sig-prename descclassname"><span class="pre">pages.analysis_layer.</span></span><span class="sig-name descname"><span class="pre">update_figure_layout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pages/analysis_layer.html#update_figure_layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.analysis_layer.update_figure_layout" title="Permalink to this definition"></a></dt>
+<dd><p>Updates the layout and axis titles for a given figure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fig</strong> (<em>plotly.graph_objs.Figure</em>) – The figure to update.</p></li>
+<li><p><strong>unit_list</strong> (<em>list</em>) – List of units associated with this figure.</p></li>
+<li><p><strong>start_date</strong> (<em>str</em><em> or </em><em>datetime object</em>) – Start date for the x-axis range.</p></li>
+<li><p><strong>end_date</strong> (<em>str</em><em> or </em><em>datetime object</em>) – End date for the x-axis range.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Pages" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="presentation_display.html" class="btn btn-neutral float-right" title="presentation_display.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Julian W.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>functions.api &mdash; Energy_Monitor 1.0.0 documentation</title>
+  <title>functions.api &mdash; Energysystemmonitor 1.0.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -29,7 +29,7 @@
           
           
           <a href="../../index.html" class="icon icon-home">
-            Energy_Monitor
+            Energysystemmonitor
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -41,7 +41,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Energy_monitor Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Energy_monitor</a></li>
 </ul>
 
         </div>
@@ -50,7 +50,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Energy_Monitor</a>
+          <a href="../../index.html">Energysystemmonitor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -74,7 +74,7 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
 
-<span class="n">csv_file_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;example/example_data1.csv&quot;</span>
+
 
 
 <span class="c1"># Define the abstract base class</span>
@@ -173,28 +173,18 @@
 <span class="sd">    Concrete class implementing the DataInterface for InfluxDB .</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">csv_file_path</span><span class="p">,</span> <span class="n">timestamp_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize the InfluxDB class.</span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            filename (str): The path to the CSV file.</span>
-<span class="sd">            timestamp_col (int or str): The index or name of the timestamp column.</span>
-<span class="sd">            sep (str): The field delimiter for the CSV file. Default is &#39;;&#39;.</span>
-<span class="sd">            decimal (str): The decimal separator. Default is &#39;,&#39;.</span>
-<span class="sd">            encoding (str): The encoding to use. Default is None.</span>
+<span class="sd">        Initialize the InfluxDB_DataInterface class.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">timestamp_col</span> <span class="o">=</span> <span class="n">timestamp_col</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sep</span> <span class="o">=</span> <span class="n">sep</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">decimal</span> <span class="o">=</span> <span class="n">decimal</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="n">encoding</span>
+        <span class="k">pass</span>
+
+       
     
 <div class="viewcode-block" id="InfluxDB_DataInterface.get_column_names"><a class="viewcode-back" href="../../functions.html#functions.api.InfluxDB_DataInterface.get_column_names">[docs]</a>    <span class="k">def</span> <span class="nf">get_column_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the names of the columns from the CSV file.</span>
-<span class="sd">        </span>
-<span class="sd">        Optimized: Read only the first line to get column names.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
@@ -202,7 +192,6 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the time frequency (step size between the individual measurement points) from the CSV file.</span>
 <span class="sd">        </span>
-<span class="sd">        Optimized: Start with a smaller number of rows and increase gradually.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
         
@@ -212,7 +201,8 @@
 <span class="sd">        Read the last &#39;num_rows&#39; lines of the CSV file in reverse order.</span>
 <span class="sd">        </span>
 <span class="sd">        Returns:</span>
-<span class="sd">            pd.DataFrame: DataFrame containing the last &#39;num_rows&#39; lines, read in reverse order.</span>
+<span class="sd">            pd.DataFrame: </span>
+<span class="sd">            DataFrame containing the last &#39;num_rows&#39; lines, read in reverse order.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
@@ -279,29 +269,45 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Concrete class implementing the DataInterface for CSV files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">csv_file_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;example/example_data1.csv&quot;</span>
     
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">csv_file_path</span><span class="p">,</span> <span class="n">timestamp_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the CSVDataInterface class.</span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            filename (str): The path to the CSV file.</span>
-<span class="sd">            timestamp_col (int or str): The index or name of the timestamp column.</span>
-<span class="sd">            sep (str): The field delimiter for the CSV file. Default is &#39;;&#39;.</span>
-<span class="sd">            decimal (str): The decimal separator. Default is &#39;,&#39;.</span>
-<span class="sd">            encoding (str): The encoding to use. Default is None.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str, optional</span>
+<span class="sd">            The path to the CSV file. The default is defined by `csv_file_path`.</span>
+<span class="sd">        timestamp_col : int or str, optional</span>
+<span class="sd">            The index or name of the timestamp column. Default is 0.</span>
+<span class="sd">        sep : str, optional</span>
+<span class="sd">            The field delimiter for the CSV file. Default is &#39;;&#39;.</span>
+<span class="sd">        decimal : str, optional</span>
+<span class="sd">            The decimal separator. Default is &#39;,&#39;.</span>
+<span class="sd">        encoding : str, optional</span>
+<span class="sd">            The encoding to use. Default is None.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timestamp_col</span> <span class="o">=</span> <span class="n">timestamp_col</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sep</span> <span class="o">=</span> <span class="n">sep</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">decimal</span> <span class="o">=</span> <span class="n">decimal</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="n">encoding</span>
-    
+
 <div class="viewcode-block" id="CSVDataInterface.get_column_names"><a class="viewcode-back" href="../../functions.html#functions.api.CSVDataInterface.get_column_names">[docs]</a>    <span class="k">def</span> <span class="nf">get_column_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the names of the columns from the CSV file.</span>
+<span class="sd">        Get the names of the columns from the CSV file, excluding the timestamp column.</span>
 <span class="sd">        </span>
-<span class="sd">        Optimized: Read only the first line to get column names.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of str</span>
+<span class="sd">            A list of column names, excluding the timestamp column.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        FileNotFoundError</span>
+<span class="sd">            If the specified file does not exist.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">header_line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
@@ -315,8 +321,17 @@
 <div class="viewcode-block" id="CSVDataInterface.get_time_frequency"><a class="viewcode-back" href="../../functions.html#functions.api.CSVDataInterface.get_time_frequency">[docs]</a>    <span class="k">def</span> <span class="nf">get_time_frequency</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the time frequency (step size between the individual measurement points) from the CSV file.</span>
+<span class="sd">        This method starts by reading a small number of rows and incrementally increases the number of rows until it can infer the frequency.</span>
 <span class="sd">        </span>
-<span class="sd">        Optimized: Start with a smaller number of rows and increase gradually.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The inferred frequency of the time series data.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the time frequency of the data could not be inferred after a predefined number of attempts.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">frequency</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">num_rows</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># Starting with a smaller number</span>
@@ -340,9 +355,16 @@
     <span class="k">def</span> <span class="nf">_read_csv_reverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_rows</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Read the last &#39;num_rows&#39; lines of the CSV file in reverse order.</span>
-<span class="sd">        </span>
-<span class="sd">        Returns:</span>
-<span class="sd">            pd.DataFrame: DataFrame containing the last &#39;num_rows&#39; lines, read in reverse order.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        num_rows : int</span>
+<span class="sd">            The number of rows to read from the end of the file.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            A DataFrame containing the last &#39;num_rows&#39; lines, read in reverse order.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
         
@@ -459,7 +481,9 @@
 <span class="sd">        Get the first timestamp from the CSV file.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            pd.Timestamp: The first timestamp.</span>
+<span class="sd">        --------</span>
+<span class="sd">        pd.Timestamp: </span>
+<span class="sd">            The first timestamp.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Read only the first row from the CSV</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">decimal</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp_col</span><span class="p">])</span>
@@ -472,7 +496,9 @@
 <span class="sd">        Get the last timestamp from the CSV file.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            pd.Timestamp: The last timestamp.</span>
+<span class="sd">        --------</span>
+<span class="sd">        pd.Timestamp: </span>
+<span class="sd">            The last timestamp.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># Jump to the second last byte</span>
@@ -499,6 +525,9 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Streamlit UI to test the function in development</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="nn">st</span> 
     <span class="c1"># Pfad zum Verzeichnis der aktuellen Datei (api.py) ermitteln</span>
     <span class="n">current_file_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
@@ -587,7 +616,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Julian W..</p>
+    <p>&#169; Copyright 2023, Julian W.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

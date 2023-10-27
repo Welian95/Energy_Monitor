@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Modules &mdash; Energysystemmonitor 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Functions" href="../../functions.html" />
+    <link rel="prev" title="presentation_display.py" href="../presentation_display.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Energysystemmonitor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Main.html">Main.py</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Pages</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../analysis_layer.html">analysis_layer.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../presentation_display.html">presentation_display.py</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">System Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-pages.modules._module_functions">module_functions.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pages.modules._module_template">module_template.py</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#template-for-module-for-handling-energy-system-parameters">Template for Module for Handling Energy System Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pages.modules.Heat_pump_module">Heat_pump_module.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pages.modules.Photovoltaik_module">Photovoltaik_module.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pages.modules.Battery_module">Battery_module.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pages.modules.E_consumer_module">E_consumer_module.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pages.modules.Floors_module">Floors_module.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pages.modules.Ventilation_system_and_heating_pumps_module">Ventilation_system_and_heating_pumps_module.py</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../functions.html">Functions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Energysystemmonitor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Pages</a></li>
+      <li class="breadcrumb-item active">System Modules</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/pages/modules/modules.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="system-modules">
+<h1>System Modules<a class="headerlink" href="#system-modules" title="Permalink to this heading"></a></h1>
+<section id="module-pages.modules._module_functions">
+<span id="module-functions-py"></span><h2>module_functions.py<a class="headerlink" href="#module-pages.modules._module_functions" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules._module_functions.get_module_figs">
+<span class="sig-prename descclassname"><span class="pre">pages.modules._module_functions.</span></span><span class="sig-name descname"><span class="pre">get_module_figs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/_module_functions.html#get_module_figs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules._module_functions.get_module_figs" title="Permalink to this definition"></a></dt>
+<dd><p>Create plant module-specific images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of charts that can be displayed using st.plotly_chart().</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules._module_functions.get_required_data_S">
+<span class="sig-prename descclassname"><span class="pre">pages.modules._module_functions.</span></span><span class="sig-name descname"><span class="pre">get_required_data_S</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/_module_functions.html#get_required_data_S"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules._module_functions.get_required_data_S" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve the required data names and their possible units for this system component.
+This function provides a dictionary where keys represent the names of data
+variables relevant for this system component. Each key is mapped to a list
+of possible units in which that data variable might be recorded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measuring_list</strong> (<em>list</em>) – List of names for the data variables relevant for this system component.</p></li>
+<li><p><strong>units</strong> (<em>list</em>) – List of possible units for the data variables.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>A dictionary where keys are the names of data variables and values are
+lists of possible units.</p>
+<ul class="simple">
+<li><p>keys : strings
+Representing the names of data variables required by this component.</p></li>
+<li><p>values : lists of strings
+Representing the possible units for the respective data variable.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules._module_functions.get_sankey_mapping_S">
+<span class="sig-prename descclassname"><span class="pre">pages.modules._module_functions.</span></span><span class="sig-name descname"><span class="pre">get_sankey_mapping_S</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Consumption</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy_type_inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy_type_outputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/_module_functions.html#get_sankey_mapping_S"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules._module_functions.get_sankey_mapping_S" title="Permalink to this definition"></a></dt>
+<dd><p>Create a data mapping dictionary from lists of labels, types, energy_type_inputs, and energy_type_outputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measuring_list</strong> (<em>list</em>) – List of data series in the DataFrame.</p></li>
+<li><p><strong>Consumption</strong> (<em>list</em>) – List of consumption values corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>labels</strong> (<em>list</em>) – List of labels corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>types</strong> (<em>list</em>) – List of types corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>energy_type_inputs</strong> (<em>list</em>) – List of energy type inputs corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>energy_type_outputs</strong> (<em>list</em>) – List of energy type outputs corresponding to each data series in the DataFrame.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The data mapping dictionary.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules._module_functions.initialize_data_interface">
+<span class="sig-prename descclassname"><span class="pre">pages.modules._module_functions.</span></span><span class="sig-name descname"><span class="pre">initialize_data_interface</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/_module_functions.html#initialize_data_interface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules._module_functions.initialize_data_interface" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize the data interface based on the saved interface in Configuration.json.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns an instance of the saved data interface, or None if the saved interface could not be loaded.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>obj or None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The function dynamically imports the ‘api’ module and creates an instance of the saved data interface.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules._module_functions.load_module_data">
+<span class="sig-prename descclassname"><span class="pre">pages.modules._module_functions.</span></span><span class="sig-name descname"><span class="pre">load_module_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_mapping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/_module_functions.html#load_module_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules._module_functions.load_module_data" title="Permalink to this definition"></a></dt>
+<dd><p>Load data for specified modules from the API and interpolate missing values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_mapping</strong> (<em>dict</em>) – The data mapping dictionary.</p></li>
+<li><p><strong>module_names</strong> (<em>list</em>) – List of module names for which data should be loaded.</p></li>
+<li><p><strong>start_time</strong> (<em>str</em><em> or </em><em>datetime</em><em>, </em><em>optional</em>) – The start time for data retrieval.</p></li>
+<li><p><strong>end_time</strong> (<em>str</em><em> or </em><em>datetime</em><em>, </em><em>optional</em>) – The end time for data retrieval.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame with the actual data from the API.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pages.modules._module_template">
+<span id="module-template-py"></span><h2>module_template.py<a class="headerlink" href="#module-pages.modules._module_template" title="Permalink to this heading"></a></h2>
+<section id="template-for-module-for-handling-energy-system-parameters">
+<h3>Template for Module for Handling Energy System Parameters<a class="headerlink" href="#template-for-module-for-handling-energy-system-parameters" title="Permalink to this heading"></a></h3>
+<p>This module-template outlines various parameters and options for the energy system model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param - <strong>units</strong><span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of strings corresponding to units supported by the pint module (<a class="reference external" href="https://pint.readthedocs.io/en/stable/">Pint Documentation</a>).
+These units are used for presenting options to the user and must be compatible with the measures in the module.</p>
+<ul class="simple">
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">units</span> <span class="pre">=</span> <span class="pre">[&quot;W&quot;,</span> <span class="pre">&quot;kW&quot;,</span> <span class="pre">&quot;Wh&quot;,</span> <span class="pre">&quot;kWh&quot;,</span> <span class="pre">&quot;J&quot;,</span> <span class="pre">&quot;°C&quot;,</span> <span class="pre">&quot;K&quot;]</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">param - <strong>measuring_list</strong><span class="colon">:</span></dt>
+<dd class="field-even"><p>Contains the names of the measures used in this system module, forming the basis for the Sankey diagram.</p>
+<ul class="simple">
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">measuring_list</span> <span class="pre">=</span> <span class="pre">['transported_energy_IN',</span> <span class="pre">'room_OUT_2']</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-odd">param - <strong>measuring_list_sankey</strong><span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list that includes both measured and calculated values for the Sankey diagram. Units must be appended to calculated values.</p>
+<ul class="simple">
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">measuring_list_sankey</span> <span class="pre">=</span> <span class="pre">['transported_energy_IN',</span> <span class="pre">'room_OUT_2',</span> <span class="pre">&quot;MATHTEST_[W]&quot;]</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">param - <strong>Label</strong><span class="colon">:</span></dt>
+<dd class="field-even"><p>Describes the measured or calculated values in the Sankey diagram. If shorter than <code class="docutils literal notranslate"><span class="pre">measuring_list</span></code>, missing labels won’t be displayed.</p>
+<ul class="simple">
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">Label</span> <span class="pre">=</span> <span class="pre">['transported_energy_IN',</span> <span class="pre">'room_OUT_2',</span> <span class="pre">&quot;MATHTEST&quot;]</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-odd">param - <strong>Consumption</strong><span class="colon">:</span></dt>
+<dd class="field-odd"><p>Initially set to <code class="docutils literal notranslate"><span class="pre">None</span></code>. Updated during processing to contain keys, numerical values, or complex expressions.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Example:</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Consumption</span> <span class="pre">=</span> <span class="pre">[None,</span> <span class="pre">None,</span> <span class="pre">&quot;Compressor_Power</span> <span class="pre">+</span> <span class="pre">ambient_heat_IN&quot;]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Consumption</span> <span class="pre">=</span> <span class="pre">[None,</span> <span class="pre">None,</span> <span class="pre">&quot;IF(</span> <span class="pre">battery</span> <span class="pre">&gt;=</span> <span class="pre">0,</span> <span class="pre">battery,</span> <span class="pre">0</span> <span class="pre">)&quot;,</span> <span class="pre">&quot;IF(</span> <span class="pre">battery</span> <span class="pre">&lt;=</span> <span class="pre">0,</span> <span class="pre">battery</span> <span class="pre">*</span> <span class="pre">-1,</span> <span class="pre">0</span> <span class="pre">)&quot;]</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt class="field-even">param - <strong>Type</strong><span class="colon">:</span></dt>
+<dd class="field-even"><p>Each label must have a corresponding type: Source, Transformer, or Sink.</p>
+<ul class="simple">
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">Type</span> <span class="pre">=</span> <span class="pre">['Transformer',</span> <span class="pre">'Sink',</span> <span class="pre">'Sink']</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-odd">param - <strong>EnergyTypeInput</strong><span class="colon">:</span></dt>
+<dd class="field-odd"><p>Indicates the form of incoming energy. ‘-’ is used for flows not represented.</p>
+<ul class="simple">
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">EnergyTypeInput</span> <span class="pre">=</span> <span class="pre">['electricity',</span> <span class="pre">'heat',</span> <span class="pre">'heat']</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">param - <strong>EnergyTypeOutput</strong><span class="colon">:</span></dt>
+<dd class="field-even"><p>Indicates the form of outgoing energy. ‘-’ is used for flows not represented.</p>
+<ul class="simple">
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">EnergyTypeOutput</span> <span class="pre">=</span> <span class="pre">['heat',</span> <span class="pre">'-',</span> <span class="pre">'-']</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-odd">param Special Handling of Consumption<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param 1. <strong>Conditional Statements</strong><span class="colon">:</span></dt>
+<dd class="field-odd"><p>Converts IF-THEN-ELSE to Python’s ternary operator.</p>
+</dd>
+<dt class="field-even">param 2. <strong>Tokenization</strong><span class="colon">:</span></dt>
+<dd class="field-even"><p>Breaks down expressions into tokens.</p>
+</dd>
+<dt class="field-odd">param 3. <strong>Data Retrieval and Caching</strong><span class="colon">:</span></dt>
+<dd class="field-odd"><p>Fetches and caches data for non-operator, non-numeric tokens.</p>
+</dd>
+<dt class="field-even">param 4. <strong>Token Replacement</strong><span class="colon">:</span></dt>
+<dd class="field-even"><p>Replaces tokens with cached values.</p>
+</dd>
+<dt class="field-odd">param 5. <strong>Expression Evaluation</strong><span class="colon">:</span></dt>
+<dd class="field-odd"><p>Evaluates updated expressions.</p>
+</dd>
+<dt class="field-even">param 6. <strong>Unit Conversion and Update</strong><span class="colon">:</span></dt>
+<dd class="field-even"><p>Converts results to desired units and updates the Sankey diagram.</p>
+</dd>
+<dt class="field-odd">param .. note::<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Following these steps enables the Sankey diagram to represent both simple and complex energy flows comprehensively.</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules._module_template.get_required_data">
+<span class="sig-prename descclassname"><span class="pre">pages.modules._module_template.</span></span><span class="sig-name descname"><span class="pre">get_required_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['W',</span> <span class="pre">'kW',</span> <span class="pre">'Wh',</span> <span class="pre">'kWh',</span> <span class="pre">'J',</span> <span class="pre">'°C',</span> <span class="pre">'K']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/_module_template.html#get_required_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules._module_template.get_required_data" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_required_data_S.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measuring_list</strong> (<em>list</em>) – List of names for the data variables relevant for this system component.</p></li>
+<li><p><strong>units</strong> (<em>list</em>) – List of possible units for the data variables.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary where keys are the names of data variables and values are lists of possible units.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules._module_template.get_sankey_mapping">
+<span class="sig-prename descclassname"><span class="pre">pages.modules._module_template.</span></span><span class="sig-name descname"><span class="pre">get_sankey_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[None]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeInput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeOutput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/_module_template.html#get_sankey_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules._module_template.get_sankey_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_sankey_mapping_S.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measuring_list</strong> (<em>list</em>) – List of data series in the DataFrame.</p></li>
+<li><p><strong>Consumption</strong> (<em>list</em>) – List of consumption values corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>labels</strong> (<em>list</em>) – List of labels corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>types</strong> (<em>list</em>) – List of types corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>energy_type_inputs</strong> (<em>list</em>) – List of energy type inputs corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>energy_type_outputs</strong> (<em>list</em>) – List of energy type outputs corresponding to each data series in the DataFrame.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The data mapping dictionary.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+<section id="module-pages.modules.Heat_pump_module">
+<span id="heat-pump-module-py"></span><h2>Heat_pump_module.py<a class="headerlink" href="#module-pages.modules.Heat_pump_module" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Heat_pump_module.create_gauge_chart">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Heat_pump_module.</span></span><span class="sig-name descname"><span class="pre">create_gauge_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="reference internal" href="../../_modules/pages/modules/Heat_pump_module.html#create_gauge_chart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Heat_pump_module.create_gauge_chart" title="Permalink to this definition"></a></dt>
+<dd><p>Create a Plotly Gauge Chart based on provided values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<em>float</em>) – The current value to be displayed on the gauge.</p></li>
+<li><p><strong>title</strong> (<em>str</em><em>, </em><em>optional</em>) – The title for the gauge chart.</p></li>
+<li><p><strong>reference_value</strong> (<em>float</em><em>, </em><em>optional</em>) – The reference value for calculating the delta.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Plotly Figure object representing the gauge chart.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>go.Figure</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The function supports optional delta and threshold settings based on the reference value.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Heat_pump_module.get_module_figs">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Heat_pump_module.</span></span><span class="sig-name descname"><span class="pre">get_module_figs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/Heat_pump_module.html#get_module_figs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Heat_pump_module.get_module_figs" title="Permalink to this definition"></a></dt>
+<dd><p>Create plant module-specific figures.</p>
+<p>This function must be customized for each plant module and retrieves data from an external API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of Plotly figures which can be displayed using <cite>st.plotly_chart()</cite>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This function specifically handles HP-specific power rating calculations.
+It uses the <cite>data_interface</cite> for data retrieval.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Heat_pump_module.get_required_data">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Heat_pump_module.</span></span><span class="sig-name descname"><span class="pre">get_required_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Compressor_Power',</span> <span class="pre">'ambient_heat_IN',</span> <span class="pre">'room_heating_OUT',</span> <span class="pre">'thermal_hp_OUT']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['W',</span> <span class="pre">'kW',</span> <span class="pre">'Wh',</span> <span class="pre">'kWh',</span> <span class="pre">'J',</span> <span class="pre">'°C',</span> <span class="pre">'K']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/Heat_pump_module.html#get_required_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Heat_pump_module.get_required_data" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_required_data_S.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measuring_list</strong> (<em>list</em>) – List of names for the data variables relevant for this system component.</p></li>
+<li><p><strong>units</strong> (<em>list</em>) – List of possible units for the data variables.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary where keys are the names of data variables and values are lists of possible units.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Heat_pump_module.get_sankey_mapping">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Heat_pump_module.</span></span><span class="sig-name descname"><span class="pre">get_sankey_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Compressor_Power',</span> <span class="pre">'ambient_heat_IN',</span> <span class="pre">'room_heating_OUT']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[None,</span> <span class="pre">None,</span> <span class="pre">None]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Compressor_Power',</span> <span class="pre">'ambient_heat',</span> <span class="pre">'room_heating']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Transformer',</span> <span class="pre">'Source',</span> <span class="pre">'Sink']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeInput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['electricity',</span> <span class="pre">'-',</span> <span class="pre">'heat']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeOutput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['heat',</span> <span class="pre">'heat',</span> <span class="pre">'-']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/Heat_pump_module.html#get_sankey_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Heat_pump_module.get_sankey_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_sankey_mapping_S.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measuring_list</strong> (<em>list</em>) – List of data series in the DataFrame.</p></li>
+<li><p><strong>Consumption</strong> (<em>list</em>) – List of consumption values corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>labels</strong> (<em>list</em>) – List of labels corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>types</strong> (<em>list</em>) – List of types corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>energy_type_inputs</strong> (<em>list</em>) – List of energy type inputs corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>energy_type_outputs</strong> (<em>list</em>) – List of energy type outputs corresponding to each data series in the DataFrame.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The data mapping dictionary.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pages.modules.Photovoltaik_module">
+<span id="photovoltaik-module-py"></span><h2>Photovoltaik_module.py<a class="headerlink" href="#module-pages.modules.Photovoltaik_module" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Photovoltaik_module.create_gauge_chart">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Photovoltaik_module.</span></span><span class="sig-name descname"><span class="pre">create_gauge_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="reference internal" href="../../_modules/pages/modules/Photovoltaik_module.html#create_gauge_chart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Photovoltaik_module.create_gauge_chart" title="Permalink to this definition"></a></dt>
+<dd><p>Create a Plotly Gauge Chart based on provided values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<em>float</em>) – The current value to be displayed on the gauge.</p></li>
+<li><p><strong>title</strong> (<em>str</em><em>, </em><em>optional</em>) – The title for the gauge chart.</p></li>
+<li><p><strong>reference_value</strong> (<em>float</em><em>, </em><em>optional</em>) – The reference value for calculating the delta.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Plotly Figure object representing the gauge chart.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>go.Figure</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The function supports optional delta and threshold settings based on the reference value.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Photovoltaik_module.get_module_figs">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Photovoltaik_module.</span></span><span class="sig-name descname"><span class="pre">get_module_figs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/Photovoltaik_module.html#get_module_figs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Photovoltaik_module.get_module_figs" title="Permalink to this definition"></a></dt>
+<dd><p>Create plant module-specific figures.</p>
+<p>This function must be customized for each plant module and retrieves data from an external API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of Plotly figures which can be displayed using <cite>st.plotly_chart()</cite>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This function specifically handles HP-specific consumption and degree of autarky calculations.
+It uses the <cite>data_interface</cite> for data retrieval.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Photovoltaik_module.get_required_data">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Photovoltaik_module.</span></span><span class="sig-name descname"><span class="pre">get_required_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['PV_yield_IN',</span> <span class="pre">'PV_supply_OUT',</span> <span class="pre">'grid_supply_IN']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['W',</span> <span class="pre">'kW',</span> <span class="pre">'Wh',</span> <span class="pre">'kWh',</span> <span class="pre">'J',</span> <span class="pre">'°C',</span> <span class="pre">'K']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/Photovoltaik_module.html#get_required_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Photovoltaik_module.get_required_data" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_required_data_S.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measuring_list</strong> (<em>list</em>) – List of names for the data variables relevant for this system component.</p></li>
+<li><p><strong>units</strong> (<em>list</em>) – List of possible units for the data variables.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary where keys are the names of data variables and values are lists of possible units.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Photovoltaik_module.get_sankey_mapping">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Photovoltaik_module.</span></span><span class="sig-name descname"><span class="pre">get_sankey_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['PV_yield_IN',</span> <span class="pre">'PV_supply_OUT',</span> <span class="pre">'grid_supply_IN']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[None,</span> <span class="pre">None,</span> <span class="pre">None]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['PV_yield',</span> <span class="pre">'PV_feed-in',</span> <span class="pre">'grid_supply']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Source',</span> <span class="pre">'Sink',</span> <span class="pre">'Source']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeInput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['-',</span> <span class="pre">'electricity',</span> <span class="pre">'-']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeOutput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['electricity',</span> <span class="pre">'-',</span> <span class="pre">'electricity']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/Photovoltaik_module.html#get_sankey_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Photovoltaik_module.get_sankey_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_sankey_mapping_S.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measuring_list</strong> (<em>list</em>) – List of data series in the DataFrame.</p></li>
+<li><p><strong>Consumption</strong> (<em>list</em>) – List of consumption values corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>labels</strong> (<em>list</em>) – List of labels corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>types</strong> (<em>list</em>) – List of types corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>energy_type_inputs</strong> (<em>list</em>) – List of energy type inputs corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>energy_type_outputs</strong> (<em>list</em>) – List of energy type outputs corresponding to each data series in the DataFrame.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The data mapping dictionary.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pages.modules.Battery_module">
+<span id="battery-module-py"></span><h2>Battery_module.py<a class="headerlink" href="#module-pages.modules.Battery_module" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Battery_module.create_gauge_chart">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Battery_module.</span></span><span class="sig-name descname"><span class="pre">create_gauge_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="reference internal" href="../../_modules/pages/modules/Battery_module.html#create_gauge_chart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Battery_module.create_gauge_chart" title="Permalink to this definition"></a></dt>
+<dd><p>Create a customized Plotly Gauge Chart.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<em>float</em>) – The current value to be displayed on the gauge.</p></li>
+<li><p><strong>title</strong> (<em>str</em><em>, </em><em>optional</em>) – The title of the gauge chart.</p></li>
+<li><p><strong>reference_value</strong> (<em>float</em><em>, </em><em>optional</em>) – The reference value for calculating the delta.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Plotly Figure object representing the gauge chart.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>go.Figure</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The function includes various settings for customizing the gauge,
+such as tick positions, colors, and threshold settings.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Battery_module.get_module_figs">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Battery_module.</span></span><span class="sig-name descname"><span class="pre">get_module_figs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/Battery_module.html#get_module_figs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Battery_module.get_module_figs" title="Permalink to this definition"></a></dt>
+<dd><p>Create plant module-specific figures.</p>
+<p>This function must be customized for each plant module and retrieves data from an external API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of Plotly figures which can be displayed using <cite>st.plotly_chart()</cite>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This function specifically handles battery charging status calculations.
+It uses the <cite>data_interface</cite> for data retrieval.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Battery_module.get_required_data">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Battery_module.</span></span><span class="sig-name descname"><span class="pre">get_required_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['battery']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['W',</span> <span class="pre">'kW',</span> <span class="pre">'Wh',</span> <span class="pre">'kWh',</span> <span class="pre">'J',</span> <span class="pre">'°C',</span> <span class="pre">'K']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/Battery_module.html#get_required_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Battery_module.get_required_data" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_required_data_S.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measuring_list</strong> (<em>list</em>) – List of names for the data variables relevant for this system component.</p></li>
+<li><p><strong>units</strong> (<em>list</em>) – List of possible units for the data variables.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary where keys are the names of data variables and values are lists of possible units.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Battery_module.get_sankey_mapping">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Battery_module.</span></span><span class="sig-name descname"><span class="pre">get_sankey_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['battery_discharge_[W]',</span> <span class="pre">'battery_charge_[W]']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['IF(</span> <span class="pre">battery</span> <span class="pre">&gt;=</span> <span class="pre">0,</span> <span class="pre">battery,</span> <span class="pre">0</span> <span class="pre">)',</span> <span class="pre">'IF(</span> <span class="pre">battery</span> <span class="pre">&lt;=</span> <span class="pre">0,</span> <span class="pre">battery</span> <span class="pre">*</span> <span class="pre">-</span> <span class="pre">1</span>&#160; <span class="pre">,</span> <span class="pre">0</span> <span class="pre">)']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['battery_discharge',</span> <span class="pre">'battery_charge']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Source',</span> <span class="pre">'Sink']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeInput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['-',</span> <span class="pre">'electricity']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeOutput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['electricity',</span> <span class="pre">'-']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/Battery_module.html#get_sankey_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Battery_module.get_sankey_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_sankey_mapping_S.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measuring_list</strong> (<em>list</em>) – List of data series in the DataFrame.</p></li>
+<li><p><strong>Consumption</strong> (<em>list</em>) – List of consumption values corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>labels</strong> (<em>list</em>) – List of labels corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>types</strong> (<em>list</em>) – List of types corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>energy_type_inputs</strong> (<em>list</em>) – List of energy type inputs corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>energy_type_outputs</strong> (<em>list</em>) – List of energy type outputs corresponding to each data series in the DataFrame.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The data mapping dictionary.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pages.modules.E_consumer_module">
+<span id="e-consumer-module-py"></span><h2>E_consumer_module.py<a class="headerlink" href="#module-pages.modules.E_consumer_module" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.E_consumer_module.get_required_data">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.E_consumer_module.</span></span><span class="sig-name descname"><span class="pre">get_required_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Server_OUT',</span> <span class="pre">'e_mobility_OUT']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['W',</span> <span class="pre">'kW',</span> <span class="pre">'Wh',</span> <span class="pre">'kWh',</span> <span class="pre">'J',</span> <span class="pre">'°C',</span> <span class="pre">'K']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/E_consumer_module.html#get_required_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.E_consumer_module.get_required_data" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_required_data_S.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measuring_list</strong> (<em>list</em>) – List of names for the data variables relevant for this system component.</p></li>
+<li><p><strong>units</strong> (<em>list</em>) – List of possible units for the data variables.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary where keys are the names of data variables and values are lists of possible units.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.E_consumer_module.get_sankey_mapping">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.E_consumer_module.</span></span><span class="sig-name descname"><span class="pre">get_sankey_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Server_OUT',</span> <span class="pre">'e_mobility_OUT',</span> <span class="pre">'Rest_[W]']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[None,</span> <span class="pre">None,</span> <span class="pre">'</span> <span class="pre">e_consumers_IN</span> <span class="pre">-</span> <span class="pre">Server_OUT</span> <span class="pre">-</span> <span class="pre">e_mobility_OUT']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['server',</span> <span class="pre">'e_mobility',</span> <span class="pre">'rest']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Sink',</span> <span class="pre">'Sink',</span> <span class="pre">'Sink']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeInput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['electricity',</span> <span class="pre">'electricity',</span> <span class="pre">'electricity']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeOutput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['-',</span> <span class="pre">'-',</span> <span class="pre">'-']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/E_consumer_module.html#get_sankey_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.E_consumer_module.get_sankey_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_sankey_mapping_S.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measuring_list</strong> (<em>list</em>) – List of data series in the DataFrame.</p></li>
+<li><p><strong>Consumption</strong> (<em>list</em>) – List of consumption values corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>labels</strong> (<em>list</em>) – List of labels corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>types</strong> (<em>list</em>) – List of types corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>energy_type_inputs</strong> (<em>list</em>) – List of energy type inputs corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>energy_type_outputs</strong> (<em>list</em>) – List of energy type outputs corresponding to each data series in the DataFrame.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The data mapping dictionary.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pages.modules.Floors_module">
+<span id="floors-module-py"></span><h2>Floors_module.py<a class="headerlink" href="#module-pages.modules.Floors_module" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Floors_module.get_required_data">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Floors_module.</span></span><span class="sig-name descname"><span class="pre">get_required_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['e_consumers_IN',</span> <span class="pre">'electricity_UG',</span> <span class="pre">'electricity_EG',</span> <span class="pre">'electricity_1OG',</span> <span class="pre">'electricity_2OG',</span> <span class="pre">'electricity_3OG']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['W',</span> <span class="pre">'kW',</span> <span class="pre">'Wh',</span> <span class="pre">'kWh',</span> <span class="pre">'J',</span> <span class="pre">'°C',</span> <span class="pre">'K']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/Floors_module.html#get_required_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Floors_module.get_required_data" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_required_data_S.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measuring_list</strong> (<em>list</em>) – List of names for the data variables relevant for this system component.</p></li>
+<li><p><strong>units</strong> (<em>list</em>) – List of possible units for the data variables.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary where keys are the names of data variables and values are lists of possible units.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Floors_module.get_sankey_mapping">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Floors_module.</span></span><span class="sig-name descname"><span class="pre">get_sankey_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[None]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeInput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeOutput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/Floors_module.html#get_sankey_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Floors_module.get_sankey_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_sankey_mapping_S.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measuring_list</strong> (<em>list</em>) – List of data series in the DataFrame.</p></li>
+<li><p><strong>Consumption</strong> (<em>list</em>) – List of consumption values corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>labels</strong> (<em>list</em>) – List of labels corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>types</strong> (<em>list</em>) – List of types corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>energy_type_inputs</strong> (<em>list</em>) – List of energy type inputs corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>energy_type_outputs</strong> (<em>list</em>) – List of energy type outputs corresponding to each data series in the DataFrame.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The data mapping dictionary.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pages.modules.Ventilation_system_and_heating_pumps_module">
+<span id="ventilation-system-and-heating-pumps-module-py"></span><h2>Ventilation_system_and_heating_pumps_module.py<a class="headerlink" href="#module-pages.modules.Ventilation_system_and_heating_pumps_module" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Ventilation_system_and_heating_pumps_module.get_required_data">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Ventilation_system_and_heating_pumps_module.</span></span><span class="sig-name descname"><span class="pre">get_required_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['auxiliary_energy_IN',</span> <span class="pre">'transported_energy_OUT',</span> <span class="pre">'room_conditioning_OUT']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['W',</span> <span class="pre">'kW',</span> <span class="pre">'Wh',</span> <span class="pre">'kWh',</span> <span class="pre">'J',</span> <span class="pre">'°C',</span> <span class="pre">'K']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/Ventilation_system_and_heating_pumps_module.html#get_required_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Ventilation_system_and_heating_pumps_module.get_required_data" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_required_data_S.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measuring_list</strong> (<em>list</em>) – List of names for the data variables relevant for this system component.</p></li>
+<li><p><strong>units</strong> (<em>list</em>) – List of possible units for the data variables.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary where keys are the names of data variables and values are lists of possible units.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pages.modules.Ventilation_system_and_heating_pumps_module.get_sankey_mapping">
+<span class="sig-prename descclassname"><span class="pre">pages.modules.Ventilation_system_and_heating_pumps_module.</span></span><span class="sig-name descname"><span class="pre">get_sankey_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measuring_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['auxiliary_energy_IN',</span> <span class="pre">'transported_energy_OUT',</span> <span class="pre">'room_conditioning_OUT']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Consumption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[None,</span> <span class="pre">None,</span> <span class="pre">None]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['auxiliary_energy',</span> <span class="pre">'transported_energy',</span> <span class="pre">'room_conditioning']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Transformer',</span> <span class="pre">'Sink',</span> <span class="pre">'Sink']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeInput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['electricity',</span> <span class="pre">'heat',</span> <span class="pre">'heat']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EnergyTypeOutput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['heat',</span> <span class="pre">'-',</span> <span class="pre">'-']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pages/modules/Ventilation_system_and_heating_pumps_module.html#get_sankey_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.modules.Ventilation_system_and_heating_pumps_module.get_sankey_mapping" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper function for get_sankey_mapping_S.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measuring_list</strong> (<em>list</em>) – List of data series in the DataFrame.</p></li>
+<li><p><strong>Consumption</strong> (<em>list</em>) – List of consumption values corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>labels</strong> (<em>list</em>) – List of labels corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>types</strong> (<em>list</em>) – List of types corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>energy_type_inputs</strong> (<em>list</em>) – List of energy type inputs corresponding to each data series in the DataFrame.</p></li>
+<li><p><strong>energy_type_outputs</strong> (<em>list</em>) – List of energy type outputs corresponding to each data series in the DataFrame.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The data mapping dictionary.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../presentation_display.html" class="btn btn-neutral float-left" title="presentation_display.py" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../functions.html" class="btn btn-neutral float-right" title="Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Julian W.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

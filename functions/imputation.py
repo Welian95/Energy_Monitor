@@ -3,85 +3,120 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-def interpolate_impute(df, freq=None):
-    '''
-    This function interpolates missing values in a DataFrame based on time gaps, 
-    only for existing data points. It then filters the result to keep only timestamps 
-    that match the specified frequency. Any cell containing "None" will not be interpolated.
-    
-    If freq is None, the original DataFrame index will be preserved.
-    
-    Parameters:
-    - df (pd.DataFrame): The input DataFrame with timestamps as the index.
-    - freq (str, optional): The desired frequency. The options are same as in the original function.
-    
-    Returns:
-    - pd.DataFrame: The interpolated and filtered DataFrame.
-    '''
-    
-    def round_up_timestamp(ts, freq):
-        """Round up a timestamp according to the given frequency."""
-        return (ts + pd.to_timedelta(freq) - pd.Timedelta(seconds=1)).floor(freq)
-    
-    # Initialize DataFrame to hold the interpolated values
+def round_up_timestamp(ts, freq):
+    """
+    Round up a timestamp according to the given frequency.
+
+    Parameters
+    ----------
+    ts : pd.Timestamp
+        The timestamp to round up.
+    freq : str
+        The frequency string compatible with pandas.
+
+    Returns
+    -------
+    pd.Timestamp
+        The rounded-up timestamp.
+    """
+    return (ts + pd.to_timedelta(freq) - pd.Timedelta(seconds=1)).floor(freq)
+
+def interpolate_columns(df):
+    """
+    Interpolate the DataFrame columns based on time.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        DataFrame with time index and columns to interpolate.
+
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame with interpolated values.
+    """
     interpolated = pd.DataFrame(index=df.index)
-    
-    # Loop through each column and interpolate only existing data points
     for col in df.columns:
-        # Drop NaN values to form valid segments for interpolation
         valid_segments = df[col].dropna()
         if not valid_segments.empty:
-            # Interpolate considering the time difference for each valid segment
             interpolated_segment = valid_segments.interpolate(method='time')
-            # Fill the corresponding column in the interpolated DataFrame
             interpolated[col] = interpolated_segment
+    return interpolated
 
-    if freq:
-        # Adjust the start time to the next full time unit according to the given frequency
-        adjusted_start = round_up_timestamp(df.index.min(), freq)
-        
-        # Create a new index with the desired frequency, starting from the adjusted start time
-        new_index = pd.date_range(start=adjusted_start, end=df.index.max(), freq=freq)
-        
-        # Merge the original index with the new index
-        combined_index = df.index.union(new_index)
-        
-        # Reindex the DataFrame with the combined index
-        interpolated = interpolated.reindex(combined_index)
+def issue_warnings(df, interpolated, freq=None):
+    """
+    Issue warnings related to data interpolation.
 
-        # Filter the DataFrame to keep only timestamps that match the frequency
-        interpolated = interpolated.loc[new_index]
-    
-    # Calculate the gap threshold as twice the specified frequency
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The original DataFrame.
+    interpolated : pd.DataFrame
+        The interpolated DataFrame.
+    freq : str, optional
+        The desired frequency.
+
+    """
     if freq:
         gap_threshold = pd.to_timedelta(freq) * 1
         time_diffs = df.index.to_series().diff()
         if any(time_diffs > gap_threshold):
-            st.warning(f"Your Data: {df.columns} has been interpolated. Data gaps larger than {gap_threshold} detected.", icon="⚠️")
+            st.warning(f"Your Data: {df.columns} has been interpolated. Data gaps larger than {gap_threshold} detected.")
     
-    # Calculate Mean Squared Error between interpolated and original values for shared timestamps
     common_indices = df.index.intersection(interpolated.index)
     mse = ((df.loc[common_indices] - interpolated.loc[common_indices]) ** 2).mean()
     
     for value in mse.tolist():
         if value != 0:
-            st.warning(f"Your Data has been interpolated. The Mean Squared Error between interpolated and original values is: {mse}", icon="⚠️")
+            st.warning(f"Your Data has been interpolated. The Mean Squared Error between interpolated and original values is: {mse}")
+
+def interpolate_impute(df, freq=None):
+    """
+    Interpolates missing values in a DataFrame based on time gaps.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The input DataFrame with timestamps as the index.
+    freq : str, optional
+        The desired frequency. 
+
+    Returns
+    -------
+    pd.DataFrame
+        The interpolated and filtered DataFrame.
+    """
+    # Interpolate the DataFrame
+    interpolated = interpolate_columns(df)
+    
+    # Frequency adjustment
+    if freq:
+        adjusted_start = round_up_timestamp(df.index.min(), freq)
+        new_index = pd.date_range(start=adjusted_start, end=df.index.max(), freq=freq)
+        combined_index = df.index.union(new_index)
+        interpolated = interpolated.reindex(combined_index)
+        interpolated = interpolated.loc[new_index]
+
+    # Issue warnings related to interpolation
+    issue_warnings(df, interpolated, freq)
     
     return interpolated
 
-
-
-
 def plot_series_with_matplotlib(series, title='Pandas Series Visualization'):
     """
-    Visualisiert eine Pandas Series mit einem datetime-Index als Liniendiagramm mit Matplotlib.
-    
-    Parameters:
-    - series (pd.Series): Die zu visualisierende Serie.
-    - title (str): Titel des Diagramms.
-    
-    Returns:
-    - matplotlib.figure.Figure: Ein Matplotlib-Figure-Objekt.
+    Visualize a Pandas Series with a datetime index as a line chart with Matplotlib.
+
+    Parameters
+    ----------
+    series : pd.Series
+        The Series to be visualized.
+    title : str
+        The title of the chart.
+
+    Returns
+    -------
+    matplotlib.figure.Figure
+        A Matplotlib Figure object.
     """
     
     # Erstellen eines Liniendiagramms mit Matplotlib
@@ -96,15 +131,10 @@ def plot_series_with_matplotlib(series, title='Pandas Series Visualization'):
 
 
 
-
-
-
-
-
-
-# Test Funktion if only this skript is running
-
 if __name__ == "__main__":
+    '''
+    Streamlit UI to test the function in development
+    '''
 
     st.title("Test of Imputation.py")
 

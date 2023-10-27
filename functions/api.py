@@ -3,7 +3,7 @@ import pandas as pd
 import os
 from io import StringIO
 
-csv_file_path = r"example/example_data1.csv"
+
 
 
 # Define the abstract base class
@@ -102,28 +102,18 @@ class InfluxDB_DataInterface(DataInterface):
     Concrete class implementing the DataInterface for InfluxDB .
     """
     
-    def __init__(self, filename=csv_file_path, timestamp_col=0, sep=';', decimal=',', encoding=None):
+    def __init__(self):
         """
-        Initialize the InfluxDB class.
-        
-        Args:
-            filename (str): The path to the CSV file.
-            timestamp_col (int or str): The index or name of the timestamp column.
-            sep (str): The field delimiter for the CSV file. Default is ';'.
-            decimal (str): The decimal separator. Default is ','.
-            encoding (str): The encoding to use. Default is None.
+        Initialize the InfluxDB_DataInterface class.
         """
-        self.filename = filename
-        self.timestamp_col = timestamp_col
-        self.sep = sep
-        self.decimal = decimal
-        self.encoding = encoding
+        pass
+
+       
     
     def get_column_names(self):
         """
         Get the names of the columns from the CSV file.
-        
-        Optimized: Read only the first line to get column names.
+
         """
         pass
 
@@ -131,7 +121,6 @@ class InfluxDB_DataInterface(DataInterface):
         """
         Get the time frequency (step size between the individual measurement points) from the CSV file.
         
-        Optimized: Start with a smaller number of rows and increase gradually.
         """
         pass
         
@@ -141,7 +130,8 @@ class InfluxDB_DataInterface(DataInterface):
         Read the last 'num_rows' lines of the CSV file in reverse order.
         
         Returns:
-            pd.DataFrame: DataFrame containing the last 'num_rows' lines, read in reverse order.
+            pd.DataFrame: 
+            DataFrame containing the last 'num_rows' lines, read in reverse order.
         """
         pass
 
@@ -208,29 +198,45 @@ class CSVDataInterface(DataInterface):
     """
     Concrete class implementing the DataInterface for CSV files.
     """
+    csv_file_path = r"example/example_data1.csv"
     
     def __init__(self, filename=csv_file_path, timestamp_col=0, sep=';', decimal=',', encoding=None):
         """
         Initialize the CSVDataInterface class.
-        
-        Args:
-            filename (str): The path to the CSV file.
-            timestamp_col (int or str): The index or name of the timestamp column.
-            sep (str): The field delimiter for the CSV file. Default is ';'.
-            decimal (str): The decimal separator. Default is ','.
-            encoding (str): The encoding to use. Default is None.
+
+        Parameters
+        ----------
+        filename : str, optional
+            The path to the CSV file. The default is defined by `csv_file_path`.
+        timestamp_col : int or str, optional
+            The index or name of the timestamp column. Default is 0.
+        sep : str, optional
+            The field delimiter for the CSV file. Default is ';'.
+        decimal : str, optional
+            The decimal separator. Default is ','.
+        encoding : str, optional
+            The encoding to use. Default is None.
+
         """
         self.filename = filename
         self.timestamp_col = timestamp_col
         self.sep = sep
         self.decimal = decimal
         self.encoding = encoding
-    
+
     def get_column_names(self):
         """
-        Get the names of the columns from the CSV file.
+        Get the names of the columns from the CSV file, excluding the timestamp column.
         
-        Optimized: Read only the first line to get column names.
+        Returns
+        -------
+        list of str
+            A list of column names, excluding the timestamp column.
+        
+        Raises
+        ------
+        FileNotFoundError
+            If the specified file does not exist.
         """
         with open(self.filename, 'r', encoding=self.encoding) as f:
             header_line = f.readline().strip()
@@ -244,8 +250,17 @@ class CSVDataInterface(DataInterface):
     def get_time_frequency(self):
         """
         Get the time frequency (step size between the individual measurement points) from the CSV file.
+        This method starts by reading a small number of rows and incrementally increases the number of rows until it can infer the frequency.
         
-        Optimized: Start with a smaller number of rows and increase gradually.
+        Returns
+        -------
+        str
+            The inferred frequency of the time series data.
+
+        Raises
+        ------
+        ValueError
+            If the time frequency of the data could not be inferred after a predefined number of attempts.
         """
         frequency = None
         num_rows = 5  # Starting with a smaller number
@@ -269,9 +284,16 @@ class CSVDataInterface(DataInterface):
     def _read_csv_reverse(self, num_rows):
         """
         Read the last 'num_rows' lines of the CSV file in reverse order.
-        
-        Returns:
-            pd.DataFrame: DataFrame containing the last 'num_rows' lines, read in reverse order.
+
+        Parameters
+        ----------
+        num_rows : int
+            The number of rows to read from the end of the file.
+
+        Returns
+        -------
+        pd.DataFrame
+            A DataFrame containing the last 'num_rows' lines, read in reverse order.
         """
         lines = []
         
@@ -388,7 +410,9 @@ class CSVDataInterface(DataInterface):
         Get the first timestamp from the CSV file.
 
         Returns:
-            pd.Timestamp: The first timestamp.
+        --------
+        pd.Timestamp: 
+            The first timestamp.
         """
         # Read only the first row from the CSV
         df = pd.read_csv(self.filename, sep=self.sep, decimal=self.decimal, encoding=self.encoding, nrows=1, usecols=[self.timestamp_col])
@@ -401,7 +425,9 @@ class CSVDataInterface(DataInterface):
         Get the last timestamp from the CSV file.
 
         Returns:
-            pd.Timestamp: The last timestamp.
+        --------
+        pd.Timestamp: 
+            The last timestamp.
         """
         with open(self.filename, 'rb') as f:
             f.seek(-2, 2)  # Jump to the second last byte
@@ -428,6 +454,9 @@ class CSVDataInterface(DataInterface):
 
 
 if __name__ == "__main__":
+    '''
+    Streamlit UI to test the function in development
+    '''
     import streamlit as st 
     # Pfad zum Verzeichnis der aktuellen Datei (api.py) ermitteln
     current_file_directory = os.path.dirname(__file__)
