@@ -1,5 +1,10 @@
 # Energy Monitor
 
+[![Documentation Status](https://readthedocs.org/projects/energy-monitor/badge/?version=latest)](https://energy-monitor.readthedocs.io/en/latest/?badge=latest)
+
+Repository:
+https://github.com/Welian95/Energy_Monitor.git
+
 ## Overview
 
 The Energy Monitor is a comprehensive software solution for analyzing and visualizing energy flows and data. Developed in Python using Streamlit, it allows users to select different system modules, map data, and perform energy analyses.
@@ -8,10 +13,26 @@ The Energy Monitor is a comprehensive software solution for analyzing and visual
 
 The project follows a modular architecture, subdivided into:
 
-- **Main Script**: Controls the execution of modules and presentation.
-- **System Modules**: Specific modules for different technical systems.
-- **Data API**: Interface for retrieving data. (See [Data Access API Documentation](#data-access-api-documentation))
-- **Presentation and Analysis Layers**: User interfaces for displaying and analyzing data.
+- **`Main.py` (Script for initialization and setting configurations - Streamlit UI)**
+- **`Configuration.json` (JSON for storing settings)**
+
+- **/pages**
+    - **`analysis_layer.py` (Script for individual data analysis of historical data - Streamlit UI)**
+    - **`presentation_display.py` (Script for automatic visualization of current data - Streamlit UI)**
+        - **/modules**
+            - **`Heat_pump_module.py` (System component for measuring data of the heat pump)**
+            - **`Photovoltaik_module.py` (System component for measuring data of the PV)**
+            - **`Battery_module.py` (System component for measuring data of the battery)**
+            - **`E_consumer_module.py` (System component for measuring data of the electricity consumers)**
+            - **`Floors_module.py` (System component for measuring data of the floors)**
+            - **`Ventilation_system_and_heating_pumps_module.py` (System component for measuring data of the ventilation system)**
+
+- **/functions**
+    - **`api.py` (Interface to the database)**
+    - **`compute_energy.py` (Conversion between power and energy)**
+    - **`imputation.py` (Statistical computation)**
+    - **`sankey.py` (Creation of Sankey diagrams)**
+    - **`conversion.py` (Unit conversion)**
 
 ## Main Features
 
@@ -32,10 +53,10 @@ The project is in an advanced stage of development with a clear structure and de
 - **Testing and Validation**: Implementing quality assurance tests.
 - **Documentation and Training**: Creating comprehensive documentation.
 - **Warning Systems**:Integration of a warning system for key figures
-- Revised calculation methods: Calculation of weeks and months in analyselayer with dynamic frequencies
-- Revise data mapping:Implement the possibility for calculated datasets in the analyselayer.
+- **Revised calculation methods**: Calculation of weeks and months in analyselayer with dynamic frequencies
+- **Revise data mapping**: Implement the possibility for calculated datasets in the analyselayer.
 
-## Installation Guide
+## Installation Guide 
 
 1. Ensure that Python and pip are installed on your machine.
 2. Open the Terminal.
@@ -73,6 +94,7 @@ The project is in an advanced stage of development with a clear structure and de
     streamlit run Main.py
     ```
 
+Note that the installation can vary for different operating systems. As an example, Anaconda must be used for the use of Streamlit under Windows. 
 
 ## Usage
 
@@ -130,6 +152,8 @@ To create a new concrete class that, for example, works on an SQL or InfluxDB da
 #### Note
 Make sure the get_data() method supports similar filter parameters as the CSVDataInterface class to maintain consistency.
 Ensure that timestamps are returned as pd.Timestamp objects to maintain consistency with other implementations.
+
+For more detailed documentation, please visit our [![Documentation Status](https://readthedocs.org/projects/energy-monitor/badge/?version=latest)](https://energy-monitor.readthedocs.io/en/latest/?badge=latest)
 
 ## License
 
