@@ -7,3 +7,4 @@ plotly
 matplotlib
 pint
 numpy
+sphinx_rtd_theme
