@@ -45,8 +45,7 @@ extensions = [
     "sphinx.ext.todo",
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
-    'sphinx.ext.viewcode',
-    'recommonmark'
+    'sphinx.ext.viewcode'
 ]
 
 napoleon_numpy_docstring = True
