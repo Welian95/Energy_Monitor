@@ -932,8 +932,6 @@ def main():
     if any(processed_data.values()):
         figure_type = st.selectbox("Choose your figure type:", options=['Line Chart', 'Bar Chart', 'Duration Curve', 'Heatmap', 'ThemeRiver'])
         display_figures(figure_type, processed_data, start_time, end_time)
-        
-
 
         export_df = convert_to_dataframe(st.session_state.processed_data)
 
