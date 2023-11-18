@@ -2,7 +2,7 @@
 
 [![Documentation Status](https://readthedocs.org/projects/energy-monitor/badge/?version=latest)](https://energy-monitor.readthedocs.io/en/latest/?badge=latest)
 
-[![Repository](https://github.com/Welian95/Energy_Monitor.git)
+[Repository](https://github.com/Welian95/Energy_Monitor.git)
 
 ## Overview
 
