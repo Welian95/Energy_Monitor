@@ -2,8 +2,7 @@
 
 [![Documentation Status](https://readthedocs.org/projects/energy-monitor/badge/?version=latest)](https://energy-monitor.readthedocs.io/en/latest/?badge=latest)
 
-Repository:
-https://github.com/Welian95/Energy_Monitor.git
+[![Repository](https://github.com/Welian95/Energy_Monitor.git)
 
 ## Overview
 
@@ -58,7 +57,9 @@ The project is in an advanced stage of development with a clear structure and de
 
 ## Installation Guide 
 
-1. Ensure that Python and pip are installed on your machine.
+### MacOS
+
+1. Ensure that Python, pip and git are installed on your machine.
 2. Open the Terminal.
 3. Execute the command:
     ```bash
@@ -94,7 +95,84 @@ The project is in an advanced stage of development with a clear structure and de
     streamlit run Main.py
     ```
 
-Note that the installation can vary for different operating systems. As an example, Anaconda must be used for the use of Streamlit under Windows. 
+### Linux
+
+1. Ensure that Python, pip and git are installed on your machine.
+   (Or Install with:
+   ```bash
+   sudo apt install python3-pip python3-full git
+   ```)
+2. Open the Terminal.
+3. Execute the command:
+    ```bash
+    sudo apt install python3-venv
+    ```
+4. Create a virtual environment with:
+    ```bash
+    python3 -m venv energymonitor
+    ```
+5. Activate the virtual environment using:
+    ```bash
+    source energymonitor/bin/activate
+    ```
+6. Clone the repository using:
+    ```bash
+    git clone https://github.com/Welian95/Energy_Monitor
+    ```
+    (If git is not installed, download the repository from GitHub into your desired folder).
+7. Navigate to the project directory:
+    ```bash
+    cd Energy_Monitor
+    ```
+8. Install the required packages using:
+    ```bash
+    pip install -r requirements.txt
+    ```
+9. Run the program using:
+    ```bash
+    python3 Main.py
+    ```
+10. Launch the Streamlit interface with:
+    ```bash
+    streamlit run Main.py
+    ```
+
+### Windows
+
+1. Ensure that Python, pip, conda and git are installed on your machine.
+2. Make sure you use conda to [Install Streamlit on Windows](docs.streamlit.io/library/get-started/installation#install-streamlit-on-windows)
+3. Open the Terminal.
+4. Create a virtual environment with:
+    ```bash
+    conda create --name energymonitor python=3.9
+    ```
+5. Activate the virtual environment using:
+    ```bash
+    sconda activate energymonitor
+    ```
+6. Clone the repository using:
+    ```bash
+    git clone https://github.com/Welian95/Energy_Monitor
+    ```
+    (If git is not installed, download the repository from GitHub into your desired folder).
+7. Navigate to the project directory:
+    ```bash
+    cd Energy_Monitor
+    ```
+8. Install the required packages using:
+    ```bash
+    pip install -r requirements.txt
+    ```
+9. Run the program using:
+    ```bash
+    python Main.py
+    ```
+10. Launch the Streamlit interface with:
+    ```bash
+    streamlit run Main.py
+    ```
+
+Note that the installation can vary for different operating systems.
 
 ## Usage
 
