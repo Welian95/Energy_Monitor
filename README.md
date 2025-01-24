@@ -148,7 +148,7 @@ The project is in an advanced stage of development with a clear structure and de
     ```
 5. Activate the virtual environment using:
     ```bash
-    sconda activate energymonitor
+    conda activate energymonitor
     ```
 6. Clone the repository using:
     ```bash
